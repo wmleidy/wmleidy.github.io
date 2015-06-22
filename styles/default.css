@@ -1,0 +1,96 @@
+* {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	position: relative;
+	color: white;
+	font-family: "helvlightregular", Helvetica, sans-serif;
+}
+
+#heroimage {
+	max-width: 100%;
+	height: auto;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 0;
+}
+
+#logo {
+	position: absolute;
+	left: 5px;
+	top: 5px;
+	float: left;
+	z-index: 1;
+}
+
+nav {
+	float: right;
+	margin-top: 30px;
+	margin-right: 5%;
+}
+
+nav ul {
+	list-style: none;
+	position: relative;
+	display: inline-table;
+	z-index: 2;
+}
+
+nav ul li {
+	float: left;
+	margin: 0px 30px;
+	border-radius:15px;
+}
+
+nav ul li a {
+	display: block;
+	padding: 5px 10px;
+	color:white;
+	font-size: 11pt;
+	text-decoration: none;
+}
+
+nav ul li:hover {
+	background-color: #bcbcbc;
+}
+
+nav ul li a:hover {
+	color: #232323;
+}
+
+nav ul ul {
+	display:none;
+	position:absolute;
+}
+
+nav ul li:hover > ul {
+	display:block;
+}
+
+nav ul ul {
+	background-color: #bcbcbc;
+	border-radius: 0px;
+	padding: 0px;
+	border-top: 5px solid black;
+	margin: 0px 8px;
+}
+
+nav ul ul li {
+	float: none;
+	border-bottom: 1px solid black;
+	border-radius: 0;
+	position:relative;
+	margin: 0;
+}
+
+nav ul ul li a {
+	padding: 5px 10px;
+}
+
+nav ul ul li a:hover {
+	background-color:#cdcdcd;
+}
