@@ -2,12 +2,17 @@
 	border: 0;
 	margin: 0;
 	padding: 0;
+	font-family: "Hoefler Text", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+p {
+	margin: 16px 0px;
 }
 
 header {
 	position: relative;
 	color: white;
-	font-family: Helvetica, sans-serif;
+  font-family: Helvetica, sans-serif;
 }
 
 header #heroimage {
@@ -104,10 +109,20 @@ header #tagline {
 	z-index: 3;
 }
 
+div#spaceholder {
+	width: 100%;
+	padding-bottom: 66%;
+}
+
 article {
-	bottom: 1000px;
-	display: static;
-	background-color: blue;
-	font-size: 24pt;
-	z-index: 5;
+	margin: 50px 15%;
+	font-size: 14pt;
+	line-height: 18pt;
+	color: midnightblue;
+}
+
+footer {
+	background-color: #abacad;
+	font-size: 9pt;
+	padding: 12px 5px;
 }
