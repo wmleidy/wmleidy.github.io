@@ -7,10 +7,10 @@
 header {
 	position: relative;
 	color: white;
-	font-family: "helvlightregular", Helvetica, sans-serif;
+	font-family: Helvetica, sans-serif;
 }
 
-#heroimage {
+header #heroimage {
 	max-width: 100%;
 	height: auto;
 	position: absolute;
@@ -19,7 +19,7 @@ header {
 	z-index: 0;
 }
 
-#logo {
+header #logo {
 	position: absolute;
 	left: 5px;
 	top: 5px;
@@ -92,5 +92,22 @@ nav ul ul li a {
 }
 
 nav ul ul li a:hover {
-	background-color:#cdcdcd;
+	background-color:#dddddd;
+}
+
+header #tagline {
+	font-size: 2em;
+	position: absolute;
+	width: 60%;
+	text-align: center;
+	margin: 48% 20% 0 20%;
+	z-index: 3;
+}
+
+article {
+	bottom: 1000px;
+	display: static;
+	background-color: blue;
+	font-size: 24pt;
+	z-index: 5;
 }
