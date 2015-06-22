@@ -4,20 +4,39 @@
 <head>
 	<meta charset="UTF-8" /> 
 	<title>Understanding the CSS Box Model</title>
-	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<link rel="stylesheet" type="text/css" href="../styles/default.css" />
 </head>
 
 <body>
+	<header>
+		<a href="../index.html"><img src="../images/logo4.png" id="logo" alt="Bill Leidy" /></a>
+		<nav>
+			<ul>
+			  <li><a href="../projects/index.html">Projects</a></li>
+				<li><a href="index.html">Writings</a></li>
+				<li><a href="../resume.html">Resume</a></li>
+				<li><a href="../bio.html">About</a>
+				  <ul>
+				  	<li><a href="../bio.html">Bio</a></li>
+				  	<li><a href="../contact.html">Contact</a></li>
+				  </ul>
+				</li>
+			</ul>
+		</nav>
+		<img src="../images/writing_bkgd.jpg" id="heroimage" alt="" />
+	  <div id="tagline">THE BLOG</div>
+	</header>
+	
+	<div id="spaceholder" style="padding-bottom:62%">Bleh.</div>
 
 <main>
+	<article>
 
 	<header>
-  <h1>Understanding the CSS Box Model: Borders, Margins, and Padding</h1>
-
-  <p>June 20, 2015</p>
+  	<h1>Understanding the CSS Box Model: Borders, Margins, and Padding</h1>
+		<p class="date">June 20, 2015</p>
   </header>
 
-  <article>
   	<p>Modern web design relies on a very traditional, almost patriarchal concept: strict division of labor between partners. According to the latest recommendations, the two languages at the foundation of every webpage, HTML and CSS, should perform very prescribed roles: HTML handles all the big words and big ideas as well as their semantic meaning (content), whereas CSS concerns itself almost exclusively with beauty (form...and formatting).</p>
 
   	<p>This division of labor actually makes a lot of sense for web design. When aesthetic tastes shift and what was considered beautiful or cutting-edge falls out of fashion, a web designer can make changes to the underlying CSS to rejuvenate the site without needing to touch or alter the content contained in the HTML. This makes "changing outfits" effortless and easy (aside from conceptualizing them, designing them, making sure they're user-friendly, making sure they're cross-browser and cross-device compatible, etc., etc.). But, at the very least, possessing mastery over CSS allows a designer to faithfully execute his or her design ideas.</p>
@@ -102,11 +121,16 @@
 
 		<p>Or just use WordPress or Squarespace instead. We're all given a finite amount of time on this earth after all.</p>
 	</section>
-	</main>
 	
 	<footer>
   	Follow me on Twitter @BillLeidy for weekly blog posts.
 	</footer>
+	
+	</article>
+	</main>
 
+	<footer>
+		Site design and content &copy;Bill Leidy, 2015.
+	</footer>
 </body>
 </html>
