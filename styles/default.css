@@ -2,7 +2,6 @@
 	border: 0;
 	margin: 0;
 	padding: 0;
-	font-family: "Hoefler Text", "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }
 
 p {
@@ -12,7 +11,8 @@ p {
 header {
 	position: relative;
 	color: white;
-  font-family: Helvetica, sans-serif;
+	font-family: "Hoefler Text", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  /*font-family: Helvetica, sans-serif;*/
 }
 
 header #heroimage {
@@ -118,6 +118,7 @@ article {
 	margin: 50px 15%;
 	font-size: 14pt;
 	color: midnightblue;
+	font-family: "Hoefler Text", "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }
 
 article header {
@@ -133,21 +134,21 @@ article p {
 	line-height: 18pt;
 }
 
-div.links {
+div.linkslist {
 	margin: 25px 5% 0 5%;
 }
 
+.linkslist a {
+	color: midnightblue;
+}
+
 article a {
+	color: crimson;
 	text-decoration:none;
 }
 
 article a:hover {
-	color: crimson;
 	text-decoration: underline;
-}
-
-article a:visited {
-	color: crimson;
 }
 
 article footer {
