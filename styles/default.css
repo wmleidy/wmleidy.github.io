@@ -191,3 +191,10 @@ footer {
 	font-size: 9pt;
 	padding: 12px 5px;
 }
+
+code {
+	background-color: cornsilk;
+	font-size: 11pt;
+	margin: 0px 20px;
+	display: block;
+}
