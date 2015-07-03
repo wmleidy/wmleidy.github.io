@@ -104,14 +104,14 @@ header #tagline {
 	font-size: 2em;
 	position: absolute;
 	width: 60%;
-	text-align: center;
-	margin: 48% 20% 0 20%;
+	margin: 20% 20% 0 15%;
+	letter-spacing: 2px;
 	z-index: 3;
 }
 
 div#spaceholder {
 	width: 100%;
-	padding-bottom: 66%;
+	padding-bottom: 45%;
 }
 
 article {
