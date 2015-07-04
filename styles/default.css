@@ -4,7 +4,7 @@
 }
 
 p {
-	margin: 16px 0px;
+	margin: 0.7em 0 1em 0;
 }
 
 header {
@@ -47,19 +47,20 @@ nav ul {
 nav ul li {
 	float: left;
 	margin: 0px 30px;
-	border-radius:15px;
+	/*border-radius:1px;*/
 }
 
 nav ul li a {
 	display: block;
-	padding: 5px 10px;
+	padding: 5px 8px;
 	color:white;
 	font-size: 11pt;
 	text-decoration: none;
 }
 
 nav ul li:hover {
-	background-color: #bcbcbc;
+	background-color: #CBD946;
+	/*background-color: #bcbcbc;*/
 }
 
 nav ul li a:hover {
@@ -76,11 +77,11 @@ nav ul li:hover > ul {
 }
 
 nav ul ul {
-	background-color: #bcbcbc;
+	background-color: #7C8340;
 	border-radius: 0px;
 	padding: 0px;
 	border-top: 5px solid black;
-	margin: 0px 8px;
+	margin: 0px;
 }
 
 nav ul ul li {
@@ -96,7 +97,7 @@ nav ul ul li a {
 }
 
 nav ul ul li a:hover {
-	background-color:#dddddd;
+	/*background-color:#dddddd;*/
 }
 
 header #tagline {
@@ -125,12 +126,18 @@ div#spaceholder {
 article {
 	margin: 50px 15%;
 	font-size: 14pt;
-	color: midnightblue;
+	color: #999;  /*The Herman Cain Special*/
 	font-family: "Hoefler Text", "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }
 
-article header {
-	color: midnightblue;
+article header, h1 ,h2 {
+	color: #7C8340;
+	margin-top: 1.4em;
+	line-height: 120%;
+}
+
+article h3, h4 {
+	margin-top: 0.4em;
 }
 
 p.date {
@@ -139,7 +146,7 @@ p.date {
 }
 
 article p {
-	line-height: 18pt;
+	line-height: 130%;
 }
 
 div.linkslist {
@@ -147,17 +154,21 @@ div.linkslist {
 }
 
 .linkslist a {
-	color: midnightblue;
+	color: #7C8340;
+}
+
+.linkslist a:hover {
+	text-decoration: underline;
 }
 
 article a {
-	color: crimson;
+	color: #0990c6;
 	text-decoration:none;
 }
 
-article a:hover {
+/*article a:hover {
 	text-decoration: underline;
-}
+}*/
 
 article footer {
 	font-size: 10pt;
@@ -174,6 +185,11 @@ article img {
 article img.screenshot {
 	width: 50%;
 	height: auto;
+	border: 1px solid #bbbbbb;
+}
+
+article ul {
+  padding-left: 1.5em;
 }
 
 article ul li {
@@ -184,6 +200,8 @@ table, tr, th, td {
 	border: 1px solid black;
 	border-collapse: collapse;
 	padding: 6px;
+	font-size: 12pt;
+	background-color: #e7edf6;
 }
 			
 th.first, td.first {
@@ -201,7 +219,8 @@ footer {
 }
 
 code {
-	background-color: cornsilk;
+	background-color: #e7edf6;
+	color: #878284;
 	font-size: 11pt;
 	margin: 0px 20px;
 	display: block;
