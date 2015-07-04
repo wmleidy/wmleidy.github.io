@@ -1,5 +1,4 @@
 * {
-	border: 0;
 	margin: 0;
 	padding: 0;
 }
@@ -104,8 +103,17 @@ header #tagline {
 	font-size: 2em;
 	position: absolute;
 	width: 60%;
-	margin: 20% 20% 0 15%;
+	margin: 21% 20% 0 15%;
 	letter-spacing: 2px;
+	z-index: 3;
+}
+
+header #taglinehome {
+	font-size: 2em;
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	margin-top: 38%;
 	z-index: 3;
 }
 
