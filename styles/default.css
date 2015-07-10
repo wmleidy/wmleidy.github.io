@@ -212,16 +212,34 @@ td {
 	text-align:center;
 }
 
-footer {
-	background-color: #abacad;
-	font-size: 9pt;
-	padding: 12px 5px;
-}
-
 code {
 	background-color: #e7edf6;
 	color: #878284;
 	font-size: 11pt;
 	margin: 0px 20px;
 	display: block;
+}
+
+footer {
+	background-color: #abacad;
+	font-size: 9pt;
+	padding: 12px 5px;
+}
+
+.socialmedia {
+	display: inline-table;
+	vertical-align: middle;
+	padding-left: 0.5em;
+ }
+
+ .socialmedia img {
+ 	width: 1.5em;
+ 	height: 1.5em;
+ 	border: 1px solid white;
+ 	border-radius: 3px;
+ 	margin: 0 0.5em;
+ }
+
+ .socialmedia img:hover {
+	background-color: #7C8340;
 }
