@@ -44,13 +44,13 @@
 
 				<p><strong>Arrays</strong> in Ruby are used to represent any collection of objects, and in particular, any collection whose <em>order</em> is important. Let's say Bobby's pre-algebra teacher wants to store his five test grades for storage and computational purposes. Hopefully for Bobby's sake, his grades will look something like this:</p>
 
-				<code>
+				<code class="block">
 				bobby_grades = [99, 94, 100, 97, 98]
 				</code>
 
 				<p>Now if Bobby's teacher wants to quickly access his star pupil's grade on the first test, it's as simple as typing:</p>
 
-				<code>
+				<code class="block">
 				bobby_grades[0]<br />
 				# Result: 99<br />
 				# (As in many programming languages, counting in Ruby starts from 0.)
@@ -58,8 +58,8 @@
 
 				<p>And if the teacher wants to find Bobby's average grade, something like this would accomplish it:</p>
 
-				<code>
-				bobby_grades.inject(0) { |sum, x| sum + x}.fdiv(bobby_grades.length)<br />
+				<code class="block">
+				bobby_grades.inject(0) { |sum, grade| sum + grade}.fdiv(bobby_grades.length)<br />
 				# Result: 97.6
 				</code>
 
@@ -71,7 +71,7 @@
 
 				<p>In contrast to arrays, <strong>hashes</strong> in Ruby store <em>pairs</em> of data, and each pair consists of a <em>key</em> and <em>value</em>. A <a href="https://www.gutenberg.org/files/972/972-h/972-h.htm">dictionary</a> is a classic example of a situation where a hash should be utilized:</p>
 
-				<code>
+				<code class="block">
 				devils_dictionary = {<br />
 				 "learning" => "The kind of ignorance distinguishing the studious",<br />
 				 "Mammon" => "The god of the world's leading religion"}
@@ -79,13 +79,13 @@
 
 				<p>Or say you're designing a video game and you want to assign attributes to your childhood hockey hero:</p>
 
-				<code>
+				<code class="block">
 				joe_sakic = {"skating" => 95, "passing" => 97, "wrist_shot" => 99, "hair" => 72}
 				</code>
 
 				<p>With hashes, retrieving a stored value is done by referencing its key:</p>
 
-				<code>
+				<code class="block">
 				joe_sakic["hair"]<br />
 				# Result: 72
 				</code>
@@ -99,11 +99,11 @@
 				<p>Use arrays for a collection of objects; use hashes for a collection of object pairs. Or, to give one final example:</p>
 
 				<p>Array<br />
-				<code>bad_puns = ["Array of hope", "Make a hash of it"]</code>
+				<code class="block">bad_puns = ["Array of hope", "Make a hash of it"]</code>
 				</p>
 
 				<p>Hash<br />
-				<code>lameness_level = {"Array of hope" => 99, "Make a hash of it" => 92}</code>
+				<code class="block">lameness_level = {"Array of hope" => 99, "Make a hash of it" => 92}</code>
 				</p>
 			</section>
 

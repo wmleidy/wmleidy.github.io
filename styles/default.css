@@ -1,3 +1,4 @@
+/* CSS Reset + <p> Properties */
 * {
 	margin: 0;
 	padding: 0;
@@ -7,6 +8,7 @@ p {
 	margin: 0.7em 0 1em 0;
 }
 
+/*Header and Nav Stuff*/
 header {
 	position: relative;
 	color: white;
@@ -129,6 +131,7 @@ div#simplepage {
 	background-color: black;
 }
 
+/*Main Article Stuff*/
 article {
 	margin: 30px 15%;
 	font-size: 14pt;
@@ -153,23 +156,6 @@ p.date {
 
 article p {
 	line-height: 130%;
-}
-
-div.linkslist {
-	margin: 25px 5% 0 5%;
-}
-
-.linkslist a {
-	color: #7C8340;
-}
-
-.linkslist a:hover {
-	text-decoration: underline;
-}
-
-article a {
-	color: #0990c6;
-	text-decoration:none;
 }
 
 /*article a:hover {
@@ -199,7 +185,15 @@ article ul {
 }
 
 article ul li {
-	line-height: 18pt;
+	line-height: 125%;
+}
+
+article ol {
+  padding-left: 1.5em;
+}
+
+article ol li {
+	line-height: 125%;
 }
 
 table, tr, th, td {
@@ -222,10 +216,16 @@ code {
 	background-color: #e7edf6;
 	color: #878284;
 	font-size: 11pt;
-	margin: 0px 20px;
-	display: block;
+	display: inline;
+	margin: 0px;
 }
 
+code.block {
+	display: block;
+	margin: 0px 20px 20px 20px;
+}
+
+/* Page Footer Stuff */
 footer {
 	background-color: #abacad;
 	font-size: 9pt;
@@ -250,6 +250,25 @@ footer {
 	background-color: #7C8340;
 }
 
+/* For Blogs Index */
+div.linkslist {
+	margin: 25px 5% 0 5%;
+}
+
+.linkslist a {
+	color: #7C8340;
+}
+
+.linkslist a:hover {
+	text-decoration: underline;
+}
+
+article a {
+	color: #0990c6;
+	text-decoration:none;
+}
+
+/*For Contact Page*/
 .contactlinks img {
 	background-color: #abacad;
 	width: 120px;
