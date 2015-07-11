@@ -120,11 +120,17 @@ header #taglinehome {
 
 div#spaceholder {
 	width: 100%;
-	padding-bottom: 45%;
+	padding-bottom: 47%;
+}
+
+div#simplepage {
+	height: 125px;
+	width: 100%;
+	background-color: black;
 }
 
 article {
-	margin: 50px 15%;
+	margin: 30px 15%;
 	font-size: 14pt;
 	color: #999;  /*The Herman Cain Special*/
 	font-family: "Hoefler Text", "Palatino Linotype", "Book Antiqua", Palatino, serif;
@@ -242,4 +248,34 @@ footer {
 
  .socialmedia img:hover {
 	background-color: #7C8340;
+}
+
+.contactlinks img {
+	background-color: #abacad;
+	width: 120px;
+	height: 120px;
+	border: solid 3px #abacad;
+	border-radius: 5px;
+	vertical-align: middle;
+	margin: 2% 5%;
+}
+
+.contactlinks img:hover {
+	background-color: #7C8340;
+	border-color: #7C8340;
+}
+
+.twitter img:hover {
+	background-color: #00ABE3;
+	border-color: #00ABE3;
+}
+
+.linkedin img:hover {
+	background-color: #007bb6;
+	border-color: #007bb6;
+}
+
+.github img:hover {
+	background-color: #333;
+	border-color: #333;
 }
