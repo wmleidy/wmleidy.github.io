@@ -107,7 +107,7 @@ header #tagline {
 	position: absolute;
 	width: 60%;
 	margin: 21% 20% 0 15%;
-	letter-spacing: 2px;
+	letter-spacing: 3px;
 	z-index: 3;
 }
 
@@ -220,6 +220,7 @@ code {
 	font-size: 11pt;
 	display: inline;
 	margin: 0px;
+	padding: 1px 2px;
 }
 
 code.block {
@@ -286,8 +287,8 @@ article a {
 /*For Contact Page*/
 .contactlinks img {
 	background-color: #abacad;
-	width: 120px;
-	height: 120px;
+	width: 100px;
+	height: 100px;
 	border: solid 3px #abacad;
 	border-radius: 5px;
 	vertical-align: middle;
