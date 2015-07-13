@@ -146,6 +146,7 @@ article header, h1 ,h2 {
 }
 
 article h3, h4 {
+	color: #7C8340;
 	margin-top: 0.4em;
 }
 
@@ -223,6 +224,19 @@ code {
 code.block {
 	display: block;
 	margin: 0px 20px 20px 20px;
+}
+
+blockquote {
+	display: block;
+	line-height: 125%;
+	margin: 0 5% 20px 5%;
+	padding: 10px;
+	background-color: #eee;
+}
+
+.attribution {
+	margin-left: 50%;
+	font-style: italic;
 }
 
 /* Page Footer Stuff */

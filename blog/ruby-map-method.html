@@ -33,51 +33,51 @@
 	<main>
 		<article>
 			<header>
-  			<h1>Ruby's Powerful #map Method</h1>
-				<p class="date">July 10, 2015</p>
+  			<h1>Ruby’s Powerful #map Method</h1>
+				<p class="date">July 9, 2015</p>
   		</header>
 			
-				<p>In my <a href="array-and-hashes.html">previous post</a>, I wrote briefly about the importance of handling collections of data and the two main data structures that Ruby relies on for this&mdash;arrays and hashes. However, storage is only one side of the coin; being able to search through and manipulate data collections is just as important. Fortunately, Ruby provides a whole host of powerful built-in methods (found in the <a href="http://ruby-doc.org/core-2.2.2/Enumerable.html">Enumerable module</a>) that allows users to do just this.</p>
+				<p>In my <a href="arrays-and-hashes.html">previous post</a>, I wrote briefly about the importance of handling collections of data and the two main data structures that Ruby relies on for this&mdash;arrays and hashes. However, storage is only one side of the coin; being able to search through and manipulate data collections is just as important. Fortunately, Ruby provides a whole host of powerful built-in methods (found in the <a href="http://ruby-doc.org/core-2.2.2/Enumerable.html">Enumerable module</a>) that allows users to do just this.</p>
 
-				<p>Getting one's head around the most popular Enumerable methods, such as <code>#each</code>, <code>#map</code>, <code>#select</code>, and <code>#reduce</code>, is an extremely important step for beginners on their pathway to Ruby enlightenment. (As an added bonus, JavaScript, the ubiquitous front-end web language, contains very similar functions, so mastering these methods is like killing two birds with one stone.) This post will focus exclusively on Ruby's <strong>#map</strong> method, first providing an introduction for novices, before moving on to (slightly) more complex instances of its usage.</p>
+				<p>Getting one’s head around the most popular Enumerable methods, such as <code>#each</code>, <code>#map</code>, <code>#select</code>, and <code>#reduce</code>, is an extremely important step for beginners on their pathway to Ruby enlightenment. (As an added bonus, JavaScript, the ubiquitous front-end web language, contains very similar functions, so mastering these methods is like killing two birds with one stone.) This post will focus exclusively on Ruby’s <strong>#map</strong> method, first providing an introduction for novices, before moving on to (slightly) more complex instances of its usage.</p>
 
 			<section>
 				<h2>Mapping an Array</h2>
 
-				<p>Arguably the simplest way to conceptualize the <code>#map</code> method is as the most efficient way to transform an array, that is, to modify all elements of an array. To see <code>#map</code> in action, let's take a very simple array:</p>
+				<p>Arguably the simplest way to conceptualize the <code>#map</code> method is as the most efficient way to transform an array, that is, to modify all elements of an array. To see <code>#map</code> in action, let’s take a very simple array:</p>
 
 				<code class="block">numbers = [1, 2, 3, 4, 5]</code>
 
-				<p>Now, let's pretend we want to make a new array that adds 1 to each of the numbers in our initial array. Of course, in this instance we could just write <code>new_numbers = [2, 3, 4, 5, 6]</code>, but in real life when we don't know what the initial values will be, this solution is untenable. Instead, we should use the #map method:</p>
+				<p>Now, let’s pretend we want to make a new array that adds 1 to each of the numbers in our initial array. Of course, in this instance we could just write <code>new_numbers = [2, 3, 4, 5, 6]</code>, but in real life when we don’t know what the initial values will be, this solution is untenable. Instead, we should use the #map method:</p>
 
 				<code class="block">new_numbers = numbers.map { |number| number = number + 1 }<br />
 				# Result: [2, 3, 4, 5, 6]
 				</code>
 
-				<p>The syntax might look a little complicated at first, but it's easy once you break it down. First comes the data collection (most often an array&mdash;in this case, it is <code>numbers</code>), then the <code>.map</code> call, and finally a <strong>code block</strong>. When the code block consists of only one line, curly braces are used to enclose it; otherwise, a slightly different structure is utilized, as we'll see below.</p>
+				<p>The syntax might look a little complicated at first, but it’s easy once you break it down. First comes the data collection (most often an array&mdash;in this case, it is <code>numbers</code>), then the <code>.map</code> call, and finally a <strong>code block</strong>. When the code block consists of only one line, curly braces are used to enclose it; otherwise, a slightly different structure is utilized, as we’ll see below.</p>
 
-				<p>So, what's exactly happening here? And what's the deal with those vertical lines around <code>|number|</code>? Let's examine this step-by-step.</p>
+				<p>So, what’s exactly happening here? And what’s the deal with those vertical lines around <code>|number|</code>? Let’s examine this step-by-step.</p>
 
 				<ol>
-					<li>First, the "zeroth" element of the array <code>numbers</code> is passed into the code block and temporarily becomes the variable designated within the vertical lines, which are usually called "pipes."</li>
+					<li>First, the “zeroth” element of the array <code>numbers</code> is passed into the code block and temporarily becomes the variable designated within the vertical lines, which are usually called “pipes.”</li>
 					<li>The code block is run with this temporary variable (1 in our case because <code>numbers[0] == 1</code>) and spits out the result to a new array, which looks like <code>[2,</code> at the moment.</li>
 					<li>The next element of the original array gets passed into the code block and assumes the temporary variable name, the code block is executed once again, and whatever comes out the other side gets added to our in-progress new array, which is currently <code>[2, 3,</code> .</li>
-					<li>This same process occurs sequentially for the all of the elements in the original array until there are no more elements, at which point our new "mapped" array is ready: <code>[2, 3, 4, 5, 6]</code></li>
+					<li>This same process occurs sequentially for the all of the elements in the original array until there are no more elements, at which point our new “mapped” array is ready: <code>[2, 3, 4, 5, 6]</code></li>
 				</ol>
 
-				<p>Please note that the name of temporary variable inside the pipes is completely arbitrary&mdash;if the code block had been written <code>{ |slaked_thirst| slaked_thrist = slaked_thirst + 1}</code> the result would have been exactly the same. But obviously it's better to choose a descriptive temporary variable name, and considered best practice in Ruby to use the singular form of the array's name whenever possible.</p>
+				<p>Please note that the name of temporary variable inside the pipes is completely arbitrary&mdash;if the code block had been written <code>{ |slaked_thirst| slaked_thrist = slaked_thirst + 1}</code> the result would have been exactly the same. But obviously it’s better to choose a descriptive temporary variable name, and considered best practice in Ruby to use the singular form of the array’s name whenever possible.</p>
 			</section>
 
 			<section>
 				<h2>The Fate of the Original Array</h2>
 
-				<p>Okay, so now we have a new array called <code>new_numbers</code> that holds <code>[2, 3, 4, 5, 6]</code>. But what about our original array? Has <code>#map</code> altered it too? Let's find out:</p>
+				<p>Okay, so now we have a new array called <code>new_numbers</code> that holds <code>[2, 3, 4, 5, 6]</code>. But what about our original array? Has <code>#map</code> altered it too? Let’s find out:</p>
 
 				<code class="block">p numbers<br />
 				# Result: [1, 2, 3, 4, 5]
 				</code>
 
-				<p>The answer is no! Our original array is still intact. In fact, this is such an important point that it's worth emphasizing through orthographic means: <strong><em>the</em> <code>#map</code> <em>method does not alter the original data that's been inputted</em></strong>. Instead, it feeds the original data into a code block and generates new data, which can be saved to a new variable, returned to the main program, or otherwise utilized. Such methods that leave the original data intact are termed "safe" or "non-destructive" methods in Ruby parlance. Most of the methods in Ruby's Enumerable module are "safe," but many of them have an "evil twin" with an evil exclamation point (!) that will "destructively" overwrite the original data. For example:</p>
+				<p>The answer is no! Our original array is still intact. In fact, this is such an important point that it’s worth emphasizing through orthographic means: <strong><em>the</em> <code>#map</code> <em>method does not alter the original data that’s been inputted</em></strong>. Instead, it feeds the original data into a code block and generates new data, which can be saved to a new variable, returned to the main program, or otherwise utilized. Such methods that leave the original data intact are termed “safe” or “non-destructive” methods in Ruby parlance. Most of the methods in Ruby’s Enumerable module are “safe,” but many of them have an “evil twin” with an evil exclamation point (!) that will “destructively” overwrite the original data. For example:</p>
 
 				<code class="block">new_numbers = numbers.map! { |num| num += 1 }<br />
 				<br />
@@ -87,7 +87,7 @@
 				[2, 3, 4, 5, 6]
 				</code>
 
-				<p>As can be seen above, the evil twin <code>#map!</code> will wipe out the original <code>numbers</code>	array. We could have just written <code>numbers.map! { |num| num += 1 }</code>. There is a potential advantage to this: fewer variables = less memory usage. The disadvantage is that you're permanently altering data that you might want to use elsewhere. In general, it is recommend to use the "safe" methods unless there is a compelling reason not to do so.</p>
+				<p>As can be seen above, the evil twin <code>#map!</code> will wipe out the original <code>numbers</code>	array. We could have just written <code>numbers.map! { |num| num += 1 }</code>. There is a potential advantage to this: fewer variables = less memory usage. The disadvantage is that you’re permanently altering data that you might want to use elsewhere. In general, it is recommend to use the “safe” methods unless there is a compelling reason not to do so.</p>
 			</section>
 
 			<section>
@@ -107,26 +107,26 @@ end
 
 # Result: [1, 8, 9, 64, 25]</pre></code>
 
-				<p>This <code>do...end</code> construction, which often includes a variable or variables inside pipes that follow <code>do</code>, is prevalent throughout Ruby, so it's of paramount importance to get comfortable with it.</p>
+				<p>This <code>do...end</code> construction, which often includes a variable or variables inside pipes that follow <code>do</code>, is prevalent throughout Ruby, so it’s of paramount importance to get comfortable with it.</p>
 			</section>
 
 			<section>
 				<h2>Bonus Section: Mapping a Hash</h2>
 
-				<p>The <code>#map</code> method, like many methods in Enumerable module, can also be called on hashes. However, since <code>#map</code> will <em>always</em> return an array, some extra steps must be taken in order to maintain the hash data structure. There are a few different ways to do this, and it can tricky to decide what will work best (fastest and most reliably) in a given situation. Let's look at an example of how a hash structure can be maintained in conjunction with <code>#map</code>, before examining an alternative way to do the same thing.</p>
+				<p>The <code>#map</code> method, like many methods in Enumerable module, can also be called on hashes. However, since <code>#map</code> will <em>always</em> return an array, some extra steps must be taken in order to maintain the hash data structure. There are a few different ways to do this, and it can tricky to decide what will work best (fastest and most reliably) in a given situation. Let’s look at an example of how a hash structure can be maintained in conjunction with <code>#map</code>, before examining an alternative way to do the same thing.</p>
 
-				<p>Imagine for a moment that you are Professor Kampmeier and you're teaching 200 pre-med hopefuls organic chemistry. The first exam has just been graded and all the results entered into a hash:</p>
+				<p>Imagine for a moment that you are Professor Kampmeier and you’re teaching 200 pre-med hopefuls organic chemistry. The first exam has just been graded and all the results entered into a hash:</p>
 
 				<code class="block">exam1_grades = {"Matt" => 75, "Janice" => 78} # plus 198 more not shown</code>
 
-				<p>You've analyzed the grades, looked at the distribution, and decided that you only want to ruin the hopes and dreams of 80 students instead of 120.  That is, you've decided that you'll apply a +6 percentage point curve to the exam grades. How can we apply the curve to our hash in Ruby? Let's first see what happens when we just use <code>#map</code>:</p>
+				<p>You’ve analyzed the grades, looked at the distribution, and decided that you only want to ruin the hopes and dreams of 80 students instead of 120.  That is, you’ve decided that you’ll apply a +6 percentage point curve to the exam grades. How can we apply the curve to our hash in Ruby? Let’s first see what happens when we just use <code>#map</code>:</p>
 
 				<code class="block">exam1_grades_curved = exam1_grades.map { |key, value| [key, value += 6] } <br />
 				p exam1_grades_curved <br />
 				# Result: [["Matt, 81], ["Janice", 84]]
 				</code>
 
-				<p>As predicted, we get an array of arrays, which is not what we want. We want to maintain the hash data structure. Let's try a couple possible workarounds (which may not work in Ruby versions before 2.x):</p>
+				<p>As predicted, we get an array of arrays, which is not what we want. We want to maintain the hash data structure. Let’s try a couple possible workarounds (which may not work in Ruby versions before 2.x):</p>
 
 				<code class="block">exam1_grades_curved = exam1_grades.map { |key, value| [key, value += 6] }.to_h <br />
 				# Result: {"Matt"=>81, "Janice"=>84}<br />
@@ -136,7 +136,7 @@ end
 				# Result: {"Matt"=>81, "Janice"=>84}
 				</code>
 
-				<p>In both variants, we've included a method, either <code>#to_h</code> or the <code>Hash</code> constructor, that will convert the mapped array back into a hash. This operates non-destructively&mdash;the original hash is left intact. But if we <em>did</em> want to act destructively on our starting hash, we would need to find an alternative to <code>#map!</code>, because it doesn't work on hashes. One viable option is to use the <code>#update</code> method:</p>
+				<p>In both variants, we’ve included a method, either <code>#to_h</code> or the <code>Hash</code> constructor, that will convert the mapped array back into a hash. This operates non-destructively&mdash;the original hash is left intact. But if we <em>did</em> want to act destructively on our starting hash, we would need to find an alternative to <code>#map!</code>, because it doesn’t work on hashes. One viable option is to use the <code>#update</code> method:</p>
 
 				<code class="block">exam1_grades.update(exam1_grades) { |key, value| value += 6}<br />
 				# Result: {"Matt"=>81, "Janice"=>84}
