@@ -147,7 +147,12 @@ article header, h1 ,h2 {
 
 article h3, h4 {
 	color: #7C8340;
-	margin-top: 0.4em;
+	margin-top: 1.2em;
+}
+
+article h4 {
+	color: #7C8340;
+	margin-top: 0.8em;
 }
 
 p.date {
