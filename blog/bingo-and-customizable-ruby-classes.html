@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Bingo! Ruby's Customizable Classes</title>
+	<link rel="stylesheet" type="text/css" href="../styles/default.css" /> 
+</head>
+
+<body>
+	<header>
+		<a href="../index.html"><img src="../images/logo4.png" id="logo" alt="Bill Leidy" /></a>
+		<nav>
+			<ul>
+			  <li><a href="../projects/index.html">Projects</a></li>
+				<li><a href="index.html">Writings</a></li>
+				<li><a href="../resume.html">Resume</a></li>
+				<li><a href="../bio.html">About</a>
+				  <ul>
+				  	<li><a href="../bio.html">Bio</a></li>
+				  	<li><a href="../contact.html">Contact</a></li>
+				  </ul>
+				</li>
+			</ul>
+		</nav>
+		<img src="../images/writing_bkgd.jpg" id="heroimage" alt="" />
+	  <div id="tagline">THE BLOG</div>
+	</header>
+	
+	<div id="spaceholder"></div>
+
+	<main>
+		<article>
+			<header>
+  			<h1>Bingo!; or, When to Use Customizable Classes in Ruby</h1>
+				<p class="date">July 15, 2015</p>
+  		</header>
+			
+  		<section>
+  			<p>For as far back as I can remember, I’ve always been an ardent gamer. From my early elementary school days, I can remember holding a 40-game unbeaten streak against my classmates in Connect Four, playing card games and simpler board games such as Sorry! and Battleship against my younger sisters, learning English verb conjugations and the location of every country in the world and their capitals using interactive educational software, and creating “statue ball,” a hybrid of tag, dodge ball, hide-and-go-seek, and...Mario 3. The Nintendo Entertainment System was first video gaming system I owned, and I still experience nostalgia when I think about playing the groundbreaking action, adventure, platforming, role-playing, and puzzle games (all hail <a href="../images/my-tetris-score.png">Tetris</a>) released for that console.</p>
+
+  			<p>I added “classic” games such as chess and bridge to my repertoire during my teenage years, and continued to buy new video game consoles up until college, where, because the snow trapped us indoors for five months of the year and, well, college culture, I would generally play games prefaced by the word “drinking.” Once a gamer, always a gamer, I guess. The last truly great game I discovered was a popular multi-player Russian card game called “Durak,” which combines the lazy-weekend atmosphere of a trump-based card game with the strategic planning and ally-backstabbing of Risk. Though it is virtually unknown in the West and it’s more fun with 3-5 people, you can play a very good two-player version of it <a href="http://durakchallenge.com/">here</a>.</p>
+
+  			<p>So, when a “Bingo challenge” appeared in the DBC curriculum this week, the gamer in me got pretty excited that I would be programming a game, albeit a very simple one. As it turned out, the actual “Bingo challenge” assigned was <em>much</em> more facile than emulating Bingo, but that didn’t stop me from striking out on my own and creating my own version of Bingo using the power of Ruby’s customizable classes. In this blog post, I will be breaking down my Bingo code after providing a brief introduction to Ruby classes.</p>
+  		</section>
+
+  		<section>
+  			<h2>Ruby’s Customizable Classes</h2>
+
+  			<p><strong>Classes</strong> in Ruby are at the very heart of its object-oriented approach. Whenever we want to model an object that exists in the real world, we can create a class that will serve as a convenient container for its characteristics (called <strong>attributes</strong>) and anything the object can do or we might want to do with the object (called <strong>methods</strong> in Ruby). Classes are especially useful when we want to model several similar objects that all correspond to the Platonic ideal of the object, but have different manifestations in the real world. I realize that I’m obfuscating worse than a politician here with my deliberately abstract language, so let’s take a look at a concrete example. Imagine for a minute that you’re running a used book store and want to be able to keep track of and manipulate your inventory in Ruby. Let’s create a <code>Book</code> class to help us:</p>
+
+<code class="block"><pre>
+class Book
+	def initialize(title, author, price)
+	  @title = title
+	  @author = author
+	  @price = price
+	end
+end</pre></code>
+
+			<p>Now, whenever we want to add an individual book (called an <strong>instance</strong> of the class) to our list, it is given three important attributes at the time of its creation&mdash;title, author, and price&mdash;that are assigned to <strong>instance variables</strong>, denoted by the @ sign in the code. (We could have added many more, but three will suffice for this example.) In real life, we’re probably going to want to interface with a database to pull in books into our program, but of course it’s possible to add them manually too:</p>
+
+			<code class="block">dreams = Book.new("Einstein's Dreams", "Alan Lightman", 9.95) <br />
+			watchman = Book.new("Go Set a Watchman", "Harper Lee", 20.99)</code>
+
+			<p>So, what exactly is the advantage of classes? Well, if we want to automate the process of offering a 10% discount, it’s easy to add a method to the <code>Book</code> class that will do exactly this:</p>
+
+<code class="block"><pre>
+class Book
+	def discount
+		@price = (@price * 0.9).round(2)
+	end
+end</pre></code>
+			
+			<p>Now if we want to discount our lightly used “Go Set a Watchman” in a futile effort to compete with Amazon, all we have to do is call the <code>#discount</code> method on it like so:</p>
+
+			<code class="block">watchman.discount <br />
+			# Result: @price changes to 18.89</code>
+
+			<p>A book for sale is just one practical, everyday example of how Ruby classes can model objects. But that’s just the proverbially proverbial tip of the iceberg&mdash;objects of much greater complexity are capable of being modeled in Ruby as well. It’s also possible to model objects of only slightly greater complexity, such as, for example, a bingo game.</p>
+		</section>
+
+		<section>
+			<h2>Bingo!</h2>
+
+			<p>The requirements for playing <a href="https://www.youtube.com/watch?v=9HriXwCs-Ck">Bingo</a> are straightforward&mdash;all you need to do is live in a nursing home. I kid. What you need to play are a randomized 5x5 board, a random number generator that will call out numbers, some way to check off numbers that are called, some way to keep track of your board, and some way to shout "BINGO!" In my <code>BingoBoard</code> class, I’ve emulated each of these features. We will look at them in order:</p>
+
+<code class="block"><pre>
+class BingoBoard
+
+	def initialize
+    b = (1..15).to_a.shuffle.slice(0..4)
+    i = (16..30).to_a.shuffle.slice(0..4)
+    n = (31..45).to_a.shuffle.slice(0..4)
+    g = (46..60).to_a.shuffle.slice(0..4)
+    o = (61..75).to_a.shuffle.slice(0..4)
+    @bingo_board = [b, i, n, g, o].transpose
+    @bingo_board[2][2] = "X"
+    @call_stack = (1..75).to_a.shuffle
+  end</pre></code>
+
+			<p>First things first, we need to generate a bingo card. I’ve accomplished this by generating five arrays (“rows”) containing five randomized numbers chosen from chunks of 15, transposing these rows into columns to mimic the traditional format of the bingo card, and finally pre-marking the center square. In this initialization step, I’ve also opted to generate my <code>call_stack</code>, which contains numbers 1-75 in the randomized order they’ll be called as the game proceeds. This works fine for my single-player version of Bingo, but were I to build a multi-player version, I would probably want to separate the board generation process from the game play.</p>
+
+			<p>Speaking of gameplay, here’s my method to draw a ball, which is contained within the <code>BingoBoard</code> class:</p>
+
+<code class="block"><pre>
+def draw_ball
+  @number = @call_stack.pop
+
+  if @number <= 15
+    call_letter = "B"
+  elsif @number <= 30
+    call_letter = "I"
+  elsif @number <= 45
+    call_letter = "N"
+  elsif @number <= 60
+    call_letter = "G"
+  else
+    call_letter = "O"
+  end
+
+  puts("#{call_letter} #{@number}, ladies and gentlemen! #{call_letter} #{@number}")
+end</pre></code>
+
+			<p>Nothing too complicated here. I’m popping off the last number in my randomized <code>call_stack</code>, determining what letter it corresponds to, and then announcing it to the world. Once the number is called, I need to check to see whether there’s a match on the bingo board:</p>
+
+<code class="block"><pre>
+def check
+  @bingo_board.each do |row|
+    row.map! do |element|
+      if element == @number
+        element = "X"
+      else
+        element
+      end
+    end
+  end
+end</pre></code>
+
+			<p>Since our bingo card is a matrix (or an array of arrays, if you prefer), iterating over it requires a touch of finesse. In my implementation, I’ve used nested Enumerable methods to accomplish this&mdash;the <code>#each</code> method will sequentially select rows for investigation, then once the row is selected, the <code>#map</code> method is called on the row and will permanently replace any element that matches called number with an X. As anyone who is familiar with bingo knows, the bingo card will gradually fill up with X’s (usually agonizingly slowly) as the game progresses. Since 5 X’s in a row, column, or diagonal signals the end of the game, the next we need is a method that will determine whether any of these magical conditions are met:</p>
+
+<code class="block"><pre>
+def winner? 
+  # test all rows
+  i = 0
+  while i < 5
+    return true if @bingo_board[i].uniq == ["X"]
+    i += 1
+  end
+
+  # test all columns
+  j = 0
+  test_board = @bingo_board.transpose
+  while j < 5
+    return true if test_board.uniq == ["X"]
+    j += 1
+  end
+
+  #test diagonals
+  bb = @bingo_board.clone  # to allow this to fit on single lines in HTML
+  if [bb[0][0], bb[1][1], bb[3][3], bb[4][4]].uniq == ["X"]
+    return true
+  elsif [bb[4][0], bb[3][1], bb[1][3], bb[0][4]].uniq == ["X"]
+    return true
+  end
+
+  return false
+end</pre></code>
+
+			<p>As if often the case in Ruby, there are several possible ways to write the code for this part, and while I don’t think I’ve chosen the most efficient or elegant one, the code is readable and gets the job done. The crucial array method used is <code>#uniq</code>&mdash;if there are only X’s in a row, column, or diagonal, then the <code>#uniq</code> method will result in <code>["X"]</code> and trigger a return of <code>true</code>. The check for this <code>true</code> is performed in the last method needed for our bingo game, something that will print to the screen the current status of the bingo card after each call and then check whether the game is complete:</p>
+
+<code class="block"><pre>
+def display
+  # Shows current status of bingo card
+  puts ""
+  puts("---B----I----N----G----O--")
+  @bingo_board.each do |row|
+    print "| "
+    row.each do |element|
+      if element.to_s.length == 2
+        print element.to_s + " | "
+      else
+        print " " + element.to_s + " | "
+      end
+    end
+    puts ""
+    puts("--------------------------")
+  end
+
+  # Performs check to see if card is a winner
+  if winner?
+    8.times do
+      print "."
+      sleep 0.2
+    end
+    print "BINGO! You've won! Congratulations! "
+    abort "You won in #{75 - @call_stack.length} calls!"
+  end
+end
+
+end   # This "end" closes the class BingoBoard</pre></code>
+
+			<p>And that’s the bingo game. It’s all conveniently contained within a class that automatically generates persistent variables that keep careful track of the current status of the bingo card(s) and the numbers drawn, and contains methods for printing out the board and checking for a winning card. By itself, the class doesn’t do anything, but rather gathers together all the tools needed to run a bingo game. From here, it’s quite straightforward to actually program a bingo game&mdash;just create a new instance of the <code>BingoBoard</code> class, add in some basic user prompts, and you’re off and running! Here’s a one-player version that I made (with just a few tweaks, this can transformed into a two-player version):</p>
+
+<code class="block"><pre>
+# GAME EMULATION FOR 1 PLAYER
+game = BingoBoard.new
+puts "Want to play some bingo? Type 'Sure' to start game."
+answer = gets.chomp
+if answer == "Sure"
+  puts "Here's your board!"
+  game.display
+  while "Sox" > "Cubs"  # or while true, if you prefer
+    puts "Press Enter to hear the next call. Type in 'quit' to exit."
+    continue = gets.chomp
+    if continue == ""
+      puts ""
+      game.draw_ball
+      game.check
+      game.display
+    elsif continue == "quit"
+      break
+    else
+      puts "Sorry, I'm didn't understand that..."
+    end
+  end
+else
+  puts "Well, that's too bad. See you next time."
+end</pre></code>
+
+			<p>And this is what happens when the game is run from the command line:</p>
+
+<code class="block"><pre>
+Want to play some bingo? Type 'Sure' to start game.
+Sure
+Here's your board!
+
+---B----I----N----G----O--
+| 10 | 22 | 42 | 50 | 65 | 
+--------------------------
+| 12 | 17 | 43 | 52 | 75 | 
+--------------------------
+|  6 | 18 |  X | 47 | 62 | 
+--------------------------
+|  8 | 20 | 36 | 54 | 63 | 
+--------------------------
+| 13 | 24 | 32 | 56 | 66 | 
+--------------------------
+Press Enter to hear the next call. Type in 'quit' to exit.
+
+
+O 62, ladies and gentlemen! O 62
+
+---B----I----N----G----O--
+| 10 | 22 | 42 | 50 | 65 | 
+--------------------------
+| 12 | 17 | 43 | 52 | 75 | 
+--------------------------
+|  6 | 18 |  X | 47 |  X | 
+--------------------------
+|  8 | 20 | 36 | 54 | 63 | 
+--------------------------
+| 13 | 24 | 32 | 56 | 66 | 
+--------------------------
+etc.</pre></code>
+
+			<p>Only three more squares to go until...BINGO!</p>
+		</section>
+
+		<section>
+			<h2>Pithy Ending</h2>
+				<p>Classes in Ruby are incredibly powerful and are the crux of Ruby’s object-oriented approach. Classes can be used to model almost any object in the real world. From simple objects like books or dice to more complicated things like a user’s account on a website or an interactive game that emulates controlling a nuclear reactor, the only limit is your imagination (and time and your computer’s memory allotment and your patience and your ability to program, etc.). Gaining a deep understanding of classes and when to construct them represents another solid step toward unlocking the power of Ruby. Onwards and upwards, fellow Rubyists!</p>
+		</section>
+
+		<footer>
+  		Follow me on Twitter <a href="https://twitter.com/BillLeidy">@BillLeidy</a> for weekly blog posts.
+		</footer>
+	
+	</article>
+	</main>
+
+	<footer>
+		Site design and content &copy;Bill Leidy, 2015. 
+		<div class="socialmedia">
+			<a href="https://twitter.com/BillLeidy"><img src="../images/twitter-icon2.png" alt="Twitter link" /></a>
+			<a href="https://www.linkedin.com/in/wmleidy"><img src="../images/linkedin-icon2.png" alt="LinkedIn link" /></a>
+			<a href="https://github.com/wmleidy/"><img src="../images/github-icon2.png" alt="GitHub link" /></a>
+			<a href="mailto:test@testing.com"><img src="../images/email-icon2.png" alt="Email link" /></a>
+		</div>
+	</footer>
+</body>
+
+</html>
