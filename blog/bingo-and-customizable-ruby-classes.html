@@ -52,12 +52,13 @@
 
 <code class="block"><pre>
 class Book
-	def initialize(title, author, price)
-	  @title = title
-	  @author = author
-	  @price = price
-	end
-end</pre></code>
+  def initialize(title, author, price)
+    @title = title
+    @author = author
+    @price = price
+  end
+end
+</pre></code>
 
 			<p>Now, whenever we want to add an individual book (called an <strong>instance</strong> of the class) to our list, it is given three important attributes at the time of its creation&mdash;title, author, and price&mdash;that are assigned to <strong>instance variables</strong>, denoted by the @ sign in the code. (We could have added many more, but three will suffice for this example.) In real life, we’re probably going to want to interface with a database to pull in books into our program, but of course it’s possible to add them manually too:</p>
 
@@ -68,10 +69,11 @@ end</pre></code>
 
 <code class="block"><pre>
 class Book
-	def discount
-		@price = (@price * 0.9).round(2)
-	end
-end</pre></code>
+  def discount
+    @price = (@price * 0.9).round(2)
+  end
+end
+</pre></code>
 			
 			<p>Now if we want to discount our lightly used “Go Set a Watchman” in a futile effort to compete with Amazon, all we have to do is call the <code>#discount</code> method on it like so:</p>
 
@@ -89,7 +91,7 @@ end</pre></code>
 <code class="block"><pre>
 class BingoBoard
 
-	def initialize
+  def initialize
     b = (1..15).to_a.shuffle.slice(0..4)
     i = (16..30).to_a.shuffle.slice(0..4)
     n = (31..45).to_a.shuffle.slice(0..4)
