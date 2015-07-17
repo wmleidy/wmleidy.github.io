@@ -160,10 +160,9 @@ def winner?
   end
 
   #test diagonals
-  bb = @bingo_board.clone  # to allow this to fit on single lines in HTML
-  if [bb[0][0], bb[1][1], bb[3][3], bb[4][4]].uniq == ["X"]
+  if [@bingo_board[0][0], @bingo_board[1][1], @bingo_board[3][3], @bingo_board[4][4]].uniq == ["X"]
     return true
-  elsif [bb[4][0], bb[3][1], bb[1][3], bb[0][4]].uniq == ["X"]
+  elsif [@bingo_board[4][0], @bingo_board[3][1], @bingo_board[1][3], @bingo_board[0][4]].uniq == ["X"]
     return true
   end
 
