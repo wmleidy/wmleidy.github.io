@@ -55,7 +55,7 @@ nav ul li {
 nav ul li a {
 	display: block;
 	padding: 5px 8px;
-	color:white;
+	color: #525252;
 	font-size: 11pt;
 	text-decoration: none;
 }
@@ -66,7 +66,7 @@ nav ul li:hover {
 }
 
 nav ul li a:hover {
-	color: #232323;
+	color: black;
 }
 
 nav ul ul {
@@ -82,13 +82,13 @@ nav ul ul {
 	background-color: #7C8340;
 	border-radius: 0px;
 	padding: 0px;
-	border-top: 5px solid black;
+	border-top: 5px solid #cccccc;
 	margin: 0px;
 }
 
 nav ul ul li {
 	float: none;
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid #cccccc;
 	border-radius: 0;
 	position:relative;
 	margin: 0;
