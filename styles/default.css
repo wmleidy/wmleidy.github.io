@@ -60,6 +60,10 @@ nav ul li a {
 	text-decoration: none;
 }
 
+nav.colorswap ul li a {
+	color: #525252;
+}
+
 nav ul li:hover {
 	background-color: #CBD946;
 	/*background-color: #bcbcbc;*/
@@ -67,6 +71,10 @@ nav ul li:hover {
 
 nav ul li a:hover {
 	color: #232323;
+}
+
+nav.colorswap ul li a:hover {
+	color: black;
 }
 
 nav ul ul {
@@ -86,12 +94,20 @@ nav ul ul {
 	margin: 0px;
 }
 
+nav.colorswap ul ul {
+	border-color: #cccccc;
+}
+
 nav ul ul li {
 	float: none;
 	border-bottom: 1px solid black;
 	border-radius: 0;
 	position:relative;
 	margin: 0;
+}
+
+nav.colorswap ul ul li {
+	border-color: #cccccc;
 }
 
 nav ul ul li a {
@@ -203,19 +219,22 @@ article ol li {
 	line-height: 125%;
 }
 
-table, tr, th, td {
-	border: 1px solid black;
+table.datatable {
 	border-collapse: collapse;
-	padding: 6px;
-	font-size: 12pt;
-	background-color: #e7edf6;
+}
+
+table.datatable tr, table.datatable th, table.datatable td {
+		background-color: #e7edf6;
+		padding: 6px;
+		font-size: 12pt;
+		border: 1pt black solid;
 }
 			
-th.first, td.first {
+table.datatable tr td:first-child {
 	text-align:left;
 }
 
-td {
+table.datatable td {
 	text-align:center;
 }
 
@@ -292,11 +311,23 @@ article a {
 }
 
 /*For Projects Page*/
-.projects img {
-	width: 20em;
+
+.projects table {
+	margin-top: 1em;
+}
+
+.projects td {
+	width: 50%;
 	vertical-align: middle;
-	margin: 2% 6% 2% 4%;
+	line-height: 120%;
+	padding: 2% 2% 2% 4%;
+	font-size: 12pt;
+}
+
+.projects img {
+	width: 100%;
 	border: 1px solid #999;
+	margin: 0;
 }
 
 /*For Contact Page*/

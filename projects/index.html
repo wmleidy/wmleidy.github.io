@@ -5,13 +5,13 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Bill's Project Page</title>
-	<link rel="stylesheet" type="text/css" href="../styles/nav-color-swap.css" /> 
+	<link rel="stylesheet" type="text/css" href="../styles/default.css" /> 
 </head>
 
 <body>
 	<header>
 		<a href="../index.html"><img src="../images/logo4.png" id="logo" alt="Bill Leidy" /></a>
-		<nav>
+		<nav class="colorswap">
 			<ul>
 			  <li><a href="index.html">Projects</a></li>
 				<li><a href="../blog/index.html">Writings</a></li>
@@ -34,10 +34,18 @@
 	<article>
 		<h1>Step outside that mountain cave, enjoy the view, and take a gander at the projects I’ve worked on...</h1>
 		
-		<div class="projects">
-		<p><img src="../images/my-site.png" alt="Bill's Website" />My Personal Website</p>
-		<p><img src="../images/coming-soon.png" alt="Coming Soon" />Loyola International Student Database</p>
-		</div>
+		<div class="projects"><table>
+			<tr><td>
+				<img src="../images/my-site.png" alt="Bill's Website" /></td><td>
+					<h4>My Personal Website</h4>
+					<p>Along with containing a personal blog and lots of info about me, my site serves as a demonstration of my front-end development skills, my ability to code in HTML and CSS, and my eye for design aesthetics.</p>
+			</td></tr>
+			<tr><td>
+				<img src="../images/coming-soon.png" alt="Coming Soon" /></td><td>
+				<h4>International Student Database for Loyola University Maryland</h4>
+				<p>A full-featured, user-friendly database application that I developed from the ground up in MS Access with smatterings of SQL and VBA. The database served to better organize international student data, make it easier to maintain, and automate the generation of complex biannual reports.</p>
+			</td></tr>
+		</table></div>
 		
 	</article>
 	</main>
