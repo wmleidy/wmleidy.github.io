@@ -140,7 +140,7 @@ def check
   end
 end</pre></code>
 
-			<p>Since our bingo card is a matrix (or an array of arrays, if you prefer), iterating over it requires a touch of finesse. In my implementation, I’ve used nested Enumerable methods to accomplish this&mdash;the <code>#each</code> method will sequentially select rows for investigation, then once the row is selected, the <code>#map</code> method is called on the row and will permanently replace any element that matches called number with an X. As anyone who is familiar with bingo knows, the bingo card will gradually fill up with X’s (usually agonizingly slowly) as the game progresses. Since 5 X’s in a row, column, or diagonal signals the end of the game, the next we need is a method that will determine whether any of these magical conditions are met:</p>
+			<p>Since our bingo card is a matrix (or an array of arrays, if you prefer), iterating over it requires a touch of finesse. In my implementation, I’ve used nested Enumerable methods to accomplish this&mdash;the <code>#each</code> method will sequentially select rows for investigation, then once the row is selected, the <code>#map!</code> method is called on the row and will permanently replace any element that matches called number with an X. As anyone who is familiar with bingo knows, the bingo card will gradually fill up with X’s (usually agonizingly slowly) as the game progresses. Since 5 X’s in a row, column, or diagonal signals the end of the game, the next thing we need is a method that will determine whether any of these magical conditions are met:</p>
 
 <code class="block"><pre>
 def winner? 

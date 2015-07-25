@@ -155,7 +155,7 @@ article {
 	font-family: "Hoefler Text", "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }
 
-article header, h1 ,h2 {
+article header, h1, h2 {
 	color: #7C8340;
 	margin-top: 1.4em;
 	line-height: 120%;
@@ -292,24 +292,6 @@ footer {
 	background-color: #7C8340;
 }
 
-/* For Blogs Index */
-div.linkslist {
-	margin: 25px 5% 0 5%;
-}
-
-.linkslist a {
-	color: #7C8340;
-}
-
-.linkslist a:hover {
-	text-decoration: underline;
-}
-
-article a {
-	color: #0990c6;
-	text-decoration:none;
-}
-
 /*For Projects Page*/
 
 .projects table {
@@ -328,6 +310,40 @@ article a {
 	width: 100%;
 	border: 1px solid #999;
 	margin: 0;
+}
+
+/* For Blogs Index */
+div.linkslist {
+	margin: 25px 5% 0 5%;
+}
+
+.linkslist a {
+	color: #7C8340;
+}
+
+.linkslist a:hover {
+	text-decoration: underline;
+}
+
+article a {
+	color: #0990c6;
+	text-decoration:none;
+}
+
+/*For Resume Page*/
+.resumelist ul {
+	list-style: none;
+	padding: 0;
+}
+
+.resumelist ul li {
+	padding: 0.8em 0 0.1em 0;
+}
+
+.resumelist ul ul li {
+	padding: 0;
+	margin-left: 1em;
+	font-style: italic;
 }
 
 /*For Contact Page*/
