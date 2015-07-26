@@ -20,22 +20,22 @@ header #heroimage {
 	max-width: 100%;
 	height: auto;
 	position: absolute;
-	top: 0px;
-	left: 0px;
+	top: 0;
+	left: 0;
 	z-index: 0;
 }
 
 header #logo {
 	position: absolute;
-	left: 5px;
-	top: 5px;
+	left: 0.3em;
+	top: 0.3em;
 	float: left;
 	z-index: 1;
 }
 
 nav {
 	float: right;
-	margin-top: 30px;
+	margin-top: 1.9em; /* Replaces 30px */
 	margin-right: 5%;
 }
 
@@ -48,20 +48,16 @@ nav ul {
 
 nav ul li {
 	float: left;
-	margin: 0px 30px;
+	margin: 0 1.9em; /* Replaces 30px */
 	/*border-radius:1px;*/
 }
 
 nav ul li a {
 	display: block;
-	padding: 5px 8px;
+	padding: 0.3em 0.55em; /* 5px 8px */
 	color:white;
-	font-size: 11pt;
+	font-size: 0.95em;
 	text-decoration: none;
-}
-
-nav.colorswap ul li a {
-	color: #525252;
 }
 
 nav ul li:hover {
@@ -71,10 +67,6 @@ nav ul li:hover {
 
 nav ul li a:hover {
 	color: #232323;
-}
-
-nav.colorswap ul li a:hover {
-	color: black;
 }
 
 nav ul ul {
@@ -88,14 +80,10 @@ nav ul li:hover > ul {
 
 nav ul ul {
 	background-color: #7C8340;
-	border-radius: 0px;
-	padding: 0px;
-	border-top: 5px solid black;
-	margin: 0px;
-}
-
-nav.colorswap ul ul {
-	border-color: #cccccc;
+	border-radius: 0;
+	padding: 0;
+	border-top: 0.3em solid black;
+	margin: 0;
 }
 
 nav ul ul li {
@@ -106,33 +94,20 @@ nav ul ul li {
 	margin: 0;
 }
 
-nav.colorswap ul ul li {
-	border-color: #cccccc;
-}
-
 nav ul ul li a {
-	padding: 5px 10px;
+	padding: 0.3em 0.6em; /* a little wider than the non-dropdown boxes, was 10px*/
 }
 
 nav ul ul li a:hover {
 	/*background-color:#dddddd;*/
 }
 
-header #tagline {
+#tagline {
 	font-size: 2em;
 	position: absolute;
 	width: 60%;
 	margin: 21% 20% 0 15%;
-	letter-spacing: 3px;
-	z-index: 3;
-}
-
-header #taglinehome {
-	font-size: 2em;
-	position: absolute;
-	width: 100%;
-	text-align: center;
-	margin-top: 38%;
+	letter-spacing: 0.1em; /* was 3px */
 	z-index: 3;
 }
 
@@ -149,8 +124,8 @@ div#simplepage {
 
 /*Main Article Stuff*/
 article {
-	margin: 30px 15%;
-	font-size: 14pt;
+	margin: 1.6em 15%; /* margin-top and -bottom was 30px */
+	font-size: 1.2em;  /* Replaces 14pt */
 	color: #999;  /*The Herman Cain Special*/
 	font-family: "Hoefler Text", "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }
@@ -173,7 +148,7 @@ article h4 {
 
 p.date {
 	font-style: italic;
-	font-size: 12pt;
+	font-size: 1em; /* Replaces 12pt */
 }
 
 article p {
@@ -185,15 +160,15 @@ article p {
 }*/
 
 article footer {
-	font-size: 10pt;
+	font-size: 0.8em; /* Replaces 10pt */
 	background-color: white;
 	font-style: italic;
-	padding-bottom: 0px;
-	padding-left: 5px;
+	padding: 0 0 0 0.5em;
+	margin-top: 1em;
 }
 
 article img {
-	margin-bottom: 10px;
+	margin-bottom: 0.6em;
 	margin-left: 5%;
 }
 
@@ -225,9 +200,9 @@ table.datatable {
 
 table.datatable tr, table.datatable th, table.datatable td {
 		background-color: #e7edf6;
-		padding: 6px;
-		font-size: 12pt;
-		border: 1pt black solid;
+		padding: 0.3em;
+		font-size: 1em;
+		border: 1px black solid;
 }
 			
 table.datatable tr td:first-child {
@@ -241,24 +216,24 @@ table.datatable td {
 code {
 	background-color: #e7edf6;
 	color: #878284;
-	font-size: 11pt;
+	font-size: 0.95em; /*Replaces 11pt*/
 	display: inline;
-	margin: 0px;
-	padding: 1px 2px;
+	margin: 0;
+	padding: 1px 0.15em;
 }
 
 code.block {
 	display: block;
-	margin: 0px 20px 20px 20px;
-	padding: 1px 3px;
+	margin: 0px 1.4em 1.4em 1.4em; /*was 20px*/
+	padding: 1px 0.2em;
 	overflow-x: auto;
 }
 
 blockquote {
 	display: block;
 	line-height: 125%;
-	margin: 0 5% 20px 5%;
-	padding: 10px;
+	margin: 0 5% 1.4em 5%;
+	padding: 0.6em;
 	background-color: #eee;
 }
 
@@ -270,8 +245,9 @@ blockquote {
 /* Page Footer Stuff */
 footer {
 	background-color: #abacad;
-	font-size: 9pt;
-	padding: 12px 5px 12px 28px;
+	font-size: 0.75em;
+	padding: 0.8em 2em;
+	margin-top: 3.5em;
 }
 
 .socialmedia {
@@ -284,7 +260,7 @@ footer {
  	width: 1.5em;
  	height: 1.5em;
  	border: 1px solid white;
- 	border-radius: 3px;
+ 	border-radius: 3px; /* last bit of px to clean up */
  	margin: 0 0.5em;
  }
 
@@ -292,10 +268,25 @@ footer {
 	background-color: #7C8340;
 }
 
+/*For Home Page */
+.homepage p {
+	margin: 1.4em 0;
+}
+
+#taglinehome {
+	font-size: 2.4em;
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	margin-top: 38%;
+	z-index: 3;
+}
+
 /*For Projects Page*/
 
 .projects table {
 	margin-top: 1em;
+	border: 0;
 }
 
 .projects td {
@@ -303,7 +294,7 @@ footer {
 	vertical-align: middle;
 	line-height: 120%;
 	padding: 2% 2% 2% 4%;
-	font-size: 12pt;
+	font-size: 1em;
 }
 
 .projects img {
@@ -314,7 +305,7 @@ footer {
 
 /* For Blogs Index */
 div.linkslist {
-	margin: 25px 5% 0 5%;
+	margin: 1.5em 5% 0 5%;
 }
 
 .linkslist a {
@@ -337,21 +328,26 @@ article a {
 }
 
 .resumelist ul li {
-	padding: 0.8em 0 0.1em 0;
+	padding: 0.7em 0 0.3em 0;
 }
 
 .resumelist ul ul li {
 	padding: 0;
-	margin-left: 1em;
+	margin: 0.1em 0 0 0;
 	font-style: italic;
+	/*color: #777;*/
+}
+
+.bulleted {
+	padding-left: 1em;
 }
 
 /*For Contact Page*/
 .contactlinks img {
 	background-color: #abacad;
-	width: 100px;
-	height: 100px;
-	border: solid 3px #abacad;
+	width: 5em;  /* was 100px */
+	height: 5em;
+	border: solid 3px #abacad; /* two more pixel clean-up spots */
 	border-radius: 5px;
 	vertical-align: middle;
 	margin: 2% 5%;
@@ -376,3 +372,22 @@ article a {
 	background-color: #333;
 	border-color: #333;
 }
+
+/* Navbar Color Swap */
+
+nav.colorswap ul li a {
+	color: #111;
+}
+
+nav.colorswap ul li a:hover {
+	color: #fff;
+}
+
+nav.colorswap ul ul {
+	border-color: #cccccc;
+}
+
+nav.colorswap ul ul li {
+	border-color: #cccccc;
+}
+

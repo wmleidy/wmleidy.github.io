@@ -90,6 +90,8 @@ end
 
 <code class="block"><pre>
 class BingoBoard
+  
+  attr_reader :bingo_board
 
   def initialize
     b = (1..15).to_a.shuffle.slice(0..4)
@@ -145,31 +147,22 @@ end</pre></code>
 <code class="block"><pre>
 def winner? 
   # test all rows
-  i = 0
-  while i < 5
-    return true if @bingo_board[i].uniq == ["X"]
-    i += 1
-  end
+  bingo_board.each { |row| return true if row.uniq == ["X"]}
 
   # test all columns
-  j = 0
-  test_board = @bingo_board.transpose
-  while j < 5
-    return true if test_board.uniq == ["X"]
-    j += 1
-  end
+  bingo_board.transpose.each { |column| return true if column.uniq == ["X"]}
 
   #test diagonals
-  if [@bingo_board[0][0], @bingo_board[1][1], @bingo_board[3][3], @bingo_board[4][4]].uniq == ["X"]
+  if [bingo_board[0][0], bingo_board[1][1], bingo_board[3][3], bingo_board[4][4]].uniq == ["X"]
     return true
-  elsif [@bingo_board[4][0], @bingo_board[3][1], @bingo_board[1][3], @bingo_board[0][4]].uniq == ["X"]
+  elsif [bingo_board[4][0], bingo_board[3][1], bingo_board[1][3], bingo_board[0][4]].uniq == ["X"]
     return true
   end
 
   return false
 end</pre></code>
 
-			<p>As if often the case in Ruby, there are several possible ways to write the code for this part, and while I don’t think I’ve chosen the most efficient or elegant one, the code is readable and gets the job done. The crucial array method used is <code>#uniq</code>&mdash;if there are only X’s in a row, column, or diagonal, then the <code>#uniq</code> method will result in <code>["X"]</code> and trigger a return of <code>true</code>. The check for this <code>true</code> is performed in the last method needed for our bingo game, something that will print to the screen the current status of the bingo card after each call and then check whether the game is complete:</p>
+			<p>As if often the case in Ruby, there are several possible ways to write the code for this part, and while this might not be the most efficient or elegant one, the code is readable and gets the job done. The crucial array method used is <code>#uniq</code>&mdash;if there are only X’s in a row, column, or diagonal, then the <code>#uniq</code> method will result in <code>["X"]</code> and trigger a return of <code>true</code>. The check for this <code>true</code> is performed in the last method needed for our bingo game, something that will print to the screen the current status of the bingo card after each call and then check whether the game is complete:</p>
 
 <code class="block"><pre>
 def display
