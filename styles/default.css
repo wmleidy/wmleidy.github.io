@@ -178,6 +178,21 @@ article img.screenshot {
 	border: 1px solid #bbbbbb;
 }
 
+img.right {
+	float: right;
+	margin: 0 0 1.5em 1.5em;
+}
+
+img.left {
+	float: left;
+	margin: 0 1.5em 1.5em 0;
+}
+
+img.small {
+	width: 8em;
+	height: auto;
+}
+
 article ul {
   padding-left: 1.5em;
 }
@@ -240,6 +255,14 @@ blockquote {
 .attribution {
 	margin-left: 50%;
 	font-style: italic;
+}
+
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	content: "";
+	clear: both;
+	height: 0;
 }
 
 /* Page Footer Stuff */

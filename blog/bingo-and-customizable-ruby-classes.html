@@ -75,7 +75,7 @@ class Book
 end
 </pre></code>
 			
-			<p>Now if we want to discount our lightly used <em>Go Set a Watchman</em> in a futile effort to compete with Amazon, all we have to do is call the <code>#discount</code> method on it like so:</p>
+			<p>Now if we want to discount our lightly used <em>Go Set a Watchman</em> in a futile effort to compete with Amazon, all we have to do is call the <code>::discount</code> method on it like so:</p>
 
 			<code class="block">watchman.discount <br />
 			# Result: @price changes to 18.89</code>
@@ -127,7 +127,7 @@ def draw_ball
   puts("#{call_letter} #{@number}, ladies and gentlemen! #{call_letter} #{@number}")
 end</pre></code>
 
-			<p>Nothing too complicated here. I’m popping off the last number in my randomized <code>call_stack</code>, determining what letter it corresponds to, and then announcing it to the world. Once the number is called, I need to check to see whether there’s a match on the bingo board:</p>
+			<p>Nothing too complicated here. I’m <code>pop</code>ping off the last number in my randomized <code>call_stack</code>, determining what letter it corresponds to, and then announcing it to the world. Once the number is called, I need to check to see whether there’s a match on the bingo board:</p>
 
 <code class="block"><pre>
 def check

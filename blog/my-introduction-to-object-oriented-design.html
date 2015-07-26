@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>My Introduction to Object-Oriented Design</title>
+	<link rel="stylesheet" type="text/css" href="../styles/default.css" /> 
+</head>
+
+<body>
+	<header>
+		<a href="../index.html"><img src="../images/logo4.png" id="logo" alt="Bill Leidy" /></a>
+		<nav>
+			<ul>
+			  <li><a href="../projects/index.html">Projects</a></li>
+				<li><a href="index.html">Writings</a></li>
+				<li><a href="../resume.html">Resume</a></li>
+				<li><a href="../bio.html">About</a>
+				  <ul>
+				  	<li><a href="../bio.html">Bio</a></li>
+				  	<li><a href="../contact.html">Contact</a></li>
+				  </ul>
+				</li>
+			</ul>
+		</nav>
+		<img src="../images/writing_bkgd.jpg" id="heroimage" alt="" />
+	  <div id="tagline">THE BLOG</div>
+	</header>
+	
+	<div id="spaceholder"></div>
+
+	<main>
+	<article>
+		<header>
+  		<h1>My Introduction to Object-Oriented Design</h1>
+			<p class="date">July 24, 2015</p>
+  	</header>
+		
+			<p>After spending the last few months becoming <a href="http://www.amazon.com/Well-Grounded-Rubyist-David-Black/dp/1617291692/ref=asap_bc?ie=UTF8">well-grounded</a> in Ruby, this week I am in the middle of reading a book that promises to change your life. No, it’s not the Bible. Or <em>The 7 Habits of Highly Effective People</em>. Or <em>The Brothers Karamazov</em> (I have previous with that one). Or even <em>Mastering the Art of French Cooking</em>. I’m talking about Sandi Metz’s <a href="http://www.poodr.com/"><em>Practical Object-Oriented Design in Ruby</em></a>. Am I being hyperbolic? Not according to the book’s author, who tells me very clearly on page 67:</p>
+
+			<blockquote>[The] transition from class-based design to message-based design is a turning point in your design career [as] the message-based perspective yields more flexible applications.</blockquote>
+
+			<p>And you know what? I think I believe her. Her insights on object-oriented (OO) design have caused me to fundamentally rethink how I approach programming problems. As a means of documenting this theoretically seminal week in my professional development as a programmer, this post will examine a couple key OO principles that Metz has introduced to me.</p>
+
+		<section>
+			<h2>Won’t Somebody Please Think of the Children?</h2>
+
+			<p>Perhaps the most succinct expression of one core tenet of object-oriented design comes not from Metz herself, but from Obie Fernandez, who writes in the book’s foreward:</p>
+
+			<blockquote>In almost all cases, maintainability over the life of the code is more important than optimizing its present state.</blockquote>
+
+			<p>This makes a lot of sense, both from a design standpoint as well as from a financial standpoint. The world is a dynamic place and never stands still, and the tech world all the more so. Any code that’s written today will surely require changes tomorrow in order to adapt to new conditions. If there were a way to structure a program where which it would be possible to make these changes quickly and efficiently in two places instead of needing to search through lines and lines of code to locate 25 potential breaking points, shouldn’t this be done?</p>
+
+			<p>Concentrating on safeguarding the future of the code instead of writing the most efficient procedures for the small task directly in front of me represented a seismic shift in how I conceptualize a programmer’s job. This is the equivalent to a spendthrift realizing for the first time that the purpose of money isn’t to help maximize one’s pleasure in the present moment, but rather to secure oneself (and, yes, one’s children) for future eventualities.</p>
+
+			<p>Even when I look through the relatively simple <a href="bingo-and-customizable-ruby-classes.html">Bingo code</a> I presented in last week’s post, I see places where better organization and design would make it more flexible and make future changes easier to implement. But rather than delve into the minute details here, let’s continue to focus on the macro level&mdash;that is, the global principles of OO design.</p>
+		</section>
+
+		<section>
+			<h2>Managing Your Dependents</h2>
+
+			<p>While it is of course impossible to fully future proof your code, if you want to greatly increase the chances it will be viable in the future, nothing is more important than managing its dependencies. What exactly does this mean from a programming standpoint? Basically, whenever one class (let’s call it “class A” for the purposes of this discussion) contains explicit references to another class, another class’s behavior, or some other concrete characteristics of another class, it becomes <strong>dependent</strong> on it. That means that any change made to the other class has the potential to create a ripple effect and ruin the functionality of class A.</p>
+
+			<div class="clearfix">
+			<p><img src="../images/house-of-cards.jpg" alt="House of Cards: A Metaphor for Poorly Constructed Classes" class="right small" />Therefore, the more dependencies you create between class A and other classes, the more fragile your design becomes as everything becomes interconnected and mutually dependent, as in a house of cards (displayed to the right for those who like visual metaphors). One small change and everything can come tumbling down.</p>
+
+			<p><img src="../images/molecule.png" alt="Molecule: A Metaphor for Properly Constructed Classes" class="left small" />On the other hand, it’s well nigh impossible to write a useful program where different classes and different objects are unable to “talk” to each other. Creating links between classes is inevitable, otherwise nothing would get accomplished. So, what’s the solution? The trick is to design the classes and their interconnectivity in such a fashion as to minimize or even avoid dependencies. Communication between classes that does occur should go along clear, predictable pathways. (The visual metaphor I’m going to reference this time is the bonds of a molecule, where each atom can represent a class or instance of an object.) There’s definitely an art to doing this, and Metz presents a gamut of refined techniques to remove or neutralize dependencies between classes.</p>
+			</div>
+
+			<p>Closely intertwined with managing inter-class dependencies and paths of communication is yet another foundational principle of object-oriented design theory.</p>
+		</section>
+
+		<section>
+			<h2>Master of One</h2>
+
+			<p>The quaint English phrase “Jack of all trades, master of none” would never be used to describe a properly constructed Ruby class. Classes should excel at doing one thing and one thing only. Designing classes in this fashion increases their modularity and, perhaps even more importantly, helps prevent the formation of dangerous dependencies between classes. Metz writes that classes that function well together should say to each other,</p>
+
+			<blockquote>“I know what I want and I trust you to do your part”</blockquote>
+
+			<p>while further noting that:</p>
+
+			<blockquote>This blind trust is a keystone of object-oriented design. It allows objects to collaborate without binding themselves to context and is necessary in any application that expects to grow and change.</blockquote>
+
+			<p>Let’s imagine that we have a person who belongs to a class we’ll call <code>Customer</code>. This person knows exactly where he wants to go&mdash;to sunny California on vacation. He needs to take a taxi to the airport and then board a plane that’s flying to San Francisco. If we were to design this <code>Customer</code> class, it would be perfectly acceptable to have a <code>::buy_ticket</code> method, a <code>::hail_taxi</code> method, and a <code>::board_plane</code> method. However, the customer, even though he knows where he wants to go, should not grab the wheel of the car or bust into the cockpit to take over the plane’s controls. These are the responsibilites of the <code>Driver</code> and <code>Pilot</code> classes, respectively.</p>
+
+			<p>The <code>Customer</code> is trusting other people to help him complete the procedure of getting from A to B. Should unforseen obstacles crop up that prevent the <code>Customer</code> from precisely following the meticulous procedure he had planned, he can send messages to other knowledgable people, masters of one, that will try to help him find a solution. Whereas if the <code>Customer</code> had only himself to rely upon and the procedure somehow got off track (snow at O’Hare?), he would have to fundamentally recalculate his entire plan and come up with a new procedure (that is, if he even possessed the capabilities to do this himself).</p>
+
+			<p>Okay, admittedly that metaphor was a little strained, but I think it nonetheless elucidates some of the core tenets of object-oriented design (planning for future eventualities, avoiding explicitly stated dependencies on any one condition or structure, and relying on experts (other classes) to do their jobs well. It also demonstrates (again, in a slightly strained fashion) the difference between object-oriented programming and its opposite, functional programming. By following the principles of object-oriented design, software becomes more flexible, more adaptable, more modular, and more amenable to future changes. Mastering these concepts allows a programmer to not only build programs for today, but for tomorrow as well. Onwards and upwards, fellow Rubyists!</p>
+
+		<footer>
+  		Follow me on Twitter <a href="https://twitter.com/BillLeidy">@BillLeidy</a> for weekly blog posts.
+		</footer>
+	
+	</article>
+	</main>
+
+	<footer>
+		Site design and content &copy;Bill Leidy, 2015. 
+		<div class="socialmedia">
+			<a href="https://twitter.com/BillLeidy"><img src="../images/twitter-icon2.png" alt="Twitter link" /></a>
+			<a href="https://www.linkedin.com/in/wmleidy"><img src="../images/linkedin-icon2.png" alt="LinkedIn link" /></a>
+			<a href="https://github.com/wmleidy/"><img src="../images/github-icon2.png" alt="GitHub link" /></a>
+			<a href="mailto:test@testing.com"><img src="../images/email-icon2.png" alt="Email link" /></a>
+		</div>
+	</footer>
+</body>
+
+</html>
