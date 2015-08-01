@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Variable Scope in Ruby and JavaScript</title>
+  <link rel="stylesheet" type="text/css" href="../styles/default.css" /> 
+</head>
+
+<body>
+  <header>
+    <a href="../index.html"><img src="../images/logo4.png" id="logo" alt="Bill Leidy" /></a>
+    <nav>
+      <ul>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Writings</a></li>
+        <li><a href="../resume.html">Resume</a></li>
+        <li><a href="../bio.html">About</a>
+          <ul>
+            <li><a href="../bio.html">Bio</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <img src="../images/writing_bkgd.jpg" id="heroimage" alt="" />
+    <div id="tagline">THE BLOG</div>
+  </header>
+  
+  <div id="spaceholder"></div>
+
+  <main>
+  <article>
+    <header>
+      <h1>Variable Scope in Ruby and JavaScript</h1>
+      <p class="date">August 1, 2015</p>
+    </header>
+    
+      <p>Influenced by the curricula of various “coding bootcamps,” including Dev Bootcamp’s, the first “real” programming language I set about teaching myself was Ruby all the way back in early 2015. JavaScript quickly followed a month later. (In fact, my own autodidactic path&mdash;HTML/CSS, SQL, Ruby, JavaScript&mdash;closely mirrored Dev Bootcamp’s “Phase 0” curriculum with the exception of SQL, which I needed to learn earlier in the sequence to complete a database project.)</p>
+
+      <p>Ruby is very expressive, deceptively simple, and has a very straightforward syntax that often resembles English; in short, it’s a great language for a beginner to learn. As for JavaScript, well, it feels more computery and the syntax is definitely more difficult than Ruby’s (but still much easier than Polish syntax). This doesn’t make any less fun to work with, especially since JavaScript gives one the power to do lots of things on the web due to its virtual omnipresence across browsers.</p>
+
+      <p>As I’ve arrived at the point in my formal program of study where we’re shifting our focus from Ruby to JavaScript, this seems a good time as any to summarize for the world some of the key differences in how variable scoping works in the two languages. This isn’t quite meant as a true beginner’s guide, so you should be familiar with the basics of variable declaration and assignment before proceeding.</p>
+
+    <section>
+      <h2>What Is Variable Scope? Global and Local Variables</h2>
+
+      <p>The term <strong>variable scope</strong> refers to where a variable can be accessed within a program. If a variable has <strong>global scope</strong>, it can be accessed and modified anywhere and everywhere within a program. In contrast to global variables, variables with <strong>local scope</strong> can only be accessed in certain parts of the program.</p>
+
+      <p>Both Ruby and JavaScript give developers the tools to declare global variables, and both languages have built-in protections to help ensure that variables only scope locally when needed. (Without local variables, if we had a variable called <code>index</code> in multiple sections of a program or even across different files compiled together, they would potentially interfere with each other.) But the means by which Ruby and JavaScript accomplish local scoping vary, sometimes in subtle ways.</p>
+
+    <section>
+      <h2>Variable Scope in the “Main” Program and Defined Methods/Functions</h2>
+      
+      <p>Both Ruby and JavaScript have ways to define methods or functions that are globally accessible. In Ruby, the keyword <code>def</code> is used to define a method; while in JavaScript, the <code>function</code> keyword is used to declare methods. What is curious (and seldom mentioned in the articles about variable scope that I’ve come across) is that they handle variable scoping in a subtly different fashion.</p>
+
+      <p>Let’s take an extremely simple example of a Ruby program with a defined method:</p>
+
+<code class="block"><pre>
+x = 1 
+def add_one(num)
+  return num + x
+end
+
+puts add_one(5)
+</pre></code>
+
+      <p>If we try to run this program, then this will happen:</p>
+
+<code class="block"><pre>
+simple.rb:3:in `add_one': undefined local variable or method `x' for main:Object (NameError)
+  from simple.rb:6:in `&lt;main&gt;'
+</pre></code>
+
+      <p>The variable <code>x</code>, even though is it defined in <code>main</code> (the top level), is not accessible within the defined method <code>#add_one</code>.</p>
+
+      <p>Now let’s look at an analogous program in JavaScript:</p>
+
+<code class="block"><pre>
+x = 1;     <em>// or var x = 1;</em>
+function addOne(num) {
+  return num + x;
+}
+console.log(addOne(5));
+</pre></code>
+
+      <p>When run, this program will successfully return the answer we want, the number <code>6</code>. Since declared functions are taken out of the normal top-down workflow in JavaScript, we can assign the variable <code>x</code> below the declared function and get the same result:</p>
+
+<code class="block"><pre>
+function addOne(num) {
+  return num + x;
+}
+x = 1;     <em>// or var x = 1;</em>
+console.log(addOne(5));
+</pre></code>
+
+      <p>These simple examples demonstrate that <strong>declared functions in JavaScript can look for and grab variables in the top level (and only the top level), whereas defined methods in Ruby only have access to local variables that are explicitly passed into them or local variables that are created within them</strong>. This also reveals to us that <strong>variables declared in the top level of JavaScript are automatically global, whereas in Ruby they are not.</strong></p>
+
+      <p>Of course, there are plenty of workarounds available in Ruby if we want to work with variables in <code>main</code> (e.g. using variables that have a larger scope such as global variables or instance variables, using a code block instead of defined methods, etc.), but this nonetheless is interesting behavior to note, especially because it has a significant effect on what needs to be done in each language to protect variable values from inadvertent change.</p>
+    </section>
+
+    <section>
+      <h2>Protecting Values by Using Local Variables</h2>
+      
+      <p>Let’s return to our simplistic program and expand it to show what happens when we have two variables with the same name in different places. Here’s the Ruby version first:</p>
+
+<code class="block"><pre>
+x = 100
+def add_one(num)
+  x = 1
+  return num + x
+end
+
+puts x           <em>#=> 100</em>
+puts add_one(5)  <em>#=> 6</em>
+puts x           <em>#=> 100</em>
+</pre></code>
+
+      <p>Now that we’ve added <code>x = 1</code> within the <code>#add_one</code> method, it will execute properly. Furthermore, note that it is properly scoped “automatically” and won’t interfere with the separate <code>x</code> we’ve created in <code>main</code>.
+
+      <p>Now let’s see what happens when we write the same program in JavaScript:</p>
+
+<code class="block"><pre>
+var x = 100;    <em>// or x = 100;</em>
+function addOne(num) {
+  x = 1;
+  return num + x;
+}
+
+console.log(x);         <em>// 100</em>
+console.log(addOne(5)); <em>// 6</em>
+console.log(x);         <em>// 1</em>
+</pre></code>
+
+      <p>The first time we query for <code>x</code>, we get <code>100</code>. But then the second time we query for <code>x</code>, we get back <code>1</code>. This has occurred because as soon as we invoke the function <code>addOne</code>, its reassignment of <code>x</code> to <code>1</code> will spill into the higher scope (in this case, the global scope).</p>
+
+      <p>In order to prevent this from happening, we need to use the keyword <code>var</code> to declare the variable, which limits a variable’s scope to the current level (and any levels that occur below it):</p>
+
+<code class="block"><pre>
+var x = 100;
+function addOne(num) {
+  var x = 1;            <em>// &lt;-- Here's the change...</em>
+  return num + x;
+}
+
+console.log(x);         <em>// 100</em>
+console.log(addOne(5)); <em>// 6</em>
+console.log(x);         <em>// 100</em>
+</pre></code>
+      
+      <p><strong>It’s helpful to think about the JavaScript keyword <code>var</code> as primarily a way to limit a variable’s scope</strong>. It also does a few other things such as create the variable (without assigning it any value) outside the normal document flow, prevents reference errors when JavaScript is run in strict mode, and stops variables from being deleted. That being said, variables in the global scope should always be declared with <code>var</code> anyway, as there is no harm in doing so, and this will prevent potential complications down the line.</p>
+    </section>
+
+    <section>
+      <h2>“Lower-Order” Functions</h2>
+
+      <p>Finally, to complete this introduction to variable scoping in Ruby and JavaScript, let’s turn our attention to “lower-order” functions (or “callback” functions as they’re usually called in JavaScript), that is, functions that are called from inside other functions. These rules for variable scoping actually apply to all kinds of different code blocks that occur inside other larger code blocks (except for things like <code>while</code> or <code>for</code> loops).</p>
+      
+      <p>To make sure we can clearly see what’s going on, let’s define a higher-order function called <code>doMath</code> that’s just as puerile as our <code>addOne</code> function above. This <code>doMath</code> will add one to a number and then multiple it by two. First, we’ll turn to Ruby and use a somewhat advanced feature called a <code>Proc</code> in order to mimic the JavaScript code, which will follow, more closely:</p>
+
+<code class="block"><pre>
+def do_math(num)
+  x = 1
+  y = 2
+  add_one = Proc.new { |number| number + x }
+  return add_one.call(num) * y
+end
+
+puts do_math(5)  <em>#=> 12</em>
+</pre></code>
+
+      <p>Because the <code>Proc</code> code block occurs within the <code>#do_math</code> method, it has no problem accessing <code>x</code>, despite the fact <code>x</code> is never assigned within in. The scope of the local variable <code>x</code> in <code>#do_math</code> encompasses everything that occurs between the method declaration and <code>end</code> (that is, all of its lower levels).</p>
+
+      <p>The punctuation-mark heavy JavaScript equivalent exhibits the exact same behavior:</p>
+
+<code class="block"><pre>
+function doMath(num) {
+  var x = 1;
+  var y = 2;
+  var addOne = function(number) { return number + x };
+  return addOne(num) * y;
+}
+      
+console.log(doMath(5));  <em>// 12</em>
+</pre></code>
+
+      <p>Even though <code>x</code>, which is declared locally within the higher-order function <code>doMath</code>, isn’t a global variable, any functions/methods further down the food chain can still see it and make use of it.</p>
+
+      <p>However, if we were to declare the variable <code>x</code> locally within the lower-order <code>addOne</code> function, the reverse would <em>not</em> be true. That is, the higher-order (or “parent”) function <code>doMath</code> would not be able to access this <code>x</code>. To wit, running this...</p>
+
+<code class="block"><pre>
+function doMath(num) {
+  var y = 2;
+  var addOne = function(number) {
+    var x = 1;
+    return number + x;
+    };
+  console.log(x);    // &lt;--here's the error
+  return addOne(num) * y;
+}
+      
+console.log(doMath(5));
+</pre></code>
+
+      <p>...will raise the following error: <code>ReferenceError: x is not defined at doMath (simple.js:7:14)</code> A similar error would occur in Ruby if <code>x</code> were created within the <code>Proc</code> and then referenced from either <code>do_math</code> or <code>main</code>.</p>
+
+      <p>Finally, let’s quickly examine a situation where there’s a locally declared <code>x</code> in both levels of <code>doMath</code></p>:
+
+<code class="block"><pre>
+function doMath(num) {
+  var x = "I'm safe!";
+  var y = 2;
+  var addOne = function(number) {
+    var x = 1;
+    return number + x;
+  };
+  console.log(x);
+  return addOne(num) * y;
+}
+      
+console.log(doMath(5));
+<em>// I'm safe!
+// 12</em>
+</pre></code>
+
+      <p>Because a separate <code>x</code> is declared in the function expression <code>addOne</code>, the <code>x</code> in <code>doMath</code> is safe from harm. (However, if the <code>var</code> in front of <code>var x = 1;</code> had been omitted, it would not have been safe.) Again, Ruby scoping works in a similar fashion here, only you would not need to bother writing <code>var</code> in front of the <code>x</code> in the <code>Proc</code>&mdash;this local-level scoping would happen automatically. However, as a word of caution, there are numerous methods in Ruby that take code blocks, such as <code>#each</code> and other Enumerables, that will <em>not</em> shield a variable assigned in a higher level from changes (unless the variable name is used as a block parameter, i.e. found between the pipes in a <code>do...end</code> structure).</p>
+
+      <p>All the examples in this section are indicative of a general rule that holds true in both Ruby and JavaScript: <strong>local variables scope downward and are accessible by all lower-order code blocks and functions.</strong> However, if a separate variable that has the same name is declared in a lower-order code block in JavaScript or put in the block parameter in Ruby, then they create a new scope for the variable name that cascades downwards through any additional levels and protects the identically named variable in the higher-order function from alteration. Make sense?</p>
+
+    </section>
+
+    <section>
+      <h2>Further Reading</h2>
+
+      <p>Despite how long it took me to compose this post, I’ve only managed to scratch the surface of variable behavior in Ruby and JavaScript. There are more types of variables to explore in Ruby, and JavaScript has an extremely powerful technique involving variables called <a href="http://stackoverflow.com/questions/111102/how-do-javascript-closures-work?rq=1">closure</a> that’s the basis for a bunch of neat things on the modern web like asynchronous execution and event handlers. Look for coverage of these topics in a future post, or, failing that, in hundreds of other places across the web.</p>
+
+    <footer>
+      Follow me on Twitter <a href="https://twitter.com/BillLeidy">@BillLeidy</a> for weekly blog posts.
+    </footer>
+  
+  </article>
+  </main>
+
+  <footer>
+    Site design and content &copy;Bill Leidy, 2015. 
+    <div class="socialmedia">
+      <a href="https://twitter.com/BillLeidy"><img src="../images/twitter-icon2.png" alt="Twitter link" /></a>
+      <a href="https://www.linkedin.com/in/wmleidy"><img src="../images/linkedin-icon2.png" alt="LinkedIn link" /></a>
+      <a href="https://github.com/wmleidy/"><img src="../images/github-icon2.png" alt="GitHub link" /></a>
+      <a href="mailto:test@testing.com"><img src="../images/email-icon2.png" alt="Email link" /></a>
+    </div>
+  </footer>
+</body>
+
+</html>
