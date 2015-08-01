@@ -95,7 +95,9 @@ x = 1;     <em>// or var x = 1;</em>
 console.log(addOne(5));
 </pre></code>
 
-      <p>These simple examples demonstrate that <strong>declared functions in JavaScript can look for and grab variables in the top level (and only the top level), whereas defined methods in Ruby only have access to local variables that are explicitly passed into them or local variables that are created within them</strong>. This also reveals to us that <strong>variables declared in the top level of JavaScript are automatically global, whereas in Ruby they are not.</strong></p>
+      <p>These simple examples demonstrate that <strong>declared functions in JavaScript can look for and grab variables in the top level (and only the top level), whereas defined methods in Ruby only have access to local variables that are explicitly passed into them or local variables that are created within them</strong>.</p>
+
+      <p>This also reveals to us that <strong>variables declared in the top level of JavaScript are automatically global, whereas in Ruby they are not</strong>.</p>
 
       <p>Of course, there are plenty of workarounds available in Ruby if we want to work with variables in <code>main</code> (e.g. using variables that have a larger scope such as global variables or instance variables, using a code block instead of defined methods, etc.), but this nonetheless is interesting behavior to note, especially because it has a significant effect on what needs to be done in each language to protect variable values from inadvertent change.</p>
     </section>
