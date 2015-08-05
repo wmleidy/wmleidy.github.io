@@ -1,0 +1,64 @@
+  
+<main>
+  <article>
+     <header>
+       <h1>Ruby Enumerable methods and JavaScript equivalents</h1>
+         <p>This cheat sheet summarizes the most commonly used Ruby enumerable methods and their Javascript equivalents, and provides example code for each.</p>
+     </header>
+      
+     <nav>
+       <ul>
+           <li><a href="#each">#each and .forEach()</a></li>
+           <li><a href="#map">#map and .map()</a></li>
+           <li><a href="#select">#select and .filter()</a></li>
+           <li><a href="#inject">#inject and .reduce()</a></li>
+           <li><a href="#all">#all? and .every()</a></li>
+           <li><a href="#any">#any? and .some()</a></li>
+        </ul>
+     </nav>
+      
+     <div id="each">
+         <h2>#each and .forEach()</h2>
+         <p>#each calls the given block once for each element, passing that element in as parameter. The JavaScript equivalent is .forEach().</p>
+         <script src="https://gist.github.com/juliagra/387ccb0aa38e658a0a7b.js"></script>
+         
+      </div>
+      
+      <div id="map">
+          <h2>#map and .map()</h2>
+          <p>#map creates a new array using the values returned by calling the block for each element. The JavaScript equivalent is .map().</p>
+          <script src="https://gist.github.com/juliagra/37638d23959edd1891fa.js"></script>
+          
+      </div>
+      
+      <div id="select">
+          <h2>#select and .filter()</h2>
+          <p>#select (or #find_all) returns a new array of all values that pass as true in the given block. The JavaScript equivalent is .filter().</p>
+         <script src="https://gist.github.com/juliagra/b05ec927afc0613fda14.js"></script> 
+          
+      </div>
+      
+      <div id="inject">
+          <h2>#inject and .reduce()</h2>
+          <p>#inject (or #reduce) combines all elements in an array by passing each element into a block. The "accumulator" is the first parameter specified within the pipes of the code block and can optionally be given a starting value by including an argument with the #inject method. The iterated variable is the second parameter included in the code block. The JavaScript equivalent is .reduce(). Note that the optional starting value is placed as the second parameter of the .reduce() method.</p>
+          <script src="https://gist.github.com/juliagra/d16866b56fd2f41aa293.js"></script>
+          
+      </div>
+      
+      <div id="all">
+          <h2>#all? and .every()</h2>
+          <p>#all passes each element to the block, and returns "true" if the block never returns false or nil. The JavaScript equivalent is .every().</p>
+          <script src="https://gist.github.com/juliagra/891ef11cc0c01da8d65a.js"></script>
+      </div>
+      
+      <div id="any">
+          <h2>#any? and .some()</h2>
+          <p>#any passes each element to the block, and returns "true" if any element evaluates as true. The JavaScript equivalent is .some().</p>
+          <script src="https://gist.github.com/juliagra/17e05c0eb89e37ea9614.js"></script>
+      </div>
+      
+      <footer>
+          <p>For more information, see <a href="http://ruby-doc.org/core-2.2.2/Enumerable.html">RubyDocs</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Mozilla’s JavaScript Reference</a>.</p>
+      </footer>
+    </article>
+</main>

@@ -1,2 +1,2 @@
 # wmleidy.github.io
-Dev Bootcamp - First Steps
+Welcome to the repository for my personal/professional website.
