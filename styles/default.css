@@ -279,6 +279,10 @@ blockquote {
 	padding-left: 1em;
 }
 
+.quickreturn a {
+	color: #B8734A;
+}
+
 /* Page Footer Stuff */
 footer {
 	background-color: #abacad;
