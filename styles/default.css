@@ -274,6 +274,11 @@ blockquote {
 	height: 0;
 }
 
+.quickreturn {
+	font-size: 0.8em;
+	padding-left: 1em;
+}
+
 /* Page Footer Stuff */
 footer {
 	background-color: #abacad;

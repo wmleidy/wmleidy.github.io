@@ -1,64 +1,118 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Iterating through Arrays in Ruby and JavaScript</title>
+  <link rel="stylesheet" type="text/css" href="../styles/default.css" /> 
+</head>
+
+<body>
+  <header>
+    <a href="../index.html"><img src="../images/logo4.png" id="logo" alt="Bill Leidy" /></a>
+    <nav>
+      <ul>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Writings</a></li>
+        <li><a href="../resume.html">Resume</a></li>
+        <li><a href="../bio.html">About</a>
+          <ul>
+            <li><a href="../bio.html">Bio</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <img src="../images/writing_bkgd.jpg" id="heroimage" alt="" />
+    <div id="tagline">THE BLOG</div>
+  </header>
   
+  <div id="spaceholder"></div>
+
 <main>
   <article>
-     <header>
-       <h1>Ruby Enumerable methods and JavaScript equivalents</h1>
-         <p>This cheat sheet summarizes the most commonly used Ruby enumerable methods and their Javascript equivalents, and provides example code for each.</p>
-     </header>
+    <header>
+      <h1>Cheat Sheet: Iterating through Arrays in Ruby and JavaScript</h1>
+      <p class="date">August 4, 2015</p>
+    </header> 
+
+      <p>This “cheat sheet,” which summarizes the most commonly used methods that Ruby provides to iterate through data collections and their JavaScript equivalents, was made in collaboration with <a href="http://juliagra.github.io/">Julia Graber</a>. Please note that most (but not all) of the Ruby methods belong to the Enumerable module, and that the JavaScript methods only work for arrays&mdash;although some JavaScript libraries will extend their functionality to object literals. Ruby code snippets are provided first, followed by the JavaScript versions.</p>
       
-     <nav>
-       <ul>
+      <hr />
+      <div id="#"><p><ul>
            <li><a href="#each">#each and .forEach()</a></li>
            <li><a href="#map">#map and .map()</a></li>
            <li><a href="#select">#select and .filter()</a></li>
            <li><a href="#inject">#inject and .reduce()</a></li>
            <li><a href="#all">#all? and .every()</a></li>
            <li><a href="#any">#any? and .some()</a></li>
-        </ul>
-     </nav>
-      
-     <div id="each">
+      </ul></p></div>
+      <hr />
+
+      <div id="each">
          <h2>#each and .forEach()</h2>
-         <p>#each calls the given block once for each element, passing that element in as parameter. The JavaScript equivalent is .forEach().</p>
+         <p><code>#each</code> calls the given block once for each element, passing that element in as a parameter. The JavaScript equivalent is <code>.forEach()</code>.</p>
          <script src="https://gist.github.com/juliagra/387ccb0aa38e658a0a7b.js"></script>
-         
+         <p class="quickreturn"><a href="#">back to top</a></p><hr />
       </div>
       
       <div id="map">
           <h2>#map and .map()</h2>
-          <p>#map creates a new array using the values returned by calling the block for each element. The JavaScript equivalent is .map().</p>
+          <p><code>#map</code> creates a new array using the values returned by calling the block for each element. The JavaScript equivalent is <code>.map()</code>.</p>
           <script src="https://gist.github.com/juliagra/37638d23959edd1891fa.js"></script>
-          
+          <p class="quickreturn"><a href="#">back to top</a></p><hr />
       </div>
       
       <div id="select">
           <h2>#select and .filter()</h2>
-          <p>#select (or #find_all) returns a new array of all values that pass as true in the given block. The JavaScript equivalent is .filter().</p>
-         <script src="https://gist.github.com/juliagra/b05ec927afc0613fda14.js"></script> 
-          
+          <p><code>#select</code> (or <code>#find_all</code>) returns a new array that contains all values that pass as true in the given block. The JavaScript equivalent is <code>.filter()</code>.</p>
+         <script src="https://gist.github.com/juliagra/b05ec927afc0613fda14.js"></script>
+         <p class="quickreturn"><a href="#">back to top</a></p><hr /> 
       </div>
       
       <div id="inject">
           <h2>#inject and .reduce()</h2>
-          <p>#inject (or #reduce) combines all elements in an array by passing each element into a block. The "accumulator" is the first parameter specified within the pipes of the code block and can optionally be given a starting value by including an argument with the #inject method. The iterated variable is the second parameter included in the code block. The JavaScript equivalent is .reduce(). Note that the optional starting value is placed as the second parameter of the .reduce() method.</p>
+          <p><code>#inject</code> (or <code>#reduce</code>) combines all elements in an array by passing each element into a block. The <strong>accumulator</strong> is the first parameter specified within the pipes of the code block and can optionally be given a starting value by including an argument with the <code>#inject</code> method. The iterated variable is the second parameter included in the code block. The JavaScript equivalent is <code>.reduce()</code>. Note that the optional starting value is placed as the second parameter of the JavaScript <code>.reduce()</code> method.</p>
           <script src="https://gist.github.com/juliagra/d16866b56fd2f41aa293.js"></script>
-          
+          <p class="quickreturn"><a href="#">back to top</a></p><hr />
       </div>
       
       <div id="all">
           <h2>#all? and .every()</h2>
-          <p>#all passes each element to the block, and returns "true" if the block never returns false or nil. The JavaScript equivalent is .every().</p>
+          <p><code>#all?</code> passes each element to the block, and will return <code>true</code> if the block never returns <code>false</code> or <code>nil</code>. The JavaScript equivalent is <code>.every()</code>.</p>
           <script src="https://gist.github.com/juliagra/891ef11cc0c01da8d65a.js"></script>
+          <p class="quickreturn"><a href="#">back to top</a></p><hr />
       </div>
       
       <div id="any">
           <h2>#any? and .some()</h2>
-          <p>#any passes each element to the block, and returns "true" if any element evaluates as true. The JavaScript equivalent is .some().</p>
+          <p><code>#any?</code> passes each element to the block, and will returns <code>true</code> as long as any one element evaluates as true. The JavaScript equivalent is <code>.some()</code>, which can also be used to mimic the behavior of Ruby’s <code>include?</code> method.</p>
           <script src="https://gist.github.com/juliagra/17e05c0eb89e37ea9614.js"></script>
+          <p class="quickreturn"><a href="#">back to top</a></p><hr />
       </div>
-      
-      <footer>
-          <p>For more information, see <a href="http://ruby-doc.org/core-2.2.2/Enumerable.html">RubyDocs</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Mozilla’s JavaScript Reference</a>.</p>
-      </footer>
-    </article>
-</main>
+
+      <h2>Coda</h2>
+      <p>Comparing the pairs of code snippets above reveal a somewhat surprising similarity between the Ruby and JavaScript versions of these powerful iteration options, something which I feel is usually obscured by JavaScript’s syntax.</p>
+        
+      <p>For more information on these and many other helpful methods for data collections, the reader is referred to <a href="http://ruby-doc.org/core-2.2.2/Enumerable.html">RubyDocs</a> and Mozilla’s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">JavaScript Reference</a>.</p>
+
+    <footer>
+      Follow me on Twitter <a href="https://twitter.com/BillLeidy">@BillLeidy</a> for weekly blog posts.
+    </footer>
+  
+  </article>
+  </main>
+
+  <footer>
+    Site design and content &copy;Bill Leidy, 2015. 
+    <div class="socialmedia">
+      <a href="https://twitter.com/BillLeidy"><img src="../images/twitter-icon2.png" alt="Twitter link" /></a>
+      <a href="https://www.linkedin.com/in/wmleidy"><img src="../images/linkedin-icon2.png" alt="LinkedIn link" /></a>
+      <a href="https://github.com/wmleidy/"><img src="../images/github-icon2.png" alt="GitHub link" /></a>
+      <a href="mailto:test@testing.com"><img src="../images/email-icon2.png" alt="Email link" /></a>
+    </div>
+  </footer>
+</body>
+
+</html>
