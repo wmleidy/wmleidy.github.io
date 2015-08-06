@@ -40,7 +40,7 @@
       <p>This “cheat sheet,” which summarizes the most commonly used methods that Ruby provides to iterate through data collections and their JavaScript equivalents, was made in collaboration with <a href="http://juliagra.github.io/">Julia Graber</a>. Please note that most (but not all) of the Ruby methods belong to the Enumerable module, and that the JavaScript methods only work for arrays&mdash;although some JavaScript libraries will extend their functionality to object literals. Ruby code snippets are provided first, followed by the JavaScript versions.</p>
       
       <hr />
-      <div id="#"><p><ul>
+      <div id="return"><p><ul>
            <li><a href="#each">#each and .forEach()</a></li>
            <li><a href="#map">#map and .map()</a></li>
            <li><a href="#select">#select and .filter()</a></li>
@@ -54,42 +54,42 @@
          <h2>#each and .forEach()</h2>
          <p><code>#each</code> calls the given block once for each element, passing that element in as a parameter. The JavaScript equivalent is <code>.forEach()</code>.</p>
          <script src="https://gist.github.com/juliagra/387ccb0aa38e658a0a7b.js"></script>
-         <p class="quickreturn"><a href="#">back to top</a></p><hr />
+         <p class="quickreturn"><a href="#return">back to top</a></p><hr />
       </div>
       
       <div id="map">
           <h2>#map and .map()</h2>
           <p><code>#map</code> creates a new array using the values returned by calling the block for each element. The JavaScript equivalent is <code>.map()</code>.</p>
           <script src="https://gist.github.com/juliagra/37638d23959edd1891fa.js"></script>
-          <p class="quickreturn"><a href="#">back to top</a></p><hr />
+          <p class="quickreturn"><a href="#return">back to top</a></p><hr />
       </div>
       
       <div id="select">
           <h2>#select and .filter()</h2>
           <p><code>#select</code> (or <code>#find_all</code>) returns a new array that contains all values that pass as true in the given block. The JavaScript equivalent is <code>.filter()</code>.</p>
          <script src="https://gist.github.com/juliagra/b05ec927afc0613fda14.js"></script>
-         <p class="quickreturn"><a href="#">back to top</a></p><hr /> 
+         <p class="quickreturn"><a href="#return">back to top</a></p><hr /> 
       </div>
       
       <div id="inject">
           <h2>#inject and .reduce()</h2>
           <p><code>#inject</code> (or <code>#reduce</code>) combines all elements in an array by passing each element into a block. The <strong>accumulator</strong> is the first parameter specified within the pipes of the code block and can optionally be given a starting value by including an argument with the <code>#inject</code> method. The iterated variable is the second parameter included in the code block. The JavaScript equivalent is <code>.reduce()</code>. Note that the optional starting value is placed as the second parameter of the JavaScript <code>.reduce()</code> method.</p>
           <script src="https://gist.github.com/juliagra/d16866b56fd2f41aa293.js"></script>
-          <p class="quickreturn"><a href="#">back to top</a></p><hr />
+          <p class="quickreturn"><a href="#return">back to top</a></p><hr />
       </div>
       
       <div id="all">
           <h2>#all? and .every()</h2>
           <p><code>#all?</code> passes each element to the block, and will return <code>true</code> if the block never returns <code>false</code> or <code>nil</code>. The JavaScript equivalent is <code>.every()</code>.</p>
           <script src="https://gist.github.com/juliagra/891ef11cc0c01da8d65a.js"></script>
-          <p class="quickreturn"><a href="#">back to top</a></p><hr />
+          <p class="quickreturn"><a href="#return">back to top</a></p><hr />
       </div>
       
       <div id="any">
           <h2>#any? and .some()</h2>
           <p><code>#any?</code> passes each element to the block, and will returns <code>true</code> as long as any one element evaluates as true. The JavaScript equivalent is <code>.some()</code>, which can also be used to mimic the behavior of Ruby’s <code>include?</code> method.</p>
           <script src="https://gist.github.com/juliagra/17e05c0eb89e37ea9614.js"></script>
-          <p class="quickreturn"><a href="#">back to top</a></p><hr />
+          <p class="quickreturn"><a href="#return">back to top</a></p><hr />
       </div>
 
       <h2>Coda</h2>
