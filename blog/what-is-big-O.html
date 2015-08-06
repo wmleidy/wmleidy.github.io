@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>What is Big-O?</title>
+  <link rel="stylesheet" type="text/css" href="../styles/default.css" /> 
+</head>
+
+<body>
+  <header>
+    <a href="../index.html"><img src="../images/logo4.png" id="logo" alt="Bill Leidy" /></a>
+    <nav>
+      <ul>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Writings</a></li>
+        <li><a href="../resume.html">Resume</a></li>
+        <li><a href="../bio.html">About</a>
+          <ul>
+            <li><a href="../bio.html">Bio</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <img src="../images/writing_bkgd.jpg" id="heroimage" alt="" />
+    <div id="tagline">THE BLOG</div>
+  </header>
+  
+  <div id="spaceholder"></div>
+
+  <main>
+  <article>
+    <header>
+      <h1>What is Big-O?</h1>
+      <h4>(Plus a little bit on linear vs binary searches)</h4>
+      <p class="date">August 5, 2015</p>
+    </header>
+    
+      <p>Big-O is a measure that represents the complexity (and thus efficiency) of a computer algorithm. Okay, that was easy, blog finished.</p>
+
+      <p>But seriously, Big-O is a subject that any programmer who hopes to write efficient programs needs to understand. This week, the designers of the Dev Bootcamp curriculum have granted us students the freedom to discuss a topic of our choice, and for me it had to be Big-O.</p>
+
+    <section>
+
+      <h2>Big-O and Order (When Big)</h2>
+
+      <p>Big-O is in essence a mathematical concept that measures the order of an equation as it approaches a limit, that is, when the input gets really, really big. As you may or may not remember from algebra class, the order of a function (or more accurately, the degree of a polynomial) is determined by its largest exponent, and the larger the exponent, the faster the <i>y</i> values climb:</p>
+
+      <img src="../images/equation-orders.png" class="screenshot" alt="Three Graphs" />
+
+      <p>The orange graph, <i>y = x<sup>3</sup></i>, is a third-degree polynomial, and it rises faster than either <i>y = x<sup>2</sup></i> or <i>y = x</i>. Zooming out further would show this effect even more clearly.</p>
+
+      <p>But what does this have to do with programming? And might it be possible to discuss this without using an abstract example from math classes of bygone years?</p>
+    </section>
+
+    <section>
+      <h2>Big-O and Programming</h2>
+
+      <p>To see how this applies to programming, let’s return to our graph (last time, I promise) where the <i>x</i> value represents the number of things we need to process and the <i>y</i> value represents the number of steps it takes to process them. If there are only 2 things we need to process, it doesn’t make <i>too</i> much of a difference in terms of computer times (usually on the scale of nanoseconds) whether our algorithm takes 2 steps (<i>y = x</i>), 4 steps (<i>y = x<sup>2</sup></i>), or 8 steps (<i>y = x<sup>3</sup></i>) to accomplish this.</p>
+
+      <p>But at 10 things to process, the differences become much starker: 10, 100, and 1000 steps respectively. Bump up our number to 1000 or 1000000 things to process and performance times (and/or data usage) quickly become a major issue. Once we start talking about huge numbers like one million or one billion, we’re testing our algorithm to the (mathematical) limit and examining its “worst-case performance scenario.”</p>
+    </section>
+
+    <section>
+      <h2>A Children’s Game and Big-O</h2>
+
+      <p>I don’t know about you, but I can vividly remember from childhood playing a game where one kid would think of a number between 1 and 100, and the other kids would see how quickly they could guess it, using “higher” and “lower” as cues. I could immediately tell which of my friends (and siblings) were mathematically inclined by analyzing their guessing patterns. Those who were mathematically inclined would guess according to an optimized pattern, whereas those who were not guessed haphazardly without a clear method.</p>
+
+      <p>Guessing haphazardly (or linearly from 1 to 100) could end up taking 100 turns to establish the correct number. Whereas I would always be able to guess within 7 guesses (50 -> 75 -> 63 -> 57 -> 60 -> 62 -> 61 being one such worst-case scenario).</p>
+
+      <p>Now let’s return to our computer&mdash;surely there’s not much difference in performance between taking 100 rounds steps or 7 rounds, but what if I were thinking of a number between 1 and 1,000,000,000 or, shifting gears a bit, thinking of a specific Facebook user from the 1.5 billion users that have active accounts. This is the limit case where we can really see the underlying efficiency of an algorithm.</p>
+    </section>
+
+    <section>
+      <h2>Linear Search vs Binary Search</h2>
+
+      <p>You might be surprised to learn that the two ways that children try to guess a number between 1 and 100 (haphazardly/linearly or by homing in using midpoints) closely mimic two different ways to perform computer searches for sorted data collections.</p>
+
+      <p>A <strong>linear search</strong> takes a total of two steps each time it examines a data point&mdash;one step to increment the index, and a second step to perform a comparison. An abstract version in Ruby for searching arrays might look something like this:</p>
+
+<code class="block"><pre>
+def linear_search(array, target)
+  array.each_with_index do |element, index|
+    if element == target
+      return index
+    end
+  end
+  return nil
+end
+</pre></code>
+
+      <p>A <strong>binary search</strong> requires a total of three steps each time it looks at a data point&mdash;one step to calculate the midpoint (choose the index), another step to perform the comparison, and then another step to redefine the boundaries of the search. A generic Ruby method for performing binary search on <em>sorted</em> arrays (this <em>won’t</em> work on unsorted arrays) that uses recursion would look like:</p>
+
+<code class="block"><pre>
+def binary_search(array, target, min, max)
+  if max &lt; min
+    return nil
+  else
+    mid = min + ((max - min) / 2)
+
+    if array[mid] > target
+      binary_search(array, target, min, mid-1)
+    elsif array[mid] &lt; target
+      binary_search(array, target, mid+1, max)
+    else
+      return mid
+    end
+  end
+end
+</pre></code>
+
+      <p>And yet, despite the fact the linear search takes 2 steps each round and the binary search takes 3, the binary search method is much, much, <em>much</em> quicker for the same reason that the child who uses midpoints to guess a number between 1 and 100 finds his answer much more efficiently.</p>
+
+      <p>If we needed to search through an array of one million (<i>n</i>) sorted names, in the worst-case scenario it would take the linear search two million (<i>2 * n</i>) steps. Whereas the binary search would take twenty rounds in the worst-case scenario, or 60 total steps (<i>3 * log<sub>2</sub>n</i> = 3 * 19.931569 &cong; 60). (The number of rounds in the binary search shows base 2 logarithmic growth.) Even with smaller array sizes, the binary search proves to be more efficient:</p>
+
+      <img src="../images/linear-vs-binary-search-steps.png" class="screenshot" alt="Graph of Linear and Binary Search Total Steps" />
+
+      <p>To translate our results into more human terms, if it took a (very, very slow) computer one second to perform each step, it would take up to 11.5 days to perform a linear search of one million names, whereas the binary search would take a minute at the most! This shows the utmost importance of writing efficient algorithms when dealing with big data collections.</p>
+
+    </section>
+
+    <section>
+      <h2>Big-O Notation</h2>
+
+      <p>When we’re talking about Big-O, we’re talking about limit cases, so when we’re dealing with numbers like 1,000,000,000 there’s really not too much difference between <i>n</i> and <i>3n</i> or <i>log<sub>10</sub>n</i> and <i>log<sub>2</sub>n</i>. There is, however, a <em>huge</em> difference between <i>n<sup>2</sup></i>, <i>n</i>, and <i>log n</i> (10<sup>18</sup>, 10<sup>9</sup>, and 9, respectively).</p>
+
+      <p>That’s why when we derive Big-O for an algorithm, we only worry about the highest order that exists in the function, and don’t concern ourselves with coefficients, constants, or “lower-order” variables (for example, <i>3x<sup>2</sup> + 6x + 10</i> simplifies to <i>x<sup>2</sup></i> for Big-O purposes).</p>
+
+      <p>So, in the case of linear search, its Big-O is written as <i>O</i>(<i>n</i>), while the Big-O of binary search would simply be <i>O</i>(<i>log n</i>). Again, we can graphically see where a Big-O of <i>O</i>(<i>log n</i>) is <em>much</em> better than <i>O</i>(<i>n</i>)&mdash;recall that <i>x</i> represents the number of data points and <i>y</i> represents steps taken (time and/or memory cost):</p>
+
+      <img src="../images/linear-vs-logarithmic-big-O.png" class="screenshot" alt="Graph of Linear versus Logarithmic Big-O" />
+    </section>
+
+    <section>
+      <h2>Further Resources</h2>
+
+      <p>Of course, the linear and logarithmic cases for the two search methods explored above are not the only possible orders for Big-O. Eric Rowell’s <a href="http://bigocheatsheet.com/">site</a> provides a great overview in both chart and graphical form of the Big-O of various algorithm types as well as what their “cost/complexity” curves look like. More in-depth, scientific explanations of Big-O as it pertains to mathematics and computational complexity are available in Computer Science textbooks and elsewhere on the web in the usual places (Stack Overflow, Wikipedia, etc.). But I hope that this blog post has at least provided you, my readers, will a solid foundational understanding of what Big-O is and why it matters. Onwards and upwards, fellow Big-O’ers!</p>
+
+    <footer>
+      Follow me on Twitter <a href="https://twitter.com/BillLeidy">@BillLeidy</a> for weekly blog posts.
+    </footer>
+  
+  </article>
+  </main>
+
+  <footer>
+    Site design and content &copy;Bill Leidy, 2015. 
+    <div class="socialmedia">
+      <a href="https://twitter.com/BillLeidy"><img src="../images/twitter-icon2.png" alt="Twitter link" /></a>
+      <a href="https://www.linkedin.com/in/wmleidy"><img src="../images/linkedin-icon2.png" alt="LinkedIn link" /></a>
+      <a href="https://github.com/wmleidy/"><img src="../images/github-icon2.png" alt="GitHub link" /></a>
+      <a href="mailto:test@testing.com"><img src="../images/email-icon2.png" alt="Email link" /></a>
+    </div>
+  </footer>
+</body>
+
+</html>
