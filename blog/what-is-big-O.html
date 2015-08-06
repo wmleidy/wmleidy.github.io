@@ -66,7 +66,7 @@
     <section>
       <h2>A Children’s Game and Big-O</h2>
 
-      <p>I don’t know about you, but I can vividly remember from childhood playing a game where one kid would think of a number between 1 and 100, and the other kids would see how quickly they could guess it, using “higher” and “lower” as cues. I could immediately tell which of my friends (and siblings) were mathematically inclined by analyzing their guessing patterns. Those who were mathematically inclined would guess according to an optimized pattern, whereas those who were not guessed haphazardly without a clear method.</p>
+      <p>I don’t know about you, but I can vividly remember from childhood playing a game where one kid would think of a number between 1 and 100, and the other kids would see how quickly they could guess it, using “higher” and “lower” as cues. I could immediately tell which of my classmates (and siblings) were mathematically inclined by analyzing their guessing patterns. Those who were mathematically inclined would guess according to an optimized pattern, whereas those who were not would guess haphazardly without a clear method.</p>
 
       <p>Guessing haphazardly (or linearly from 1 to 100) could end up taking 100 turns to establish the correct number. Whereas I would always be able to guess within 7 guesses (50 -> 75 -> 63 -> 57 -> 60 -> 62 -> 61 being one such worst-case scenario).</p>
 
@@ -76,7 +76,7 @@
     <section>
       <h2>Linear Search vs Binary Search</h2>
 
-      <p>You might be surprised to learn that the two ways that children try to guess a number between 1 and 100 (haphazardly/linearly or by homing in using midpoints) closely mimic two different ways to perform computer searches for sorted data collections.</p>
+      <p>You might be surprised to learn that the two ways that children try to guess a number between 1 and 100 (haphazardly/linearly or by homing in using midpoints) closely mimic two different ways to perform computer searches for data collections.</p>
 
       <p>A <strong>linear search</strong> takes a total of two steps each time it examines a data point&mdash;one step to increment the index, and a second step to perform a comparison. An abstract version in Ruby for searching arrays might look something like this:</p>
 
@@ -91,7 +91,7 @@ def linear_search(array, target)
 end
 </pre></code>
 
-      <p>A <strong>binary search</strong> requires a total of three steps each time it looks at a data point&mdash;one step to calculate the midpoint (choose the index), another step to perform the comparison, and then another step to redefine the boundaries of the search. A generic Ruby method for performing binary search on <em>sorted</em> arrays (this <em>won’t</em> work on unsorted arrays) that uses recursion would look like:</p>
+      <p>A <strong>binary search</strong> requires a total of three steps each time it looks at a data point&mdash;one step to calculate the midpoint (choose the index), another step to perform the comparison, and then another step to redefine the boundaries of the search. Note that a binary search will only work on <em>sorted</em> arrays (it is ineffective on unsorted arrays). A generic Ruby method for performing binary search on sorted arrays that uses recursion would look like:</p>
 
 <code class="block"><pre>
 def binary_search(array, target, min, max)
@@ -117,7 +117,7 @@ end
 
       <img src="../images/linear-vs-binary-search-steps.png" class="screenshot" alt="Graph of Linear and Binary Search Total Steps" />
 
-      <p>To translate our results into more human terms, if it took a (very, very slow) computer one second to perform each step, it would take up to 11.5 days to perform a linear search of one million names, whereas the binary search would take a minute at the most! This shows the utmost importance of writing efficient algorithms when dealing with big data collections.</p>
+      <p>To translate our results into more human terms, if it took a (very, very slow) computer one second to perform each step, it would take up to 11.5 days to perform a linear search of one million pre-sorted names, whereas the binary search would take a minute at the most! This shows the utmost importance of writing efficient algorithms when dealing with big data collections.</p>
 
     </section>
 
