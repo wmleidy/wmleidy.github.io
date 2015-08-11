@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>JavaScript SAT Hangman</title>
+	<link rel="stylesheet" type="text/css" href="../styles/default.css" />
+	<link rel="stylesheet" type="text/css" href="../styles/hangman.css" />
+</head>
+
+<body>
+	<header>
+		<a href="../index.html"><img src="../images/logo4.png" id="logo" alt="Bill Leidy" /></a>
+		<nav>
+			<ul>
+			  <li><a href="index.html">Projects</a></li>
+				<li><a href="../blog/index.html">Writings</a></li>
+				<li><a href="../resume.html">Resume</a></li>
+				<li><a href="../bio.html">About</a>
+				  <ul>
+				  	<li><a href="../bio.html">Bio</a></li>
+				  	<li><a href="../contact.html">Contact</a></li>
+				  </ul>
+				</li>
+			</ul>
+		</nav>
+	</header>
+	
+	<div id="simplepage"></div>
+
+	<main>
+	<article>
+		<h2>Welcome to JavaScript Hangman&mdash;SAT Edition!</h2>
+
+		<p>The computer will randomly select an SAT word, and it’s your job to correctly guess the letters in the word. Careful though...seven wrong guesses and it’s game over!</p>
+
+		<img id="scaffold" src="../images/hangman/hangman0.png" alt="" />
+		<p id="progress"></p>
+		<p id="wrongletters">Incorrect guesses: </p>
+		<p><label for="letter">Your guess:</label>
+		   <input type="text" id="letter" size="20" maxlength="1" />
+		   <button type="button" id="button">Submit letter!</button>
+		</p>
+		<div id="console">
+			<p id="message"></p>
+			<p id="playagain"><label for="anothergame" id="invitation">Want to play again?</label>
+				<button type="button" id="anothergame">Of course!</button>
+			</p>
+		</div>
+
+	</article>
+	</main>
+
+	<footer>
+		Site design and content &copy;Bill Leidy, 2015. 
+		<div class="socialmedia">
+			<a href="https://twitter.com/BillLeidy"><img src="../images/twitter-icon2.png" alt="Twitter link" /></a>
+			<a href="https://www.linkedin.com/in/wmleidy"><img src="../images/linkedin-icon2.png" alt="LinkedIn link" /></a>
+			<a href="https://github.com/wmleidy/"><img src="../images/github-icon2.png" alt="GitHub link" /></a>
+			<a href="mailto:test@testing.com"><img src="../images/email-icon2.png" alt="Email link" /></a>
+		</div>
+	</footer>
+	<script src="../js/hangman.js"></script> 
+</body>
+
+</html>
