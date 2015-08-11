@@ -284,10 +284,31 @@ blockquote {
 }
 
 /* Page Footer Stuff */
+
+/* Now incorporates footerfix.css, which was used for pages with limited
+amount of content or no hero image to ensure that footer appears at bottom of page */
+html {
+	height: 100%;
+}
+
+body {
+	min-height: 100%;
+	position: relative;
+  margin-bottom: -3.1em;
+	padding-bottom: 3.1em;
+	box-sizing: border-box;
+}
+
 footer {
+	height: 1.5em;
+	position: absolute;
+	bottom: 0;
+	width: 98.5%;
+/* end of footerfix.css additions */
+
 	background-color: #abacad;
 	font-size: 0.75em;
-	padding: 0.8em 2em;
+	padding: 0.8em 0 0.8em 1.5%;
 	margin-top: 3.5em;
 }
 
