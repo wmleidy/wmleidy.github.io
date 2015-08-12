@@ -1,4 +1,7 @@
- // a first attempt at an interactive JavaScript game with DOM manipulation
+// a first attempt at an interactive JavaScript game with DOM manipulation
+// this should be considered a "first draft" or "minimum viable product"
+// refactoring will take place as my knowledge of design principles of
+// JavaScript expands
 
 // initializing game, putting variables in global scope
 var words = ["abbreviate","abstinence","adulation","adversity","aesthetic","ambivalent","amicable","anachronistic","anecdote","anonymous","antagonist","arid","assiduous","asylum","benevolent","camaraderie","censure","circuitous","clairvoyant","collaborate","compassion","compromise","condescending","conditional","conformist","congregation","convergence","deleterious","demagogue","digression","diligent","discredit","disdain","divergent","empathy","emulate","enervating","enhance","ephemeral","evanescent","exasperation","exemplary","extenuating","florid","fortuitous","frugal","hackneyed","haughty","hedonist","hypothesis","impetuous","impute","incompatible","inconsequential","inevitable","integrity","intrepid","intuitive","jubilation","lobbyist","longevity","mundane","nonchalant","novice","opulent","orator","ostentatious","parched","perfidious","precocious","pretentious","procrastinate","prosaic","prosperity","provocative","prudent","querulous","rancorous","reclusive","reconciliation","renovation","resilient","restrained","reverence","sagacity","scrutinize","spontaneity","spurious","submissive","substantiate","subtle","superficial","superfluous","suppress","surreptitious","tactful","tenacious","transient","venerable","vindicate","wary"];
@@ -66,7 +69,7 @@ function displayProgress() {
 
 function hasGameEnded() {
 	if (wrongGuesses === 7) {
-		elMessage.innerHTML = "You've met a grizzly death... <br /> The word was " + theWord.join("") + ".<br /> Do you know the meaning of this word? If not, click <a href=\"http://dictionary.reference.com/browse/" + theWord.join("") + "\" target=\"_blank\">here</a>."
+		elMessage.innerHTML = "You’ve met a grizzly death... <br /> The word was " + theWord.join("") + ".<br /> Do you know the meaning of this word? If not, click <a href=\"http://dictionary.reference.com/browse/" + theWord.join("") + "\" target=\"_blank\">here</a>."
 		elInvitation.textContent = "Want a chance to redeem yourself?";
 	}
 	else if (theWord.join("") === progress.join("")) {
@@ -84,8 +87,8 @@ function gameTurn() {
 	elLetter.value = "";
 	elLetter.focus();
 	if (!validateLetter(letter)) {
-		return;                        // "break" here caused me to lose 2 hours of my life
-	};
+		return;                        // "break" instead of "return" here
+	};                               // caused me to lose 2 hours of my life
 	guessedLetters.push(letter);
 	checkLetter(letter);
 	displayProgress();
