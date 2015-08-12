@@ -28,7 +28,7 @@ var elInvitation = document.getElementById("invitation");
 // initializes game upon load
 function initializeGame() {
 	elProgress.textContent = progress.toString().replace(/,/g," ");
-};
+}
 
 window.onload = initializeGame;
 
@@ -69,7 +69,7 @@ function displayProgress() {
 
 function hasGameEnded() {
 	if (wrongGuesses === 7) {
-		elMessage.innerHTML = "You’ve met a grizzly death... <br /> The word was " + theWord.join("") + ".<br /> Do you know the meaning of this word? If not, click <a href=\"http://dictionary.reference.com/browse/" + theWord.join("") + "\" target=\"_blank\">here</a>."
+		elMessage.innerHTML = "You’ve met a grizzly death... <br /> The word was " + theWord.join("") + ".<br /> Do you know the meaning of this word? If not, click <a href=\"http://dictionary.reference.com/browse/" + theWord.join("") + "\" target=\"_blank\">here</a>.";
 		elInvitation.textContent = "Want a chance to redeem yourself?";
 	}
 	else if (theWord.join("") === progress.join("")) {
@@ -80,6 +80,7 @@ function hasGameEnded() {
 	}
 	elPlayAgain.style.visibility = "visible";
 	elButton.disabled = true;
+	elLetter.disabled = true;
 }
 
 function gameTurn() {
@@ -88,7 +89,7 @@ function gameTurn() {
 	elLetter.focus();
 	if (!validateLetter(letter)) {
 		return;                        // "break" instead of "return" here
-	};                               // caused me to lose 2 hours of my life
+	}                                // caused me to lose 2 hours of my life
 	guessedLetters.push(letter);
 	checkLetter(letter);
 	displayProgress();
@@ -96,6 +97,13 @@ function gameTurn() {
 }
 
 elButton.addEventListener("click", gameTurn, false);
+
+// add alternate functionality so mouse no longer necessary
+elLetter.addEventListener("keydown", function(e) {
+	if (e.keyCode == 13) {
+		gameTurn();
+	}
+}, false);
 
 // restarts the game after completion
 function resetGame() {
@@ -111,12 +119,12 @@ function resetGame() {
 	elScaffold.src  = "../images/hangman/hangman0.png";
 	elProgress.textContent = progress.toString().replace(/,/g," ");
 	elWrongLetters.textContent = "Incorrect guesses: ";
+	elLetter.disabled = false;
 	elLetter.value = "";
 	elLetter.focus();
 	elMessage.innerHTML = "";
 	elPlayAgain.style.visibility = "hidden";
 	elButton.disabled = false;
-
 }
 
 elAnotherGame.addEventListener("click", resetGame, false);
