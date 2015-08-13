@@ -36,7 +36,7 @@
 
 	header nav ul li {
 		width: 10%;
-		margin: 0 7.2%;
+		margin: 0 7%;
 		text-align: center;
 		float: none;
 		display: inline-block;
@@ -60,7 +60,7 @@
 	}
 
 	#tagline, #taglinehome {
-		font-size: 2em;
+		font-size: 1.8em;
 		border-top: 1px solid white;
 		padding: 4% 1%;
 		position: static;
