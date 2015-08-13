@@ -13,10 +13,9 @@ header {
 	position: relative;
 	color: white;
 	font-family: "Hoefler Text", "Palatino Linotype", "Book Antiqua", Palatino, serif;
-  /*font-family: Helvetica, sans-serif;*/
 }
 
-header #heroimage {
+#heroimage {
 	max-width: 100%;
 	height: auto;
 	position: absolute;
@@ -25,7 +24,7 @@ header #heroimage {
 	z-index: 0;
 }
 
-header #logo {
+#logo {
 	position: absolute;
 	left: 0.3em;
 	top: 0.3em;
@@ -35,8 +34,8 @@ header #logo {
 
 nav {
 	float: right;
-	margin-top: 1.9em; /* Replaces 30px */
-	margin-right: 4%;
+	margin-top: 2.75%; /* Replaces 30px or 1.9em */
+	margin-right: 3%;
 }
 
 nav ul {
@@ -49,20 +48,18 @@ nav ul {
 nav ul li {
 	float: left;
 	margin: 0 1.9em; /* Replaces 30px */
-	/*border-radius:1px;*/
 }
 
 nav ul li a {
 	display: block;
-	padding: 0.3em 0.55em; /* 5px 8px */
+	padding: 0.3em 0.55em; /* was 5px 8px */
 	color:white;
 	font-size: 0.95em;
 	text-decoration: none;
 }
 
-nav ul li:hover {
+nav ul li a:hover {
 	background-color: #CBD946;
-	/*background-color: #bcbcbc;*/
 }
 
 nav ul li a:hover {
@@ -88,7 +85,7 @@ nav ul ul {
 
 nav ul ul li {
 	float: none;
-	border-bottom: 1px solid black;
+	border-bottom: 0.1em solid black;
 	border-radius: 0;
 	position:relative;
 	margin: 0;
@@ -96,10 +93,6 @@ nav ul ul li {
 
 nav ul ul li a {
 	padding: 0.3em 0.6em; /* a little wider than the non-dropdown boxes, was 10px*/
-}
-
-nav ul ul li a:hover {
-	/*background-color:#dddddd;*/
 }
 
 #tagline {
@@ -111,13 +104,13 @@ nav ul ul li a:hover {
 	z-index: 3;
 }
 
-div#spaceholder {
+#spaceholder {
 	width: 100%;
-	padding-bottom: 47%;
+	padding-bottom: 47%; /* normalized to fit standard hero image dimensions of 2.14 x 1 */
 }
 
-div#simplepage {
-	height: 125px;
+#simplepage {
+	height: 7.75em; /* was 120px */
 	width: 100%;
 	background-color: black;
 }
@@ -164,9 +157,10 @@ article p {
 	line-height: 130%;
 }
 
-/*article a:hover {
-	text-decoration: underline;
-}*/
+article a {
+	color: #0990c6;
+	text-decoration:none;
+}
 
 article footer {
 	font-size: 0.8em; /* Replaces 10pt */
@@ -179,12 +173,13 @@ article footer {
 article img {
 	margin-bottom: 0.6em;
 	margin-left: 5%;
+	max-width: 100%;
 }
 
 article img.screenshot {
 	width: 50%;
 	height: auto;
-	border: 1px solid #bbbbbb;
+	border: 0.1em solid #bbbbbb;
 }
 
 img.right {
@@ -202,19 +197,11 @@ img.small {
 	height: auto;
 }
 
-article ul {
+article ul, article ol {
   padding-left: 1.5em;
 }
 
-article ul li {
-	line-height: 125%;
-}
-
-article ol {
-  padding-left: 1.5em;
-}
-
-article ol li {
+article ul li, article ol li {
 	line-height: 125%;
 }
 
@@ -243,13 +230,13 @@ code {
 	font-size: 0.95em; /*Replaces 11pt*/
 	display: inline;
 	margin: 0;
-	padding: 1px 0.15em;
+	padding: 0.1em 0.15em;
 }
 
 code.block {
 	display: block;
-	margin: 0px 1.4em 1.4em 1.4em; /*was 20px*/
-	padding: 1px 0.2em;
+	margin: 0 1.4em 1.4em 1.4em; /*was 20px*/
+	padding: 0.1em 0.2em;
 	overflow-x: auto;
 }
 
@@ -318,21 +305,31 @@ footer {
 	padding-left: 0.5em;
  }
 
- .socialmedia img {
+.socialmedia img {
  	width: 1.5em;
  	height: 1.5em;
- 	border: 1px solid white;
- 	border-radius: 3px; /* last bit of px to clean up */
+ 	border: 0.1em solid white;
+ 	border-radius: 0.25em;
  	margin: 0 0.5em;
  }
 
- .socialmedia img:hover {
+.socialmedia img:hover {
 	background-color: #7C8340;
+}
+
+#mobilefooter {
+	display: none;
+}
+
+#mobilefooter a {
+	color: white;
+	float: right;
+	padding-right: 5%;
 }
 
 /*For Home Page */
 .homepage p {
-	margin: 1.4em 0;
+	margin: 1.4em 0; /* space out sparse paragraph more */
 }
 
 #taglinehome {
@@ -361,7 +358,7 @@ footer {
 
 .projects img {
 	width: 100%;
-	border: 1px solid #999;
+	border: 0.1em solid #999;
 	margin: 0;
 }
 
@@ -378,11 +375,6 @@ div.linkslist {
 	text-decoration: underline;
 }
 
-article a {
-	color: #0990c6;
-	text-decoration:none;
-}
-
 /*For Resume Page*/
 .resumelist ul {
 	list-style: none;
@@ -397,7 +389,6 @@ article a {
 	padding: 0;
 	margin: 0.1em 0 0 0;
 	font-style: italic;
-	/*color: #777;*/
 }
 
 .bulleted {
@@ -409,8 +400,8 @@ article a {
 	background-color: #abacad;
 	width: 5em;  /* was 100px */
 	height: 5em;
-	border: solid 3px #abacad; /* two more pixel clean-up spots */
-	border-radius: 5px;
+	border: solid 0.2em #abacad;
+	border-radius: 0.35em;
 	vertical-align: middle;
 	margin: 2% 5%;
 }

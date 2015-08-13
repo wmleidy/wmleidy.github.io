@@ -1,0 +1,93 @@
+/* Responsive Design */
+/* Unfortunately not "mobile first"...next site I build will be... */
+
+@media screen and (max-width: 700px) {
+
+	body {
+		float: none;
+		width: auto;
+	}
+
+	header {
+		position: static;
+		background-color: black;
+		color: white;
+	}
+	
+	#logo {
+		position: static;
+		display: block;
+		float: none;
+		width: 150px;
+		margin: 0 auto;
+	}
+
+	header nav {
+		position: static;
+		float: none;
+		margin: 1em 0;
+	}
+
+	header nav ul {
+		position: static;
+		padding: 0.5em 0;
+		display: inline;
+	}
+
+	header nav ul li {
+		width: 10%;
+		margin: 0 7.2%;
+		text-align: center;
+		float: none;
+		display: inline-block;
+		position: static;
+	}
+
+	header nav ul li a {
+		color: white;
+		font-size: 0.95em;
+		text-decoration: none;
+		display: inline-block;
+	}
+
+	header nav ul ul {
+		display:none;
+		position:static;
+	}
+
+	nav ul li:hover > ul {
+		display:none;
+	}
+
+	#tagline, #taglinehome {
+		font-size: 2em;
+		border-top: 1px solid white;
+		padding: 4% 1%;
+		position: static;
+		width: 98%;
+		margin: auto;
+		letter-spacing: 0.1em;
+		line-height: 130%;
+	}
+
+	#heroimage, #simplepage, #spaceholder {
+		display: none;
+	}
+
+	article {
+		margin: 2%;
+	}
+
+	article p {
+		line-height: 150%;
+	}
+
+	footer .socialmedia {
+		display: none;
+	}
+
+	#mobilefooter {
+		display: inline;
+	}
+
+} 
