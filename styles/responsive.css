@@ -26,6 +26,7 @@
 		position: static;
 		float: none;
 		margin: 1em 0;
+		padding-bottom: 1.25em;
 	}
 
 	header nav ul {
@@ -49,6 +50,10 @@
 		padding: 5% 10%;
 		text-decoration: none;
 		display: inline-block;
+	}
+
+	header nav ul li a:active {
+		color: white;
 	}
 
 	header nav ul ul {
