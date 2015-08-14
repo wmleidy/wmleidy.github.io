@@ -4,8 +4,10 @@
 
 <head>
 	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width">
 	<title>Arrays and Hashes</title>
-	<link rel="stylesheet" type="text/css" href="../styles/default.css" /> 
+	<link rel="stylesheet" type="text/css" href="../styles/default.css">
+	<link rel="stylesheet" type="text/css" href="../styles/responsive.css" media="screen and (max-width: 700px)"> 
 </head>
 
 <body>
@@ -44,24 +46,24 @@
 
 				<p><strong>Arrays</strong> in Ruby are used to represent any collection of objects, and in particular, any collection whose <em>order</em> is important. Let’s say Bobby’s pre-algebra teacher wants to store his five test grades for storage and computational purposes. Hopefully for Bobby’s sake, his grades will look something like this:</p>
 
-				<code class="block">
-				bobby_grades = [99, 94, 100, 97, 98]
-				</code>
+<code class="block"><pre>
+bobby_grades = [99, 94, 100, 97, 98]
+</pre></code>
 
 				<p>Now if Bobby’s teacher wants to quickly access his star pupil’s grade on the first test, it’s as simple as typing:</p>
 
-				<code class="block">
-				bobby_grades[0]<br />
-				# Result: 99<br />
-				# (As in many programming languages, counting in Ruby starts from 0.)
-				</code>
+<code class="block"><pre>
+bobby_grades[0]
+# Result: 99
+# (As in many programming languages, counting in Ruby starts from 0.)
+</pre></code>
 
 				<p>And if the teacher wants to find Bobby’s average grade, something like this would accomplish it:</p>
 
-				<code class="block">
-				bobby_grades.inject(0) { |sum, grade| sum + grade}.fdiv(bobby_grades.length)<br />
-				# Result: 97.6
-				</code>
+<code class="block"><pre>
+bobby_grades.inject(0) { |sum, grade| sum + grade}.fdiv(bobby_grades.length)
+# Result: 97.6
+</pre></code>
 
 				<p>While this particular example of an array used a collection of integers, arrays in Ruby can take a collection of any type of object (strings, booleans, classes, other arrays) and even mix object type (though this is not usually recommended).</p>
 			</section>
@@ -71,24 +73,24 @@
 
 				<p>In contrast to arrays, <strong>hashes</strong> in Ruby store <em>pairs</em> of data, and each pair consists of a <em>key</em> and <em>value</em>. A <a href="https://www.gutenberg.org/files/972/972-h/972-h.htm">dictionary</a> is a classic example of a situation where a hash should be utilized:</p>
 
-				<code class="block">
-				devils_dictionary = {<br />
-				 "learning" => "The kind of ignorance distinguishing the studious",<br />
-				 "Mammon" => "The god of the world's leading religion"}
-				</code>
+<code class="block"><pre>
+devils_dictionary = {
+  "learning" => "The kind of ignorance distinguishing the studious",
+  "Mammon" => "The god of the world's leading religion"}
+</pre></code>
 
 				<p>Or say you’re designing a video game and you want to assign attributes to your childhood hockey hero:</p>
 
-				<code class="block">
-				joe_sakic = {"skating" => 95, "passing" => 97, "wrist_shot" => 99, "hair" => 72}
-				</code>
+<code class="block"><pre>
+joe_sakic = {"skating" => 95, "passing" => 97, "wrist_shot" => 99, "hair" => 72}
+</pre></code>
 
 				<p>With hashes, retrieving a stored value is done by referencing its key:</p>
 
-				<code class="block">
-				joe_sakic["hair"]<br />
-				# Result: 72
-				</code>
+<code class="block"><pre>
+joe_sakic["hair"]
+# Result: 72
+</pre></code>
 
 				<p>In versions of Ruby up to and including 1.8.x, hashes were <em>unordered</em> collections, which represented another crucial distinction from arrays. In practice though, since values in hashes are generally accessed by their keys and not by a numerical index (as elements in arrays are), it’s still feasible to think of arrays as more explicitly and obviously ordered than hashes.</p>
 			</section>
@@ -98,13 +100,15 @@
 
 				<p>Use arrays for a collection of objects; use hashes for a collection of object pairs. Or, to give one final example:</p>
 
-				<p>Array<br />
-				<code class="block">bad_puns = ["Array of hope", "Make a hash of it"]</code>
-				</p>
+				<p>Array</p>
+<code class="block"><pre>
+bad_puns = ["Array of hope", "Make a hash of it"]
+</pre></code>
 
-				<p>Hash<br />
-				<code class="block">lameness_level = {"Array of hope" => 99, "Make a hash of it" => 92}</code>
-				</p>
+				<p>Hash</p>
+<code class="block"><pre>
+lameness_level = {"Array of hope" => 99, "Make a hash of it" => 92}
+</pre></code>
 
 				<p>Onwards and upwards, fellow Rubyists!</p>
 			</section>

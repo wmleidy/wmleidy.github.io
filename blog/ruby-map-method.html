@@ -4,8 +4,10 @@
 
 <head>
 	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width">
 	<title>Ruby's Map Method</title>
-	<link rel="stylesheet" type="text/css" href="../styles/default.css" /> 
+	<link rel="stylesheet" type="text/css" href="../styles/default.css" />
+	<link rel="stylesheet" type="text/css" href="../styles/responsive.css" media="screen and (max-width: 700px)"> 
 </head>
 
 <body>
@@ -50,9 +52,10 @@
 
 				<p>Now, let’s pretend we want to make a new array that adds 1 to each of the numbers in our initial array. Of course, in this instance we could just write <code>new_numbers = [2, 3, 4, 5, 6]</code>, but in real life when we don’t know what the initial values will be, this solution is untenable. Instead, we should use the #map method:</p>
 
-				<code class="block">new_numbers = numbers.map { |number| number = number + 1 }<br />
-				# Result: [2, 3, 4, 5, 6]
-				</code>
+<code class="block"><pre>
+new_numbers = numbers.map { |number| number = number + 1 }
+# Result: [2, 3, 4, 5, 6]
+</pre></code>
 
 				<p>The syntax might look a little complicated at first, but it’s easy once you break it down. First comes the data collection (most often an array&mdash;in this case, it is <code>numbers</code>), then the <code>.map</code> call, and finally a <strong>code block</strong>. When the code block consists of only one line, curly braces are used to enclose it; otherwise, a slightly different structure is utilized, as we’ll see below.</p>
 
@@ -73,19 +76,21 @@
 
 				<p>Okay, so now we have a new array called <code>new_numbers</code> that holds <code>[2, 3, 4, 5, 6]</code>. But what about our original array? Has <code>#map</code> altered it too? Let’s find out:</p>
 
-				<code class="block">p numbers<br />
-				# Result: [1, 2, 3, 4, 5]
-				</code>
+<code class="block"><pre>
+p numbers
+# Result: [1, 2, 3, 4, 5]
+</pre></code>
 
 				<p>The answer is no! Our original array is still intact. In fact, this is such an important point that it’s worth emphasizing through orthographic means: <strong><em>the</em> <code>#map</code> <em>method does not alter the original data that’s been inputted</em></strong>. Instead, it feeds the original data into a code block and generates new data, which can be saved to a new variable, returned to the main program, or otherwise utilized. Such methods that leave the original data intact are termed “safe” or “non-destructive” methods in Ruby parlance. Most of the methods in Ruby’s Enumerable module are “safe,” but many of them have an “evil twin” with an evil exclamation point (!) that will “destructively” overwrite the original data. For example:</p>
 
-				<code class="block">new_numbers = numbers.map! { |num| num += 1 }<br />
-				<br />
-				puts(numbers.to_s)<br />
-				puts(new_numbers.to_s)<br />
-				# Result: [2, 3, 4, 5, 6]<br />
-				[2, 3, 4, 5, 6]
-				</code>
+<code class="block"><pre>
+new_numbers = numbers.map! { |num| num += 1 }
+
+puts(numbers.to_s)
+puts(new_numbers.to_s)
+# Result: [2, 3, 4, 5, 6]
+[2, 3, 4, 5, 6]
+</pre></code>
 
 				<p>As can be seen above, the evil twin <code>#map!</code> will wipe out the original <code>numbers</code>	array. We could have just written <code>numbers.map! { |num| num += 1 }</code>. There is a potential advantage to this: fewer variables = less memory usage. The disadvantage is that you’re permanently altering data that you might want to use elsewhere. In general, it is recommend to use the “safe” methods unless there is a compelling reason not to do so.</p>
 			</section>
@@ -117,30 +122,36 @@ end
 
 				<p>Imagine for a moment that you are Professor Kampmeier and you’re teaching 200 pre-med hopefuls organic chemistry. The first exam has just been graded and all the results entered into a hash:</p>
 
-				<code class="block">exam1_grades = {"Matt" => 75, "Janice" => 78} # plus 198 more not shown</code>
+<code class="block"><pre>
+exam1_grades = {"Matt" => 75, "Janice" => 78}
+# plus 198 more not shown
+</pre></code>
 
 				<p>You’ve analyzed the grades, looked at the distribution, and decided that you only want to ruin the hopes and dreams of 80 students instead of 120.  That is, you’ve decided that you’ll apply a +6 percentage point curve to the exam grades. How can we apply the curve to our hash in Ruby? Let’s first see what happens when we just use <code>#map</code>:</p>
 
-				<code class="block">exam1_grades_curved = exam1_grades.map { |key, value| [key, value += 6] } <br />
-				p exam1_grades_curved <br />
-				# Result: [["Matt, 81], ["Janice", 84]]
-				</code>
+<code class="block"><pre>
+exam1_grades_curved = exam1_grades.map { |key, value| [key, value += 6] }
+p exam1_grades_curved
+# Result: [["Matt, 81], ["Janice", 84]]
+</pre></code>
 
 				<p>As predicted, we get an array of arrays, which is not what we want. We want to maintain the hash data structure. Let’s try a couple possible workarounds (which may not work in Ruby versions before 2.x):</p>
 
-				<code class="block">exam1_grades_curved = exam1_grades.map { |key, value| [key, value += 6] }.to_h <br />
-				# Result: {"Matt"=>81, "Janice"=>84}<br />
-				<br />
-				# Another possible variant: <br />
-				# exam1_grades_curved = Hash[exam1_grades.map {|key, value| [key, value += 6] }]
-				# Result: {"Matt"=>81, "Janice"=>84}
-				</code>
+<code class="block"><pre>
+exam1_grades_curved = exam1_grades.map { |key, value| [key, value += 6] }.to_h
+# Result: {"Matt"=>81, "Janice"=>84}
+
+# Another possible variant:
+# exam1_grades_curved = Hash[exam1_grades.map {|key, value| [key, value += 6] }]
+# Result: {"Matt"=>81, "Janice"=>84}
+</pre></code>
 
 				<p>In both variants, we’ve included a method, either <code>#to_h</code> or the <code>Hash</code> constructor, that will convert the mapped array back into a hash. This operates non-destructively&mdash;the original hash is left intact. But if we <em>did</em> want to act destructively on our starting hash, we would need to find an alternative to <code>#map!</code>, because it doesn’t work on hashes. One viable option is to use the <code>#update</code> method:</p>
 
-				<code class="block">exam1_grades.update(exam1_grades) { |key, value| value += 6}<br />
-				# Result: {"Matt"=>81, "Janice"=>84}
-				</code>
+<code class="block"><pre>
+exam1_grades.update(exam1_grades) { |key, value| value += 6}
+# Result: {"Matt"=>81, "Janice"=>84}
+</pre></code>
 
 				<p>The normal use of the <code>#update</code> method is to merge two hashes or create a new hash (the name of the merged hash or new hash is given as the argument of <code>#update</code> and any desired changes in key/value pairs are included in the code block). However, by tweaking the <code>#update</code> method by making its argument <code>exam1_grades</code> (the exact same hash as the input), this causes each value of the hash to be updated by the code block and then overwritten in place. This can be handy in certain situations, but one should be very careful&mdash;it will mercilessly obliterate the original hash.</p>
 

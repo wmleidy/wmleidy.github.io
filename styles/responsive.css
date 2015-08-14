@@ -46,7 +46,7 @@
 	header nav ul li a {
 		color: white;
 		font-size: 0.95em;
-		padding: 0;
+		padding: 5% 10%;
 		text-decoration: none;
 		display: inline-block;
 	}
@@ -62,13 +62,14 @@
 
 	#tagline, #taglinehome {
 		font-size: 1.8em;
-		border-top: 1px solid white;
+		border-top: 1px solid #7C8340;
 		padding: 4% 1%;
 		position: static;
 		width: 98%;
 		margin: auto;
 		letter-spacing: 0.1em;
 		line-height: 130%;
+		text-align: center;
 	}
 
 	#heroimage, #simplepage, #spaceholder {
@@ -77,18 +78,40 @@
 
 	article {
 		margin: 2%;
+		font-size: 1.1em;
+	}
+
+	article header {
+		background-color: white;
 	}
 
 	article p {
 		line-height: 150%;
 	}
 
-	footer .socialmedia {
+	article ul li, article ol li {
+		line-height: 150%;
+	}
+
+	code.block {
+		margin-right: 0;
+		margin-left: 0;
+	}
+
+	footer.socialmedia {
 		display: none;
 	}
 
 	#mobilefooter {
 		display: inline;
+	}
+
+	nav.colorswap ul li a {
+	color: white;
+	}
+
+	nav.colorswap ul li a:hover {
+		color: #232323;
 	}
 
 } 

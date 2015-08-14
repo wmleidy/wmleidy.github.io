@@ -4,8 +4,10 @@
 
 <head>
 	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width">
 	<title>Bingo! Ruby's Customizable Classes</title>
-	<link rel="stylesheet" type="text/css" href="../styles/default.css" /> 
+	<link rel="stylesheet" type="text/css" href="../styles/default.css" />
+	<link rel="stylesheet" type="text/css" href="../styles/responsive.css" media="screen and (max-width: 700px)"> 
 </head>
 
 <body>
@@ -62,8 +64,10 @@ end
 
 			<p>Now, whenever we want to add an individual book (called an <strong>instance</strong> of the class) to our list, it is given three important attributes at the time of its creation&mdash;title, author, and price&mdash;that are assigned to <strong>instance variables</strong>, denoted by the @ sign in the code. (We could have added many more, but three will suffice for this example.) In real life, we’re probably going to want to interface with a database to pull in books into our program, but of course it’s possible to add them manually too:</p>
 
-			<code class="block">dreams = Book.new("Einstein's Dreams", "Alan Lightman", 9.95) <br />
-			watchman = Book.new("Go Set a Watchman", "Harper Lee", 20.99)</code>
+<code class="block"><pre>
+dreams = Book.new("Einstein's Dreams", "Alan Lightman", 9.95)
+watchman = Book.new("Go Set a Watchman", "Harper Lee", 20.99)
+</pre></code>
 
 			<p>So, what exactly is the advantage of classes? Well, if we want to automate the process of offering a 10% discount, it’s easy to add a method to the <code>Book</code> class that will do exactly this:</p>
 
@@ -77,8 +81,10 @@ end
 			
 			<p>Now if we want to discount our lightly used <em>Go Set a Watchman</em> in a futile effort to compete with Amazon, all we have to do is call the <code>::discount</code> method on it like so:</p>
 
-			<code class="block">watchman.discount <br />
-			# Result: @price changes to 18.89</code>
+<code class="block"><pre>
+watchman.discount
+# Result: @price changes to 18.89
+</pre></code>
 
 			<p>A book for sale is just one practical, everyday example of how Ruby classes can model objects. But that’s just the proverbially proverbial tip of the iceberg&mdash;objects of much greater complexity are capable of being modeled in Ruby as well. It’s also possible to model objects of only slightly greater complexity, such as, for example, a bingo game.</p>
 		</section>
