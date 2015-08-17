@@ -26,7 +26,7 @@
 		position: static;
 		float: none;
 		margin: 1em 0;
-		padding-bottom: 1.25em;
+		padding-bottom: 0.4em;
 	}
 
 	header nav ul {
@@ -67,14 +67,18 @@
 
 	#tagline, #taglinehome {
 		font-size: 1.8em;
-		border-top: 1px solid #7C8340;
-		padding: 4% 1%;
+		border-top: 1px solid #CBD946; /*#7C8340;*/
+		padding: 3% 1%;
 		position: static;
-		width: 98%;
-		margin: auto;
+		width: 88%;
+		margin: 0 auto;
 		letter-spacing: 0.1em;
 		line-height: 130%;
 		text-align: center;
+	}
+
+	#taglinehome {
+		letter-spacing: 0;
 	}
 
 	#heroimage, #simplepage, #spaceholder {
@@ -84,6 +88,7 @@
 	article {
 		margin: 2%;
 		font-size: 1.1em;
+		margin-top: 1.8em;
 	}
 
 	article header {

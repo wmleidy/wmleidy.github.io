@@ -30,6 +30,7 @@ header {
 	top: 0.3em;
 	float: left;
 	z-index: 1;
+	width: 150px;
 }
 
 nav {
