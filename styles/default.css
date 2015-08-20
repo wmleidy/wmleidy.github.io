@@ -330,7 +330,7 @@ footer {
 
 /*For Home Page */
 .homepage p {
-	margin: 1.4em 0; /* space out sparse paragraph more */
+	margin: 1.4em 0; /* space out sparse paragraphs more */
 }
 
 #taglinehome {
@@ -365,15 +365,15 @@ footer {
 
 /* For Blogs Index */
 div.linkslist {
-	margin: 1.5em 5% 0 5%;
+	margin-top: 1.5em;
 }
 
 .linkslist a {
-	color: #7C8340;
+	color: #999;
 }
 
 .linkslist a:hover {
-	text-decoration: underline;
+	color: #0990c6;
 }
 
 /*For Resume Page*/

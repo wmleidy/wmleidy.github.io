@@ -96,11 +96,11 @@ end
       <p>A <strong>binary search</strong> requires a total of three steps each time it looks at a data point&mdash;one step to calculate the midpoint (choose the index), another step to perform the comparison, and then another step to redefine the boundaries of the search. Note that a binary search will only work on <em>sorted</em> arrays (it is ineffective on unsorted arrays). A generic Ruby method for performing binary search on sorted arrays that uses recursion would look like:</p>
 
 <code class="block"><pre>
-def binary_search(array, target, min, max)
+def binary_search(array, target, min = 0, max = array.length - 1)
   if max &lt; min
     return nil
   else
-    mid = min + ((max - min) / 2)
+    mid = (max - min) / 2
 
     if array[mid] > target
       binary_search(array, target, min, mid-1)
