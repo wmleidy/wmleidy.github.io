@@ -45,14 +45,19 @@
 
     <p>With the drawing to an end of the remote phase of Dev Bootcamp, I thought it would be à propos to look back at the process of building this website from the ground up. Thanks to the magic of git and commit messages (which you can read about in <a href="what-do-you-get-from-git.html">my very first blog post</a>), I am able to effortlessly go back in time and see how my website looked on a certain day, and pinpoint the changes I made and when I made them.</p>
 
+    <section>
     <h2>Initial Site Design</h2>
 
     <p>When I went back in time to my very first “completed” version of my website, finished on June 21 (technically at 4 am on June 22 after emerging victorous in a life-and-death battle with the intricacies and eccentricities of CSS, but who’s counting?), I was somewhat surprised to see just how similar my current version of site (as of August 16) to my initial commit. Sure, the navigation buttons were light gray and pill-shaped, most of the links resulted in 404s, and the content that was there was mostly laughable, but nevertheless the initial vision I had of my website, which I had wireframed earlier in that same week, has proven to be surprisingly robust.</p>
+    </section>
 
+    <section>
     <h2>Content Generation</h2>
 
     <p>I like writing. A lot. Especially when it’s on a specific topic. That’s why I didn’t have any trouble churning out two blog posts a week. It was all the other text that I felt were necessary for this website and its “hidden” (in plain view) purpose&mdash;the intro spiel, my short bio, the resume page, and the bits of text on the projects page&mdash;that felt like a chore to write. I did it slowly over a period of 4-5 weeks, setting a goal to get one part done per week.</p>
+    </section>
 
+    <section>
     <h2>Refining the Design</h2>
 
     <p>Almost immediately after pushing the first “completed” version of the site to GitHub, I started seeing places that needed improvement, sometimes with the help of friends. For example, someone told me that the links on my site looked like they had time-traveled back from 1999 (colored as they were in that early-Internet, Netscape Navigator blue and purple), at which point I sat down and analyzed how modern sites signify hyperlinks and what modern users expect. This change was swiftly made.</p>
@@ -62,16 +67,20 @@
     <p>Having to build my site from a blank CSS file did wonders for my CSS skills, and I felt very comfortable in executing my design idea for the social media icons present in the footer, which I did on July 10. This is still my favorite design element on the entire site&mdash;to me, there’s something very distinctive and pleasing about the olive green that pops out of that light gray background on <code>:hover</code>, but <em>De gustibus non est disputandum</em> of course.</p>
 
     <p>As my blog posts became more varied, I started to require more and more elements like <code>&lt;table&gt;</code>, <code>&lt;blockquote&gt;</code>, and, well, <code>&lt;code&gt;</code>, a tag which has made the bits of code in this sentence monospaced on a faint blue background. As my technical posts became more technical, I acutely felt the need for a <code>&lt;code&gt;</code> tag as well as a <code>&lt;code class="block"&gt;&lt;pre&gt;</code>, which I wrote into my CSS file on July 11 and July 16 (added a horizontal scroll bar). The CSS file itself was reorganized on July 26 under the influence of Jonathan Snook’s <a href="https://smacss.com/book/">webbook on Scalable and Modular Architecture for CSS</a>. It could still use another round of refactoring, but it’s a lot better than it was.</p>
+    </section>
 
+    <section>
     <h2>Rewriting the Content</h2>
 
     <p>The Russian proverb «первый блин комом» (“the first pancake is always a mess”) could just as well be applied to the writing of drafts, so I sat down on August 5 and hacked and slashed the core content into something that more closely represents my Platonic ideal of a pancake. Site design is important, but content is still king.</p>
+    </section>
 
-    <h2>Responsive Design and Other Important Improvements</h2>
+    <section>
+    <h2>Responsive Design and Other Improvements That Add Polish</h2>
 
     <p>While the overwhelming majority of this site was written by taking the principles I learned from reading two different HTML/CSS textbooks in the spring of this year and relentlessly experimenting with them, there are some pieces of professional polish that must be learned from (and attributed to) the experts. For example, I chose to do a “nuclear” CSS Reset (a more refined one found on <a href="http://cssreset.com/">this aggregator</a> might have been a better option) and borrowed the <a href="https://css-tricks.com/snippets/css/clear-fix/">“clearfix” hack</a> when I wanted to float images in <a href="my-introduction-to-object-oriented-design.html">my post on object-oriented design</a> without resorting to using <code>&lt;br style="clear:both" /&gt;</code> in my HTML.</p>
 
-    <p>On August 11, I fixed the problem I had with footers mysteriously floating in the middle of the screen on large monitors for pages with not so much content by drawing on the ideas referenced in this <a href="http://stackoverflow.com/questions/18469262/position-footer-at-bottom-of-page-having-fixed-header">Stack Overflow post</a>. I combined a couple of the ideas to come up with this fix:</p>
+    <p>On August 11, I fixed the problem I had with my page footers mysteriously floating in the middle of the screen on large monitors for pages with a minimal amount of content by drawing on the ideas referenced in this <a href="http://stackoverflow.com/questions/18469262/position-footer-at-bottom-of-page-having-fixed-header">Stack Overflow post</a>. I combined a couple of the suggestions to institute this fix:</p>
 
 <code class="block"><pre>
 html {
@@ -95,9 +104,17 @@ footer {
 }
 </pre></code>
 
-    <p>Also, on this day, completed my first experiment with DOM manipulation in a fun and educational hangman game.</p>
+    <p>Also, on this day, I completed my first experiment with using “vanilla” JavaScript (i.e. not jQuery) for DOM manipulation by making what I call <a href="../projects/javascript-hangman.html">SAT hangman</a>, a semi-educational game where the possible words consist of the 100 most common SAT words.</p>
 
-    <p>Finally, August 13 spamguard.js and responsive design</p>
+    <p>Finally, August 13 was destined to be the day I sat down and gave my site something it probably should have had from the beginning&mdash;a responsive design. (Earlier this same day, I added a custom script to render my email address more safely.) Despite being familiar with CSS media queries, I had always somehow thought that JavaScript had an essential role to play in resizing for mobile web. And while there certainly are many popular techniques in JavaScript that add in the functionality present in most mobile design these days, the core bit is actually done in CSS.</p>
+
+    <p>To other aspiring web designers and developers who might be reading this post, I would recommend starting with Ethan Marcotte’s <a href="http://alistapart.com/article/responsive-web-design">seminal article</a> on responsive design, before reading <a href="http://blog.teamtreehouse.com/modern-field-guide-responsive-web-design">a short introduction on responsive design</a> that details some of the shifts in responsive design practice that have occurred in the five years since the publication of Marcotte’s article. However, after reading these two articles and coming up with a responsive design scheme that kicks in at 700 or fewer pixels of width, my smartphone still defaulted to the desktop page, probably due to pixel density calculations. The technical solution to this&mdash;including <code>&lt;meta name="viewport" content="width=device-width"&gt;</code> within the <code>&lt;head&gt;</code>tag&mdash;and many more advanced tips and tricks can be found in <a href="http://learn.shayhowe.com/advanced-html-css/responsive-web-design/">Shay Howe’s excellent webbook</a> on HTML and CSS.</p>
+    </section>
+
+    <section>
+    <h2>Final Thoughts</h2>
+
+    <p>One thing that distinguishes writing a website from, say, writing an article for publication is that there is never any “final” product. There is always more content to add or another improvement that can enhance a site’s functionality or make it feel more “modern.” I have a few ideas for my site in both these areas, but in the coming weeks I will be prioritizing my classes and projects at Dev Bootcamp Chicago. The rapid speed of change is what defines web publishing in the 21st century and, in fact, the tech industry as a whole, and this is what makes it so exciting for me to be a part of it.</p>
 
     <footer>
       Follow me on Twitter <a href="https://twitter.com/BillLeidy">@BillLeidy</a> for weekly blog posts.
