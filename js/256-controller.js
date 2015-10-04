@@ -29,20 +29,13 @@ var View = function() {
       var $tile = $("#tile" + i);
       var oldClass = $tile.attr('class');
       var newClass = "value" + end[i].toString();
-      if (i === 1) { console.log(oldClass, newClass); }
       if (end[i] > 0) {
         $tile.text(end[i].toString());
       } else {
         $tile.text("");
       }
-      // var animationDirection = "padding" + direction.charAt(0).toUpperCase() + direction.slice(1);
       if (oldClass !== newClass) {
         $tile.switchClass(oldClass, newClass, 500, "easeInOutBounce");
-      // } else if (!start[i] && end[i] > 0) {
-        // $tile.switchClass("unfilled", "filled", 500, "easeInOutBounce");
-        // $tile.text(end[i]);
-      // } else if (end[i] === 0) {
-      //   $tile.switchClass(oldClass, newClass, 500, "easeInOutBounce");
       }
     }
   }
