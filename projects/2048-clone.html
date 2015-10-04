@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width">
+	<title>2048 Clone</title>
+	<link rel="stylesheet" type="text/css" href="../styles/default.css" />
+	<link rel="stylesheet" type="text/css" href="../styles/responsive.css" media="screen and (max-width: 700px)">
+	<link rel="stylesheet" type="text/css" href="../styles/256.css" />
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="../js/jquery-ui.js"></script>
+  <script src="../js/mousetrap.js"></script>
+  <script src="../js/underscore.js"></script>
+  <script src="../js/256-game.js"></script>
+  <script src="../js/256-controller.js"></script>
+</head>
+
+<body>
+	<header>
+		<a href="../index.html"><img src="../images/logo4.png" id="logo" alt="Bill Leidy" /></a>
+		<nav>
+			<ul>
+			  <li><a href="index.html">Projects</a></li>
+				<li><a href="../blog/index.html">Writings</a></li>
+				<li><a href="../resume.html">Resume</a></li>
+				<li><a href="../bio.html">About</a>
+				  <ul>
+				  	<li><a href="../bio.html">Bio</a></li>
+				  	<li><a href="../contact.html">Contact</a></li>
+				  </ul>
+				</li>
+			</ul>
+		</nav>
+	</header>
+	
+	<div id="simplepage"></div>
+
+	<h1>256! The game for those of us who like to win immediately!</h1>
+
+  <table id="game-board">
+  <tr>
+      <td class="value0" id="tile0"></td>
+      <td class="value0" id="tile1"></td>
+      <td class="value0" id="tile2"></td>
+      <td class="value0" id="tile3"></td>
+  </tr>
+  <tr>
+    <td class="value0" id="tile4"></td>
+    <td class="value0" id="tile5"></td>
+    <td class="value0" id="tile6"></td>
+    <td class="value0" id="tile7"></td>
+  </tr>
+  <tr>
+    <td class="value0" id="tile8"></td>
+    <td class="value0" id="tile9"></td>
+    <td class="value0" id="tile10"></td>
+    <td class="value0" id="tile11"></td>
+  </tr>
+  <tr>
+    <td class="value0" id="tile12"></td>
+    <td class="value0" id="tile13"></td>
+    <td class="value0" id="tile14"></td>
+    <td class="value0" id="tile15"></td>
+  </tr>
+  </table>
+
+  <h1 id="winner">You've won! Congratulations!</h1>
+</body>
+</html>
