@@ -2,7 +2,7 @@
 $(document).ready(function() {
   var game = new Game;
   // var game = new Game("2,4,8,16,2,4,8,16,2,4,8,16,2,4,8,16"); // for testing reverse
-  // var game = new Game("128,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0"); // for testing winning
+  // var game = new Game("1024,1024,0,0,0,0,0,0,0,0,0,0,0,0,0,0"); // for testing winning
   var view = new View;
   view.updateBoard([], game.toFlatArray(), 'down');
   var originalGame, updatedGame;
@@ -64,11 +64,11 @@ var View = function() {
 
   this.flashWinningStatement = function() {
     $("#status").text("Congratulations! You’ve won!");
-    $("#status").show();
+    $("#status").css("visibility", "visible");
   }
 
   this.flashLosingStatement = function() {
     $("#status").text("Sorry, you’ve lost!");
-    $("#status").show();
+    $("#status").css("visibility", "visible");
   }
 }
