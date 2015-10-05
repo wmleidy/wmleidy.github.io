@@ -1,7 +1,8 @@
 // Controller
 $(document).ready(function() {
   var game = new Game;
-  // var game = new Game("128,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0"); // for testing
+  // var game = new Game("2,4,8,16,2,4,8,16,2,4,8,16,2,4,8,16"); // for testing reverse
+  // var game = new Game("128,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0"); // for testing winning
   var view = new View;
   view.updateBoard([], game.toFlatArray(), 'down');
   var originalGame, updatedGame;
@@ -13,7 +14,10 @@ $(document).ready(function() {
       updatedGame  = game.move(direction);
       view.updateBoard(originalGame.toFlatArray(), updatedGame.toFlatArray(), direction);
       view.flashNewTile(game.spawnNewTile());
-      updatedGame.isWinningBoard();
+      if (updatedGame.checkStatus() === "loser") {
+        view.flashLosingStatement();
+        Mousetrap.reset();
+      }
       if (updatedGame.isWinner) {
         view.flashWinningStatement();
         Mousetrap.reset();
@@ -35,18 +39,25 @@ var View = function() {
         $tile.text("");
       }
       if (oldClass !== newClass) {
-        $tile.switchClass(oldClass, newClass, 500, "easeInOutBounce");
+        $tile.switchClass(oldClass, newClass, 200, "easeInOutBounce");
       }
     }
   }
 
-  this.flashNewTile = function(tileNumber) {
-    var $tile = $("#tile" + tileNumber);
-    $tile.switchClass("value0", "value2", 250, "easeInOutBounce");
-    $tile.text("2");
+  this.flashNewTile = function(tilePositionAndNumber) {
+    var $tile = $("#tile" + tilePositionAndNumber[0]);
+    $tile.effect("highlight", {color: "#F5F5DC"}, 100);
+    $tile.switchClass("value0", "value" + tilePositionAndNumber[1], 350, "easeInOutBounce");
+    $tile.text(tilePositionAndNumber[1]);
   }
 
   this.flashWinningStatement = function() {
-    $("#winner").show();
+    $("#status").text("Congratulations! You’ve won!");
+    $("#status").show();
+  }
+
+  this.flashLosingStatement = function() {
+    $("#status").text("Sorry, you’ve lost!");
+    $("#status").show();
   }
 }

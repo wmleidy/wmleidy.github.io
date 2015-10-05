@@ -18,6 +18,8 @@ h1 {
   margin: 0;
   font-size: 2em;
   color: white;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-weight: bold;
 }
 
 .value0 {
@@ -29,50 +31,45 @@ h1 {
 }
 
 .value4 {
-  background-color: #53b1d7;
-}
-
-.value8 {
-  background-color: #229bcc;
-}
-
-.value16 {
   background-color: #0990c6;
 }
 
-.value32 {
-  background-color: #0882b2;
-}
-
-.value64 {
-  background-color: #07739e;
-}
-
-.value128 {
+.value8 {
   background-color: #06658b;
 }
 
+.value16 {
+  background-color: #043a4f;
+}
+
+.value32 {
+  background-color: #5c5cad;
+}
+
+.value64 {
+  background-color: #333399;
+}
+
+.value128 {
+  background-color: #24246b;
+}
+
 .value256 {
-  background-color: #055677;
+  background-color: #003399;
 }
 
 .value512 {
-  background-color: #044863;
+  background-color: #00297a;
 }
 
 .value1024 {
-  background-color: #032b3b;
+  background-color: #001f5c;
 }
 
 .value2048 {
-  background-color: #021d28;
+  background-color: black;
 }
 
-.filled {
-  color: white;
-  background-color: #772222;
-}
-
-#winner {
+#status {
   display: none;
 }

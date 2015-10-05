@@ -17,8 +17,8 @@ Game.prototype.createBoard = function(gameString) {
   if (!gameString) {
     var randomNumbers = []
     do {
-      randomNumbers[0] = Math.floor(Math.random()*15);
-      randomNumbers[1] = Math.floor(Math.random()*15);
+      randomNumbers[0] = Math.floor(Math.random()*16);
+      randomNumbers[1] = Math.floor(Math.random()*16);
     } while (randomNumbers[0] === randomNumbers[1]);
 
     var template = [[0,0,0,0], [0,0,0,0], [0,0,0,0], [0,0,0,0]]
@@ -85,14 +85,15 @@ Game.prototype.move = function(direction) {
       newBoard.push(row);
     });
 
-    if (transpose) { newBoard = _.zip.apply(null,newBoard) }
-
+    if (transpose) {
+      newBoard = _.zip.apply(null,newBoard);
+      // workingBoard = _.zip.apply(null,workingBoard);
+    }
+    // return newBoard;  // When testing for loss, return the board, not the Game object
     game.setBoard(newBoard);
-    // game.spawnNewTile();
     return game;
   }
 }
-
 
 function stackTiles(array) {
   var condensedArray = _.reject(array, function(value) {return value === 0});
@@ -130,22 +131,40 @@ Game.prototype.spawnNewTile = function() {
     }
   }
   var updateLocation = _.sample(zeroLocations);
-  currentArray[updateLocation] = 2;
+  var tileRandomizer = Math.floor(Math.random()*8);
+  if (tileRandomizer === 7) {
+    currentArray[updateLocation] = 4;
+  } else {
+    currentArray[updateLocation] = 2;
+  }
   var template = [];
    for(var i=0; i < 13 ;i+=4) {
     template.push(currentArray.slice(i, i + 4))
   };
   this.setBoard(template);
-  return updateLocation;
+  return [updateLocation, currentArray[updateLocation]];
 }
 
-Game.prototype.isWinningBoard = function() {
+Game.prototype.checkStatus = function() {
   var that = this;
   var flattenedArray = this.toFlatArray();
   flattenedArray.forEach(function(tile) {
-    if (tile === 256) {
+    if (tile === 2048) {
       that.isWinner = true;
     }
   })
-  return false;
+
+  // These tests cause the actual game board to change (reverse) due to object references
+  // being copied (probably in the var workingBoard = game.board() line). Therefore, the
+  // code to check for losing conditions must be refactored somehow to prevent weird stuff
+  // from happening.
+
+  // if (that.toString() === _.flatten(processMove(that)).join(",") &&
+  //     that.toString() === _.flatten(processMove(that,true)).join(",") &&
+  //     that.toString() === _.flatten(processMove(that,false,true)).join(",") &&
+  //     that.toString() === _.flatten(processMove(that,true,true)).join(",")) {
+  //   return "loser"
+  // }
+  // console.log(that.toString());
+  // return this
 }
