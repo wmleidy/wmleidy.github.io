@@ -14,7 +14,9 @@ $(document).ready(function() {
       updatedGame  = game.move(direction);
       view.updateBoard(originalGame.toFlatArray(), updatedGame.toFlatArray(), direction);
       view.flashNewTile(game.spawnNewTile());
-      if (updatedGame.checkStatus() === "loser") {
+      view.cleanBoard(updatedGame.toFlatArray());   // otherwise a bit buggy when moving fast
+      
+      if (updatedGame.checkStatus() === "loser") {  // not currently implemented
         view.flashLosingStatement();
         Mousetrap.reset();
       }
@@ -34,7 +36,7 @@ var View = function() {
       var oldClass = $tile.attr('class');
       var newClass = "value" + end[i].toString();
       if (end[i] > 0) {
-        $tile.text(end[i].toString());
+        $tile.text(end[i]);
       } else {
         $tile.text("");
       }
@@ -50,6 +52,15 @@ var View = function() {
     $tile.switchClass("value0", "value" + tilePositionAndNumber[1], 350, "easeInOutBounce");
     $tile.text(tilePositionAndNumber[1]);
   }
+
+  this.cleanBoard = function(end) {
+    for (var i = 0; i < 16; i++) {
+      var $tile = $("#tile" + i);
+      if (end[i] === 0) {
+        $tile.stop(true, true).removeClass().addClass("value0");
+      }
+    }
+  } 
 
   this.flashWinningStatement = function() {
     $("#status").text("Congratulations! You’ve won!");
