@@ -5,15 +5,31 @@ $(document).ready(function() {
   // var game = new Game("1024,1024,0,0,0,0,0,0,0,0,0,0,0,0,0,0"); // for testing winning
   var view = new View;
   view.updateBoard([], game.toFlatArray(), 'down');
-  var originalGame, updatedGame;
+  var originalGameState, updatedGame, updatedGameState;
   var keyBindings = ['left', 'right', 'up', 'down'];
+
+  function arraysEqual(a, b) {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length != b.length) return false;
+
+    for (var i = 0; i < a.length; ++i) {
+      if (a[i] !== b[i]) return false;
+    }
+    return true;
+  }
 
   keyBindings.forEach(function(direction) {
     Mousetrap.bind(direction, function() {
-      originalGame = game;
+      originalGameState = game.toFlatArray();
       updatedGame  = game.move(direction);
-      view.updateBoard(originalGame.toFlatArray(), updatedGame.toFlatArray(), direction);
-      view.flashNewTile(game.spawnNewTile());
+      updatedGameState = updatedGame.toFlatArray();
+      view.updateBoard(originalGameState, updatedGameState, direction);
+
+      if (!arraysEqual(originalGameState, updatedGameState)) {
+        view.flashNewTile(game.spawnNewTile());
+      }
+      
       view.cleanBoard(updatedGame.toFlatArray());   // otherwise a bit buggy when moving fast
       
       if (updatedGame.checkStatus() === "loser") {  // not currently implemented

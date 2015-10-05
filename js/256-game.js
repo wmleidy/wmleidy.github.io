@@ -50,7 +50,7 @@ Game.prototype.toFlatArray = function() {
   return _.flatten(this.board());
 }
 
-// Move logic (stack => combine => spawn)
+// Move logic (stack => combine => spawn (only if there is change))
 Game.prototype.move = function(direction) {
   switch(direction) {
     case "left":
