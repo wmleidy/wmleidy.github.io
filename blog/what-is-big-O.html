@@ -72,13 +72,13 @@
 
       <p>Guessing haphazardly (or linearly from 1 to 100) could end up taking 100 turns to establish the correct number. Whereas I would always be able to guess within 7 guesses (50 -> 75 -> 63 -> 57 -> 60 -> 62 -> 61 being one such worst-case scenario).</p>
 
-      <p>Now let’s return to our computer&mdash;surely there’s not much difference in performance between taking 100 rounds steps or 7 rounds, but what if I were thinking of a number between 1 and 1,000,000,000 or, shifting gears a bit, thinking of a specific Facebook user from the 1.5 billion users that have active accounts. This is the limit case where we can really see the underlying efficiency of an algorithm.</p>
+      <p>Now let’s return to our computer&mdash;surely there’s not much difference in performance between taking 100 rounds or 7 rounds, but what if I were thinking of a number between 1 and 1,000,000,000 or, shifting gears a bit, thinking of a specific Facebook user from the 1.5 billion users that have active accounts. This is the limit case where we can really see the underlying efficiency of an algorithm.</p>
     </section>
 
     <section>
       <h2>Linear Search vs Binary Search</h2>
 
-      <p>You might be surprised to learn that the two ways that children try to guess a number between 1 and 100 (haphazardly/linearly or by homing in using midpoints) closely mimic two different ways to perform computer searches for data collections.</p>
+      <p>You might be surprised to learn that the two ways that children try to guess a number between 1 and 100 (haphazardly/linearly or by homing in using midpoints) closely mimic two different ways to perform computer searches over data collections.</p>
 
       <p>A <strong>linear search</strong> takes a total of two steps each time it examines a data point&mdash;one step to increment the index, and a second step to perform a comparison. An abstract version in Ruby for searching arrays might look something like this:</p>
 
