@@ -1,8 +1,6 @@
 // Controller
 $(document).ready(function() {
   var game = new Game;
-  // var game = new Game("2,4,8,16,2,4,8,16,2,4,8,16,2,4,8,16"); // for testing reverse
-  // var game = new Game("1024,1024,0,0,0,0,0,0,0,0,0,0,0,0,0,0"); // for testing winning
   var view = new View;
   view.updateBoard([], game.toFlatArray(), 'down');
   var originalGameState, updatedGame, updatedGameState;
@@ -32,7 +30,7 @@ $(document).ready(function() {
       
       view.cleanBoard(updatedGame.toFlatArray());   // otherwise a bit buggy when moving fast
       
-      if (updatedGame.checkStatus() === "loser") {  // not currently implemented
+      if (updatedGame.checkStatus() === "loser") {
         view.flashLosingStatement();
         Mousetrap.reset();
       }

@@ -87,9 +87,7 @@ Game.prototype.move = function(direction) {
 
     if (transpose) {
       newBoard = _.zip.apply(null,newBoard);
-      // workingBoard = _.zip.apply(null,workingBoard);
     }
-    // return newBoard;  // When testing for loss, return the board, not the Game object
     game.setBoard(newBoard);
     return game;
   }
@@ -154,17 +152,23 @@ Game.prototype.checkStatus = function() {
     }
   })
 
-  // These tests cause the actual game board to change (reverse) due to object references
-  // being copied (probably in the var workingBoard = game.board() line). Therefore, the
-  // code to check for losing conditions must be refactored somehow to prevent weird stuff
-  // from happening.
+  // Hardcoding because manipulating the actual game board to check for the same position
+  // after all possible moves causes unwanted consequences because of reverse and transpose
+  if (flattenedArray[0] !== flattenedArray[1] && flattenedArray[1] !== flattenedArray[2] &&
+      flattenedArray[2] !== flattenedArray[3] && flattenedArray[4] !== flattenedArray[5] &&
+      flattenedArray[5] !== flattenedArray[6] && flattenedArray[6] !== flattenedArray[7] &&
+      flattenedArray[8] !== flattenedArray[9] && flattenedArray[9] !== flattenedArray[10] &&
+      flattenedArray[10] !== flattenedArray[11] && flattenedArray[12] !== flattenedArray[13] &&
+      flattenedArray[13] !== flattenedArray[14] && flattenedArray[14] !== flattenedArray[15] &&
+      flattenedArray[0] !== flattenedArray[4] && flattenedArray[4] !== flattenedArray[8] &&
+      flattenedArray[8] !== flattenedArray[12] && flattenedArray[1] !== flattenedArray[5] &&
+      flattenedArray[5] !== flattenedArray[9] && flattenedArray[9] !== flattenedArray[13] &&
+      flattenedArray[2] !== flattenedArray[6] && flattenedArray[6] !== flattenedArray[10] &&
+      flattenedArray[10] !== flattenedArray[14] && flattenedArray[3] !== flattenedArray[7] &&
+      flattenedArray[7] !== flattenedArray[11] && flattenedArray[11] !== flattenedArray[15] &&
+      flattenedArray.indexOf(0) === -1 ) {
+    return "loser";
+  }
 
-  // if (that.toString() === _.flatten(processMove(that)).join(",") &&
-  //     that.toString() === _.flatten(processMove(that,true)).join(",") &&
-  //     that.toString() === _.flatten(processMove(that,false,true)).join(",") &&
-  //     that.toString() === _.flatten(processMove(that,true,true)).join(",")) {
-  //   return "loser"
-  // }
-  // console.log(that.toString());
-  // return this
+  return this;
 }
