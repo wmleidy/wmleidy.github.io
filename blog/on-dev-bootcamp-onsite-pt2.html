@@ -7,7 +7,9 @@
   <meta name="viewport" content="width=device-width">
   <title>Reflections on Dev Bootcamp Onsite: Part 2</title>
   <link rel="stylesheet" type="text/css" href="../styles/default.css" />
-  <link rel="stylesheet" type="text/css" href="../styles/responsive.css" media="screen and (max-width: 700px)"> 
+  <link rel="stylesheet" type="text/css" href="../styles/responsive.css" media="screen and (max-width: 700px)">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="../js/ajax-example.js"></script>
 </head>
 
 <body>
@@ -39,15 +41,47 @@
       <p class="date">October 28, 2015</p>
     </header>
 
+    <p>The <a href="on-dev-bootcamp-onsite-pt1.html">first phase</a> of Dev Bootcamp was very much still in the realm of teaching best programming practices through the study of algorithms, design patterns, and proper database setup. The second phase, however, jumped directly into a field I had very little knowledge of&mdash;web development proper. During these three weeks, I gained a new understanding of server-side and client-side technologies, routing conventions, using layout templates, increasing site responsiveness, and much, much more.</p>
+
     <section>
     <h2>Week 4 &ndash; Sinatra</h2>
 
-    <p>Nope, not the singer.</p>
+    <p>Nope, not the singer. Sinatra is an extremely lightweight web framework that uses Ruby. (Incidentally, it’s not the only web framework named after a musician&mdash;the popular Python framework Django also takes its name from a 20th-century musician.) Looking back, it seems a little silly and a bit naïve, but before this week, I didn’t really have a clear grasp about how everything comes together on the web. That is, how a newly created page inherits the same basic layout as the rest of a website (I knew that the method I used to build this very small website, copy-and-pasting the site template into each individual html file, wasn’t right, but I didn’t understand what the right way was), how to secure certain parts of a site based on whether a user is logged in or is the “owner” of the content, how to marry the data on the back end with what gets seen on the front end, etc., etc. Learning all this new stuff made this quite an exciting week&mdash;it was as if I had been initiated into the web-based verison of the <a href="https://en.wikipedia.org/wiki/Eleusinian_Mysteries">Eleusinian Mysteries</a> (I’ve gone ahead and included an explanatory link for those less familiar with the original Demeter, who has nothing to do with computer science).</p>
+
+    <p>The other notable thing about this week was the importance of two unpleasant-sounding four-letter acronyms, CRUD and REST. One deals with database operations and the other with web routing conventions, and both are intimately tied together. Once the principles of REST are internalized, routing for basic websites becomes very straightfoward.</p>
+    </section>
+
+    <section>
+    <h2>Week 5 &ndash; Ajax</h2>
+
+    <p>Nope, not the <a href="http://english.ajax.nl/">soccer team</a>, <a href="http://www.prideproducts.com/images/inventory/96360.jpg">household cleaner</a>, or <a href="https://en.wikipedia.org/wiki/Ajax_(mythology)">Iliadic hero</a>. When web developers talk about Ajax (Asynchronous JavaScript And XML), they refer to a set of techniques that serve to make the web much more dynamic. As an example, if you click the button below, you’ll be sent to a new page, which is fairly inconvenient as everything needs to be loaded up again and that takes time:</p>
+
+    <form method="get" action="on-dev-bootcamp-onsite-pt2-clicked.html">
+      <input type="submit" value="Normal Button" />
+    </form>
+
+    <p>However, if just a tiny bit of JavaScript is added, observe how much quicker the page responds to the user’s action:</p>
+
+    <form method="get" id="ajax-button">
+      <input type="submit" value="Ajaxed Button" />
+    </form>
+
+    <p>(Note: this isn’t technically an Ajax request, because no data is being sent to the server that will affect the back end, but rather it mimics the responsiveness of an AJAX request.)</p>
+
+    <p>The use of Ajax makes websites feel more responsive and enhances the user experience, which basically makes it a requirement for any modern website. Ajax techniques are also an integral part of single page applications, such as Gmail and Google Maps. So, as someone who is just as interested in the construction of the front end of websites as the back end architecture, this was also a very enlightening week, serving as a solid foundation for my future explorations into advanced JavaScript frameworks that provide the same kind of responsiveness.</p>
+
+    </section>
+
+    <section>
+    <h2>Week 6 &ndash; Consolidation and Exploration</h2>
+
+    <p>This was an atypical Dev Bootcamp week. It was simultaneously the most laidback and arguably the most stressful for many in the cohort. Laidback because the relentless pace momentarily abated to allow for review. Stressful because it featured a full-day assessment which wasn’t a full-day assessment because that’s a word that puts undue pressure on people to perform but was nevertheless a full-day assessment even if you don’t want to call it that. On “not really an assessment” day, I managed to get into a good groove pretty quickly
+
     </section>
 
     <p>* * * * *</p>
 
-    <p>This concludes Part 2 of this massive blog post. Back to <a href="on-dev-bootcamp-onsite-pt1.html">Part 1</a> or forward to <a href="on-dev-bootcamp-onsite-pt3.html">Part 3</a>.</p>
+    <p>This concludes Part 2 of this massive blog post. Return to <a href="on-dev-bootcamp-onsite-pt1.html">Part 1</a> or go to <a href="on-dev-bootcamp-onsite-pt3.html">Part 3</a>.</p>
 
     <footer>
       Follow me on Twitter <a href="https://twitter.com/BillLeidy">@BillLeidy</a> for weekly blog posts.
