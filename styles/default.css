@@ -271,6 +271,14 @@ blockquote {
 	color: #B8734A;
 }
 
+.headerlink {
+	color: #7C8340;
+}
+
+.headerlink:hover {
+	color: #0990c6;
+}
+
 /* Page Footer Stuff */
 
 /* Now incorporates footerfix.css, which was used for pages with limited
