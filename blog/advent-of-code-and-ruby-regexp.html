@@ -36,7 +36,7 @@
   <article>
     <header>
       <h1>Advent of Code, Day 5 &ndash; Regexp in Ruby</h1>
-      <p class="date">December 26, 2015</p>
+      <p class="date">December 28, 2015</p>
     </header>
     
     <p>Completing the New York Times crossword puzzle is a morning ritual for thousands of Americans. While I personally never partook in this ritual (the less time-intensive Jumble fit into my morning better), it was something I could definitely see myself doing if I could justify to myself the time required. So, when I found about Eric Wastl’s <a href="http://adventofcode.com/">Advent of Code</a>, which offered a new programming challenge daily for 25 days in December, it quickly became part of my morning (or sometimes late night) routine.</p>
@@ -52,13 +52,154 @@
 
     <p>Surprisingly (but perhaps not so surprisingly those who know Ruby fairly well), a regular expression in Ruby is an object, and an instance of the <code>Regexp</code> class can be conveniently created by placing the pattern to be matched between two forward slashes. For example, the regular expression <code>/aa/</code> would generate matches in the strings <code>"aardvark"</code> and <code>"naan"</code> (but very few other English words).</p>
 
-    <p>To look for a pattern match, you obviously need two things&mdash;a pattern and a string. Once you have these two things, there are three main Ruby methods that can be called:</p>
+    <p>To look for a pattern match, you obviously need two things&mdash;a pattern and a string. Once you have these two things, there are three Ruby methods that can be called:</p>
     <ul>
-      <li><code>#match</code> &ndash; <code>"devushka".match(/dev/)</code> would return a special <code>MatchData</code> object (<code>&lt;MatchData "dev"&gt;</code>)that behaves similarly to an array; <code>"chlopak".match(/dev/)</code> returns <code>nil</code>
-      <li><code>=~</code> &ndash; 
+      <li><code>#match</code> returns a special <code>MatchData</code> object that behaves similarly to an array if a match is found; <code>nil</code> if there is no match
+<code class="block"><pre>
+"devushka".match(/dev/) # &lt;MatchData "dev"&gt;
+/dev/.match("chlopak")  # nil
+</pre></code></li>
+      <li><code>=~</code> returns the string index of the starting point of the first match if one is found; <code>nil</code> if there is no match
+<code class="block"><pre>
+/ipp/ =~ "Mississippi"  # 7
+"rhinoceros" =~ /ipp/   # nil
+</pre></code></li>
+      <li><code>#scan</code> returns an array containing all found matches or an empty array if none are found
+<code class="block"><pre>
+"kolokola".scan(/ko/)   # ["ko", "ko"]
+"Karelian".scan(/ko/)   # []
+</pre></code></li>
+    </ul>
 
+    <p>Note that the order of the string and Regexp is unimportant for <code>#match</code> and <code>=~</code>, and also that both these methods return a “truthy” value when a match is found and a “falsy” value if one is not (and thus can be conveniently used in conditionals). However, <code>#scan</code> must be called on a string (i.e. <code>/a/.scan("banana") does not work</code>) and will return a “truthy” value whether or not a match is found. Also, both <code>#match</code> and <code>=~</code> find only the first match, whereas <code>#scan</code> hoovers up all the matches.</p>
 
+    <p>Those are the basics of Regexp in Ruby, but in order to fully unlock Regexp’s power, some additional techniques are required.</p>
     </section>
+
+    <section>
+    <h2>Wildcards and Ranges and Captures (Oh My!)</h2>
+
+    <p>Of course, when we look for patterns, maybe we don’t want to look for a set combination of letters, but something more abstract like a group of letters and numbers followed by the @ symbol. This is where <strong>wildcards</strong> come into play. The broadest wildcard is <code>.</code>, which can stand in for any character except a new line, but the wildcards <code>\d</code> (any digit), <code>\w</code> (any “word character”), and <code>\s</code> (any whitespace character) see a lot of use as well.</p>
+
+    <p>To give two brief examples, if a linguist wanted to analyze the frequency of letters that precede “n” in a certain language, all the matches within a huge corpus could be retrieved with <code>.scan(/.n/)</code> and then tallied. Or, if one wanted to find all the words that end with “ing” in a document, <code>.scan(/\w+ing\b/)</code> would do the trick. (<code>\w+</code> finds sequences of “word characters” one character or longer, while <code>\b</code> identifies word boundaries. For interactive confirmation that this works, try out the excellent site <a href="http://rubular.com/">Rubular</a>, a great resource for working with Regexp in Ruby.)</p>
+
+    <p>More precision can be achieved by using <strong>ranges</strong>, which are placed inside brackets. Whereas the <code>\w</code> wildcard picks up letters, numbers, and underscores, using <code>[a-z]</code> restricts matches only to (lowercase) letters. Thus we have <code>.scan(/[a-z]+ing\b/)</code>. Similarly, if the linguist in the above paragraph wanted to study only vowels preceding “n”, <code>.scan(/[aeiouy]n/)</code> would provide a succinct solution to the problem.</p>
+
+    <p>Finally, <strong>capture groups</strong> allow one to access specific parts of a successful match. They are designated by including the desired capture within parentheses, which can be done multiple times within a single Regexp. An example will make this clearer. Say that you’re trying to isolate the different parts of a properly formatted Social Security Number:</p>
+
+<code class="block"><pre>
+ssn = "333-22-4444"
+match = ssn.match(/\d{3}-\d{2}-\d{4}/)
+# &lt;MatchData "333-22-4444"&gt;
+</pre></code>
+
+    <p>This might look a little confusing at first, but it’s not too difficult: The Regexp pattern given looks for a sequence of exactly 3 digits (<code>\d</code> is a wildcard that means any digit and <code>{3}</code> means exactly three in a row) then a dash then exactly 2 digits then a dash then exactly 4 digits. Now, to add the three sets of parentheses for the three desired capture groups:</p>
+
+<code class="block"><pre>
+ssn = "333-22-4444"
+match = ssn.match(/(\d{3})-(\d{2})-(\d{4})/)
+# &lt;MatchData "333-22-4444" 1:"333" 2:"22" 3:"4444"&gt;
+</pre></code>
+
+    <p>Each of the digit sequences has been enclosed in parentheses, and these subpatterns are now included in the <code>MatchData</code> object. If we want to access the third capture group (that is, the group of 4 digits), Ruby gives us three different ways to do this:</p>
+
+<code class="block"><pre>
+$3                 # "4444"
+match[3]           # "4444"
+match.captures[2]  # "4444"
+</pre></code>
+
+    <p>Upon creation, Ruby stores capture groups in numbered global variables, within the <code>MatchData</code> object, and within something that can be conceptualized as a <code>captures</code> subarray within the <code>MatchData</code> object. Access is possible from any one of these three locations as demonstrated in the code above.</p>
+
+    <p>Finally, capture groups can also be referenced from within a regular expression as will be seen below.</p>
+    </section>
+
+    <section>
+    <h2>Advent of Code, Day 5 &ndash; The Problem</h2>
+
+    <p>In keeping with the Christmas theme, the <a href="http://adventofcode.com/day/5">Day 5 Problem</a> asked the user to develop a program that would help Santa quickly identify “nice” and “naughty” strings within a huge text file. For Part One of the problem, nice strings were defined as those that had 3 vowels, a double letter, and did not have adjacent combinations of certain consecutive letters (ab, cd, pq, and xy). For Part Two, nice strings were those that had “a pair of any two letters that appears at least twice in the string without overlapping, like xyxy (xy)” and “at least one letter which repeats with exactly one letter between them, like xyx, abcdefeghi (efe), or even aaa.”</p>
+
+    <p>Now, this problem <strong>could</strong> be solved without using regular expressions (for example, by setting up a <code>while</code> or <code>for</code> loop that steps through the string indices while checking for certain conditions), but such a solution would be much less elegant and arguably harder for a human to read. Therefore, it’s time to use what we’ve reviewed above to write some nice reusable one-line methods that leverage the power of Regexp.</p>
+    </section>
+
+    <section>
+    <h2>Advent of Code, Day 5 &ndash; A Solution</h2>
+
+    <p>Let’s get right to it. Here is my code for Part One:</p>
+
+<code class="block"><pre>
+def vowels_count(str)
+  str.scan(/[aeiou]/).length
+end
+
+def doubles_okay?(str)
+  !!str.match(/(.)\1/)
+end
+
+def forbiddens_okay?(str)
+  !str.match(/ab|cd|pq|xy/)
+end
+
+def nice_string?(str)
+  vowels_count(str) >= 3 && doubles_okay?(str) && forbiddens_okay?(str)
+end
+</pre></code>
+
+    <p>The first method, <code>vowels_count</code>, uses <code>#scan</code> to shove every individual vowel into an array and then determines the size of this array. This should seem pretty straightforward.</p>
+
+    <p>The second method, <code>doubles_okay?</code>, is not nearly as straightforward. Let’s focus on the Regexp for now. By using <code>(.)</code>, where <code>.</code> as you’ll recall is a wildcard that can stand in for any character, I am in essence inspecting by turn each and every individual character in the string and assigning it to a capture group. Then, I reference this provisional first capture group using <code>\1</code> in order to determine whether the character following the wildcard is the exact same character. If this occurs somewhere in the string, then the pattern <code>/(.)\1/</code> is matched and a <code>MatchData</code> object is returned. However, if there is no double letter in the string, then there will not be a match and <code>nil</code> will be returned instead.</p>
+
+    <p>In theory, it is sufficient to send either the <code>MatchData</code> object (a truthy value) or <code>nil</code> (a falsy value) to the <code>nice_string?</code> method&mdash;the answer we would get back would be the same. However, it is cleaner to coerce the result of <code>#doubles_okay?</code> into a Boolean using <code>!!</code>. If a match is found, the first <code>!</code> changes the <code>MatchData</code> object into <code>false</code> and the second <code>!</code> flips this <code>false</code> into <code>true</code>. Analogously, if a double letter isn’t present, <code>nil</code> becomes <code>true</code> and then ultimately <code>false</code>.</p>
+
+    <p>The third method, <code>forbiddens_okay?</code>, will result in <code>MatchData</code> if any one of the four forbidden sequences (split by the <code>|</code> symbol in the Regexp) are found in the string. We want such a case to send <code>false</code> to the <code>nice_string?</code> method (because forbiddens are not “okay”), so the <code>!</code> operator is used to switch the result into the appropriate Boolean value.</p>
+
+    <p>Finally, now that all three of the Regexp building blocks are in place, just by using the <code>&&</code> operator the <code>nice_string?</code> method will return <code>true</code> should all three of the other methods return <code>true</code> and <code>false</code> otherwise.</p>
+
+    <p>My approach to Part Two was similar:</p>
+
+<code class="block"><pre>
+def has_pairs?(str)
+  !!str.match(/(..).*\1/)
+end
+
+def has_mini_palindrome?(str)
+  !!str.match(/(.).\1/)
+end
+
+def nice_string2?(str)
+  has_pairs?(str) && has_mini_palindrome?(str)
+end
+</pre></code>
+
+    <p>The method <code>has_pairs?</code> sequentially looks at each pair of side-by-side characters in the string and provisionally makes it a capture group. The <code>.*</code> signifies that zero or more characters can separate the initial pair and the second occurrence of the pair, which (as in the <code>doubles_okay?</code> method above) is represented by <code>\1</code>, a reference to the first capture group. After the <code>#match</code> method returns a <code>MatchData</code> object or <code>nil</code>, this result is then coerced into a Boolean using <code>!!</code>.</p>
+
+    <p>The next method, <code>has_mini_palindrome?</code>, is very similar to <code>doubles_okay?</code> with the only substantive difference being that there has to be exactly one character between the pair of letters. Therefore, we insert the all-inclusive wildcard <code>.</code> between <code>/(.)\1/</code> to get <code>/(.).\1/</code>. If necessary, you can convince yourself that this works as expected by playing around with <a href="http://rubular.com/">Rubular</a>. The final step, though not strictly necessary because we already have truthy and falsy values, is to transform this result into a Boolean with <code>!!</code>.</p>
+
+    <p>Lastly, the brilliantly named method <code>nice_string2?</code> will return <code>true</code> if and only if both subconditions are <code>true</code> and <code>false</code> if one or both of the subconditions are not met.</p>
+    </section>
+
+    <section>
+    <h2>Final Remarks</h2>
+
+    <p>So, I hope it is clear from this example how using Regexp can succinctly solve a variety of pattern matching problems. By way of contrast, imagine having to write a <code>has_pairs?</code> method without being able to leverage Regexp. It might end up looking something like this:</p>
+
+<code class="block"><pre>
+def has_pairs?(str)
+  i = 0
+  while i &lt; str.length - 1
+    pair = str[i..i+1]
+    j = i + 2
+    while j &lt; str.length - 1
+      return true if pair == str[j..j+1]
+      j += 1
+    end
+    i += 1
+  end
+  false
+end
+</pre></code>
+
+    <p>While admittedly the Regexp (<code>str.match(/(..).*\1/)</code>) might be hard for a neophyte to read, I still think it looks much cleaner than the nested <code>while</code> loops above. As such, Regexp is well worth the effort to master for anyone who regularly deals with parsing or validating strings in their programming work.</p>
 
     <footer>
       Follow me on Twitter <a href="https://twitter.com/BillLeidy">@BillLeidy</a> for regular blog posts.
