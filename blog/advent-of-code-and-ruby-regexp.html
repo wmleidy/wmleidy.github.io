@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width">
+  <title>Advent of Code</title>
+  <link rel="stylesheet" type="text/css" href="../styles/default.css" />
+  <link rel="stylesheet" type="text/css" href="../styles/responsive.css" media="screen and (max-width: 700px)"> 
+</head>
+
+<body>
+  <header>
+    <a href="../index.html"><img src="../images/logo_serif.png" id="logo" alt="Bill Leidy" /></a>
+    <nav>
+      <ul>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Writings</a></li>
+        <li><a href="../resume.html">Resume</a></li>
+        <li><a href="../bio.html">About</a>
+          <ul>
+            <li><a href="../bio.html">Bio</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <img src="../images/writing_bkgd.jpg" id="heroimage" alt="" />
+    <div id="tagline">THE BLOG</div>
+  </header>
+  
+  <div id="spaceholder"></div>
+
+  <main>
+  <article>
+    <header>
+      <h1>Advent of Code, Day 5 &ndash; Regexp in Ruby</h1>
+      <p class="date">December 26, 2015</p>
+    </header>
+    
+    <p>Completing the New York Times crossword puzzle is a morning ritual for thousands of Americans. While I personally never partook in this ritual (the less time-intensive Jumble fit into my morning better), it was something I could definitely see myself doing if I could justify to myself the time required. So, when I found about Eric Wastl’s <a href="http://adventofcode.com/">Advent of Code</a>, which offered a new programming challenge daily for 25 days in December, it quickly became part of my morning (or sometimes late night) routine.</p>
+
+    <p>There was a lot to like about Advent of Code. First, most of the problems were of just the right complexity&mdash;20-40 minutes on average to come up with a working solution, but engaging enough to really require one to think. Second, there was a very nice variety of problem types, some math-based, some that were best solved using advanced data structures, some that allowed a Rubyist to delve deeply into infrequently used features of the language, and some that lent themselves to object-oriented programming. Third, the <a href="https://www.reddit.com/r/adventofcode/">reddit community</a> was a great resource for seeing how other programmers approached the problem and implemented their solutions in a range of different languages.</p>
+
+    <p>As Advent of Code occupied a lot of my mental energy in December (deepening my knowledge of writing tests for Rails was the other thing I focused on this month), I am going to use a few of my favorite solutions as jumping off points for a series of short technical blogs. (The rest of my Advent of Code solutions can be found in a <a href="https://github.com/wmleidy/advent-of-code-ruby">GitHub repo</a>.) My first post covers regular expressions in Ruby, and is directed toward those without a lot of experience using Regex.</p>
+
+    <section>
+    <h2>Intro to Regexp in Ruby</h2>
+
+    <p>Regular expressions, commonly called “Regex” in programming vernacular (or sometimes “Regexp,” as it exists in the Ruby language), provide a convenient way to locate matching patterns within a <a href="https://en.wikipedia.org/wiki/String_(computer_science)">string</a>. Need to validate that something is an email address or a phone number? Regex is your friend.</p>
+
+    <p>Surprisingly (but perhaps not so surprisingly those who know Ruby fairly well), a regular expression in Ruby is an object, and an instance of the <code>Regexp</code> class can be conveniently created by placing the pattern to be matched between two forward slashes. For example, the regular expression <code>/aa/</code> would generate matches in the strings <code>"aardvark"</code> and <code>"naan"</code> (but very few other English words).</p>
+
+    <p>To look for a pattern match, you obviously need two things&mdash;a pattern and a string. Once you have these two things, there are three main Ruby methods that can be called:</p>
+    <ul>
+      <li><code>#match</code> &ndash; <code>"devushka".match(/dev/)</code> would return a special <code>MatchData</code> object (<code>&lt;MatchData "dev"&gt;</code>)that behaves similarly to an array; <code>"chlopak".match(/dev/)</code> returns <code>nil</code>
+      <li><code>=~</code> &ndash; 
+
+
+    </section>
+
+    <footer>
+      Follow me on Twitter <a href="https://twitter.com/BillLeidy">@BillLeidy</a> for regular blog posts.
+    </footer>
+  
+  </article>
+  </main>
+
+  <footer>
+    Site design and content by Bill Leidy, 2015.
+    <div id="mobilefooter"><a href="../contact.html">Contact Page</a></div> 
+    <div class="socialmedia">
+      <a href="https://twitter.com/BillLeidy"><img src="../images/twitter-icon2.png" alt="Twitter link" /></a>
+      <a href="https://www.linkedin.com/in/wmleidy"><img src="../images/linkedin-icon2.png" alt="LinkedIn link" /></a>
+      <a href="https://github.com/wmleidy/"><img src="../images/github-icon2.png" alt="GitHub link" /></a>
+      <a href="mailto:please-enable-javascript" class="emaillink"><img src="../images/email-icon2.png" alt="Email link" /></a>
+    </div>
+  </footer>
+  <script src="../js/spamguard.js"></script>
+</body>
+
+</html>
