@@ -73,7 +73,7 @@
 
     <p>Note that the order of the string and Regexp is unimportant for <code>#match</code> and <code>=~</code>, and also that both these methods return a “truthy” value when a match is found and a “falsy” value if one is not (and thus can be conveniently used in conditionals). However, <code>#scan</code> must be called on a string (i.e. <code>/a/.scan("banana") does not work</code>) and will return a “truthy” value whether or not a match is found. Also, both <code>#match</code> and <code>=~</code> find only the first match, whereas <code>#scan</code> hoovers up all the matches.</p>
 
-    <p>Those are the basics of Regexp in Ruby, but in order to fully unlock Regexp’s power, some additional techniques are required.</p>
+    <p>Those are the basics of Regexp in Ruby (though perhaps the string replacement methods <code>#sub</code> and <code>#gsub</code> should be added to the three “find” methods). But, in order to fully unlock Regexp’s power, some additional techniques are required.</p>
     </section>
 
     <section>
