@@ -195,16 +195,21 @@ article img.websites {
 
 img.right {
 	float: right;
-	margin: 0 0 1.5em 1.5em;
+	margin: 0 0 1em 1em;
 }
 
 img.left {
 	float: left;
-	margin: 0 1.5em 1.5em 0;
+	margin: 0 1em 1em 0;
 }
 
 img.small {
 	width: 8em;
+	height: auto;
+}
+
+img.medium {
+	width: 12em;
 	height: auto;
 }
 
