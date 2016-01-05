@@ -48,10 +48,9 @@
 
     <p>Like most modern programming languages, Ruby gives its users lots of built-in data structures, such as arrays, hashes, sets, and queues. So, why bother building a <code>Graph</code> class? That is to say, what makes graphs unique as a data structure?</p>
 
-    <p><img src="../images/simple-graph.png" alt="Simple Graph" class="right medium" />In contrast to other data structures, where the main goal is convenient storage, searching, and sorting, and the connections between the elements are incidental (a byproduct of their sorted order or order of insertion), <strong>in graphs, the connections themselves encode the relevant information</strong>. This will become clearer with an example. To the right is a (very) simple map of Poland with four cities represented on it. These cities could be stored in an array, <code>["Warsaw", "Lublin", "Poznań", "Gdańsk"]</code>, but then we miss out on what’s important here&mdash;the distances and routes between the cities. The graph data structure optimizes the storage of such “connection-heavy” data.</p>
+    <p><img src="../images/simple-graph.png" alt="Simple Graph" class="right medium" />In contrast to other data structures, where the main goal is convenient storage, searching, and sorting, and the connections between the elements are incidental (a byproduct of their sorted order or order of insertion), <strong>in graphs, the connections themselves encode the relevant information</strong>. This will become clearer with an example. To the right is a (comically) simple map of Poland with four cities represented on it. These cities could be stored in an array, <code>["Warsaw", "Lublin", "Poznań", "Gdańsk"]</code>, but then we miss out on what’s important here&mdash;the distances and routes between the cities. The graph data structure optimizes the storage of such “connection-heavy” data.</p>
 
-    <p>For my mini-graph, the connections represent kilometers by car between the cities. However, please note, that the connections can represent pretty much anything. For a travel or mapping site, these connections might also represent travel time, price, a quality of travel metric, and other things besides just distance. For a social networking site, the points might symbolize users, whereas a connection between two points encodes a friendship.</p>
-
+    <p>For my mini-graph, the connections represent distance in kilometers by car between the cities. However, it is important to note that the connections can represent pretty much anything. For a travel or mapping site, these connections might also represent travel time, price, a quality of travel metric, or other things besides just distance. For a social networking site, the points might symbolize users, whereas a connection between two points encodes a friendship.</p>
     </section>
 
     <section>
@@ -59,9 +58,11 @@
 
     <p>There are a plethora of terms that are commonly used for the points and lines on a graph. I personally prefer the terms <strong>vertices</strong> and <strong>edges</strong>, so I will use these terms below.</p>
 
-    <p>Graphs can be <strong>weighted</strong> or <strong>unweighted</strong>. In a weighted graph, edges have a particular value associated with them. In an unweighted graph, the edge between any two points is merely present or absent. Graphs can also be <strong>directed</strong> or <strong>undirected</strong>. In a directed graph, the edge <em>A&rarr;B</em> might not necessarily be the same as the edge <em>B&rarr;A</em> (for road maps, think of cases like one-way roads or construction detours; for social networks like Twitter, think of unreciprocated followings). Obviously, in an undirected graph, <em>A&rarr;B</em> will always be the same as <em>B&rarr;A</em>.</p>
+    <p>Graphs can be <strong>weighted</strong> or <strong>unweighted</strong>. In a weighted graph, edges have a particular value associated with them. In an unweighted graph, an edge between any two points is merely present or absent.</p>
 
-    <p>Now that our terminology has been defined, let’s explore how one might a <code>Graph</code> class in Ruby, while keeping in mind that what follows below is just one programmer’s first attempt at doing so.</p>
+    <p>Graphs can also be <strong>directed</strong> or <strong>undirected</strong>. In a directed graph, the edge <em>A&rarr;B</em> might not necessarily be the same as the edge <em>B&rarr;A</em> (for road maps, think of cases like one-way roads or construction detours; for social networks like Twitter, think of unreciprocated followings). That is to say, if an edge <em>A&rarr;B</em> exists and has a weight of 5, the edge <em>B&rarr;A</em> could have a different weight or might not even exist at all. Obviously, in an undirected graph, <em>A&rarr;B</em> will always be the same as <em>B&rarr;A</em>.</p>
+
+    <p>Now that our terminology has been defined, let’s explore how one might write a <code>Graph</code> class in Ruby, while keeping in mind that what follows below is just one programmer’s first attempt at doing so.</p>
     </section>
 
     <section>
@@ -69,12 +70,12 @@
 
     <p>One of the most interesting decisions that needs to made when constructing a <code>Graph</code> class is choosing how to keep track of the data in the edges. To my knowledge, there are three different “canonical” ways to do this, each with its own pluses and minuses:</p>
     <ol>
-      <li>matrix &ndash; a matrix <em>M</em> of size <em>n x n</em> can be built with the data at <em>M[x,y]</em> representing either the presence/absence of a connection (unweighted graphs) or the weight of such a connection (weighted graphs); if you’re old enough to remember these things called road altases, they generally contained matrices of distances between major cities</li>
+      <li>matrix &ndash; a matrix <em>M</em> of size <em>n x n</em> can be built with the data at <em>M[x,y]</em> representing either the presence or absence of a connection for unweighted graphs or the weight of such a connection forweighted graphs (if you’re old enough to remember these things called <a href="http://www.randmcnally.com/images/atlas-covers/1942-RandMcNally.jpg">road altases</a>, they usually contained matrices of distances between major cities)</li>
       <li>array + linked lists &ndash; the array <em>A</em> holds all the vertices in order, while the value at <em>A[x]</em> holds a linked list that contains all the edges that originate at vertex <em>x</em>; best used for sparsely connected graphs</li>
       <li>pointer-based &ndash; each vertex has one or two associated arrays, one that holds pointers to all of the vertex’s neighbors (or <em>nil</em> if no connection is present) and, if necessary, another array containing all the weights</li>
     </ol>
 
-    <p>In my <code>Graph</code> class, I opted to use a pointer-based model. I chose to optimize my implementation for graphs with “named” (string-based) vertices and edges that hold a numerical value. Here’s what my <code>Vertex</code> class and beginnings of my <code>Graph</code> class looks like:</p>
+    <p>In my <code>Graph</code> class, I opted to use a pointer-based model. I chose to optimize my implementation for graphs with “named” (string-based) vertices and edges that hold a numerical value. Here’s what my <code>Vertex</code> class and the beginnings of my <code>Graph</code> class looks like:</p>
 
 <code class="block"><pre>
 class Vertex
@@ -142,13 +143,13 @@ end
     <section>
     <h2>What Can We Do With Graphs? &ndash; An Overview</h2>
 
-    <p>This blog post would grow to even more monstrous proportions if I were to describe in detail all the cool stuff it’s possible to do with graphs and analyze the methods I wrote to accomplish these things. Instead I’ll provide a barebones overview of the possibilities of graphs, and refer my reader to my GitHub account for <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/data-structures/graphs.rb">all the implementation details</a>:</p>
+    <p>This post would grow to even more monstrous proportions if I were to describe in detail all the cool stuff it’s possible to do with graphs and analyze the methods I wrote to accomplish these things. Instead I’ll provide a barebones overview of the possibilities of graphs, and refer my reader to my GitHub account for all the <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/data-structures/graphs.rb">implementation details</a>:</p>
 
     <ul>
       <li>Traversal/Search &ndash; Graphs can be traversed (or searched) in either a breadth-first fashion (by using a queue) or a depth-first fashion (by using a stack)</li>
-      <li>Shortest Path &ndash; The classic algorithm for finding the shortest path between two vertices was envisioned by legendary computer scientist <a href="http://amturing.acm.org/award_winners/dijkstra_1053701.cfm">Edsger Dijkstra</a>; theoretically, this can be used for weighted graphs (e.g. to find the shortest distance) and for unweighted graphs too (e.g. to find the minimum number of degrees to Kevin Bacon)</li>
+      <li>Shortest Path &ndash; The classic algorithm for finding the shortest path between two vertices was formulated by legendary computer scientist <a href="http://amturing.acm.org/award_winners/dijkstra_1053701.cfm">Edsger Dijkstra</a>; theoretically, this can be used for weighted graphs (e.g. to find the shortest distance) and for unweighted graphs too (e.g. to find the minimum number of degrees to Kevin Bacon)</li>
       <li>All Shortest Paths &ndash; If we’re interested in finding all the shortest distances between all the vertices on the graph, Floyd’s algorithm does so quicker (in O(n^3) time) than repeatingly calling Dijkstra’s algorithm</li>
-      <li>Minimal Spanning Tree &ndash; To find the “minimal spanning tree” of an undirected graph, that is, a collection of connected edges with the minimum possible total weight, Prim’s algorithm is one such option</li>
+      <li>Minimal Spanning Tree &ndash; To find the “minimal spanning tree” of an undirected graph, that is, a collection of connected edges with the minimum possible total weight, Prim’s algorithm is one such option</li>
       <li>Traveling Salesman Problem &ndash; Lastly, the famously difficult and theoretically important optimization problem, the <a href="https://en.wikipedia.org/wiki/Travelling_salesman_problem">Traveling Salesman Problem</a>, which tries to find the shortest route whereby a salesman can visit each “city” (vertex) exactly once and then return to his hometown, is best represented by using a graph</li>
     </ul>
     </section>
@@ -162,9 +163,9 @@ end
     <section>
     <h2>Advent of Code, Day 9 &ndash; A Solution</h2>
 
-    <p>Shortly after checking the <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/input/input9-distances.txt">input</a> I received, I realized that (a) my implementation of the <code>Graph</code> class, with its emphasis on names and distances, would be a perfect fit, and (b) the problem is basically a variation of the Traveling Salesman Problem (TSP), only the salesman need not return to his home base.</p>
+    <p>Shortly after checking the <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/input/input9-distances.txt">input</a> I received, I realized that (a) my implementation of the <code>Graph</code> class, with its emphasis on names and distances, would be an ideal fit, and (b) the problem is basically a variation of the Traveling Salesman Problem (TSP), only the salesman need not return to his home base.</p>
 
-    <p>In the original <code>Graph</code> class I wrote, there was a rather naïve, brute-force approach to the TSP that only worked effectively up until about 10 vertices (as the number of cities (<em>n</em>) grows, the possible routes grow at the same speed as <em>n!</em>). In order to adapt it for this problem, I would need to modify the code to account for a situation where returning to the origin is unnecessary. I accomplished this with an optional <code>return_to_origin</code> parameter, which defaults to <code>true</code> as in the standard TSP.</p>
+    <p>In the original <code>Graph</code> class I wrote, there was a rather naïve, brute-force approach to the TSP that only worked effectively up until about 10 vertices (as the number of cities (<em>n</em>) grows, the possible routes grow at the same speed as <em>n!</em>). In order to adapt it for this problem, I would need to modify the code to account for a situation where returning to the origin is unnecessary. I accomplished this by including an optional <code>return_to_origin</code> parameter, which defaults to <code>true</code> as in the standard TSP.</p>
 
     <p>I’ll now walk through my modified implementation of the Traveling Salesman Problem:</p>
 
@@ -178,7 +179,7 @@ class Graph
     paths = (0...count).to_a.permutation.to_a
 </pre></code>
 
-    <p>This is the setup. Set the minimum path distance to <code>Infinity</code>, the best path to <code>nil</code>, and generate each and every possible permutation of the range 0 to the total number of vertices minus one. The numbers in these permutations will refer to the indices in the <code>@vertices</code> array of the graph and represent the city-to-city path that the salesman (or Santa) will provisionally take.</p><br />
+    <p>This is the setup. Set the minimum path distance to <code>Infinity</code>, the best path to <code>nil</code>, and generate each and every possible permutation of the range 0 to the total number of vertices minus one. The numbers in these permutations will refer to the indices of the graph’s <code>@vertices</code> array and represent the city-to-city path that the salesman (or Santa) will take.</p><br />
 
 <code class="block"><pre>
     paths.each do |path|
@@ -229,9 +230,9 @@ class Graph
   end
 </pre></code>
 
-      <p>Not strictly necessary, but the <code>#brute_force_tsp</code> method finishes by calling a private method <code>#humanize_tsp_route</code> that renders the city-to-city path easily readable for a humans, who are more adept at words than numbers.</p><br />
+      <p>Not strictly necessary, but the <code>#brute_force_tsp</code> method finishes by calling a private method <code>#humanize_tsp_route</code> that renders the city-to-city path easily readable for humans, who are generally more adept at working with words than long lists of numbers.</p><br />
 
-      <p>With the setup now in place, all that’s left to do is to create a graph containing the vertices and edges specified in the input data and then call <code>#brute_force_tsp</code> with the <code>return_to_origin</code> flag set to <code>false</code>. Using <a href="advent-of-code-and-ruby-regexp.html">Ruby’s Regexp</a>, it would possible to pull out as capture groups all the data we’re interested in; however, a sloppier but no less effective way to do this is to use <code>#split</code> on each line of the input (comments are interspersed):</p>
+      <p>Returning to the Advent of Code problem, with this setup now in place, all that’s left to do is to create a graph containing the vertices and edges specified in the input data and then call <code>#brute_force_tsp</code> with the <code>return_to_origin</code> flag set to <code>false</code>. Using <a href="advent-of-code-and-ruby-regexp.html">Ruby’s Regexp</a>, it would possible to pull out as capture groups all the data we’re interested in; however, a sloppier but no less effective way to do this is to use <code>#split</code> on each line of the input (comments are interspersed):</p>
 
 <code class="block"><pre>
 def build_graph_io
@@ -274,9 +275,9 @@ places.brute_force_tsp(false)
     <section>
     <h2>Part Two and Final Observations</h2>
 
-    <p>As this post is already waaaaaaay too long as it stands, I shall have mercy on you and shan’t torture you with a blow-by-blow explanation of the Part Two solution, which can be found <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/solutions/9-minimum-distance.rb">here</a>. Basically, it’s just another tweak of the basic TSP algorithm, only this one tracks maximum distance (as written it will only work for fully connected graphs, i.e. a path exists between each and every city, which is fine because our input conforms to this criterion).</p>
+    <p>As this post is already waaaaaaay too long as it stands, I shall have mercy on you and refrain from torturing you with a blow-by-blow explanation of the Part Two solution, which can be found <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/solutions/9-minimum-distance.rb">here</a>. Basically, it’s just another tweak of the basic TSP algorithm, only this one tracks maximum distance (as written it will only work for fully connected graphs, i.e. graphs in which a path exists between each and every city, which is fine because our input conforms to this criterion).</p>
 
-    <p>Of course, it is fully possible to solve this problem without bothering to construct a graph. (This day’s <a href="https://www.reddit.com/r/adventofcode/comments/3w192e/day_9_solutions/">solution thread</a> on the AoC subreddit has a ridiculously concise &ndash; and ridiculously hard to read &ndash; Ruby solution spanning only 7 lines.) But by recognizing common computational problems and then identifying which data structure lends itself best to solving them, it’s possible to leverage well-known, reusable algorithms and adapt them toward specific goals whether that’s modeling relations on an expansive social networking or achieving more mundane goals like helping Santa visit eight mythical lands as quickly and painlessly as possible.</p>
+    <p>Of course, it is fully possible to solve this problem without bothering to construct a graph. (<a href="https://www.reddit.com/r/adventofcode/comments/3w192e/day_9_solutions/">The Day 9 solution thread</a> on the AoC subreddit has a ridiculously concise &ndash; and ridiculously hard to read &ndash; Ruby solution spanning only 7 lines.) But by recognizing common computational problems and then identifying which data structure lends itself best to solving them, it’s possible to take advantage of well-known, reusable algorithms and adapt them toward specific goals whether that’s modeling relations on an expansive social networking site or achieving more mundane goals like arranging relatives around a table in an ideal fashion (as in <a href="http://adventofcode.com/day/13">Day 13 of Advent of Code</a>) or helping Santa visit eight mythical lands as quickly and painlessly as possible.</p>
     </section>
 
     <footer>
