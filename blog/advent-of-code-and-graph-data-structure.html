@@ -149,21 +149,135 @@ end
       <li>Shortest Path &ndash; The classic algorithm for finding the shortest path between two vertices was envisioned by legendary computer scientist <a href="http://amturing.acm.org/award_winners/dijkstra_1053701.cfm">Edsger Dijkstra</a>; theoretically, this can be used for weighted graphs (e.g. to find the shortest distance) and for unweighted graphs too (e.g. to find the minimum number of degrees to Kevin Bacon)</li>
       <li>All Shortest Paths &ndash; If we’re interested in finding all the shortest distances between all the vertices on the graph, Floyd’s algorithm does so quicker (in O(n^3) time) than repeatingly calling Dijkstra’s algorithm</li>
       <li>Minimal Spanning Tree &ndash; To find the “minimal spanning tree” of an undirected graph, that is, a collection of connected edges with the minimum possible total weight, Prim’s algorithm is one such option</li>
-      <li>Traveling Salesman Problem &ndash; Lastly, the famously difficult and theoretically important optimization problem, the <a href="https://en.wikipedia.org/wiki/Travelling_salesman_problem">Traveling Salesman Problem</a>, which tries to find the shortest route whereby a salesman can visit each “city” (vertex) exactly once and then return to his hometown, is best represented by using a graph (the method I’ve written is a rather naïve, brute-force approach that only works effectively up until about 10 vertices on a fully connected graph as the number of possible routes grows at the same speed as does <em>n!</em>)</li>
+      <li>Traveling Salesman Problem &ndash; Lastly, the famously difficult and theoretically important optimization problem, the <a href="https://en.wikipedia.org/wiki/Travelling_salesman_problem">Traveling Salesman Problem</a>, which tries to find the shortest route whereby a salesman can visit each “city” (vertex) exactly once and then return to his hometown, is best represented by using a graph</li>
     </ul>
     </section>
 
     <section>
     <h2>Advent of Code, Day 9 &ndash; The Problem</h2>
 
-    <p>On the <a href="http://adventofcode.com/day/9">ninth day</a> of Advent of Code, the elves give Santa a list of new locations to visit that includes distances between every pair of locations, and the task of the programmer was to find the shortest route that would visit each and every location exactly once. For Part Two of the problem, Santa, probably a bit drunk on eggnog, decides he’s going to show off and take the longest possible route between all the locations (while visiting each of them exactly once). The lack of concern he shows for his reindeer’s health is frightening, but I guess we can excuse it because Santa grew up in a different era.</p>
+    <p>On the <a href="http://adventofcode.com/day/9">ninth day</a> of Advent of Code, the elves give Santa a list of new locations to visit that includes distances between every pair of locations, and the task of the programmer is to find the shortest route that would visit each and every location exactly once. That’s Part One. For Part Two of the problem, Santa, probably a bit drunk on eggnog, decides he’s going to show off and take the longest possible route between all the locations (while visiting each of them exactly once). The lack of concern he shows for his reindeer’s health is frightening, but I guess we can excuse it because Santa grew up in a different era.</p>
     </section>
 
     <section>
     <h2>Advent of Code, Day 9 &ndash; A Solution</h2>
+
+    <p>Shortly after checking the <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/input/input9-distances.txt">input</a> I received, I realized that (a) my implementation of the <code>Graph</code> class, with its emphasis on names and distances, would be a perfect fit, and (b) the problem is basically a variation of the Traveling Salesman Problem (TSP), only the salesman need not return to his home base.</p>
+
+    <p>In the original <code>Graph</code> class I wrote, there was a rather naïve, brute-force approach to the TSP that only worked effectively up until about 10 vertices (as the number of cities (<em>n</em>) grows, the possible routes grow at the same speed as <em>n!</em>). In order to adapt it for this problem, I would need to modify the code to account for a situation where returning to the origin is unnecessary. I accomplished this with an optional <code>return_to_origin</code> parameter, which defaults to <code>true</code> as in the standard TSP.</p>
+
+    <p>I’ll now walk through my modified implementation of the Traveling Salesman Problem:</p>
+
+<code class="block"><pre>
+class Graph
+  # ...see above...
+
+  def brute_force_tsp(return_to_origin = true)
+    min_distance = 1.0/0.0
+    best_path = nil
+    paths = (0...count).to_a.permutation.to_a
+</pre></code>
+
+    <p>This is the setup. Set the minimum path distance to <code>Infinity</code>, the best path to <code>nil</code>, and generate each and every possible permutation of the range 0 to the total number of vertices minus one. The numbers in these permutations will refer to the indices in the <code>@vertices</code> array of the graph and represent the city-to-city path that the salesman (or Santa) will provisionally take.</p><br />
+
+<code class="block"><pre>
+    paths.each do |path|
+      cumulative_distance = 0
+
+      path[0..path.length - 2].each_with_index do |start_index, i|
+        end_index = path[i + 1]
+        if vertices[start_index].weights[end_index]
+          cumulative_distance += vertices[start_index].weights[end_index]
+        else
+          cumulative_distance += 1.0/0.0
+        end
+      end
+</pre></code>
+
+      <p>For each path, the cumulative distance is calculated. For a given path, say <code>[3, 5, 2, 7, 6, 0, 1, 4]</code>, the permutation array is iterated through step-by-step until the last position is reached. In the first step in the above array, the salesman travels from the fourth city to the sixth city (Ruby arrays are zero based, of course). The appropriate <code>Vertex</code> is referenced from the graph’s <code>@vertices</code> instance variable and if that <code>Vertex</code>’s <code>@weights</code> array holds a numerical value at position <code>[5]</code>, then the value is added to the cumulative distance. If no edge exists between the cities, then that array position will hold <code>nil</code>, and thus the cumulative distance is set to <code>Infinity</code> as no valid path exists.</p><br />
+
+<code class="block"><pre>
+      if return_to_origin
+        if vertices[path[-1]].weights[path[0]]
+          cumulative_distance += vertices[path[-1]].weights[path[0]]
+        else
+          cumulative_distance += 1.0/0.0
+        end
+      end
+</pre></code>
+
+      <p>In a normal TSP algorithm, this wouldn’t be an <code>if</code> block&mdash;the cost to return “home” from the last city is always calculated and added to the total. However, in the Advent of Code problem, we want to be able to pass a <code>false</code> flag into the algorithm and bypass this step.</p><br />
+
+<code class="block"><pre>
+      if cumulative_distance &lt; min_distance
+        min_distance = cumulative_distance
+        best_path = path
+      end
+    end
+</pre></code>
+
+      <p>The end of the <code>each</code> loop. If the evaluated path’s cumulative distance is the shortest, then replace the value of the minimum distance and array representation of the best path.</p><br />
+
+<code class="block"><pre>
+    if return_to_origin
+      puts "The shortest distance for a complete loop is #{min_distance}"
+    else
+      puts "The shortest route to visit each vertex exactly once is #{min_distance}"
+    end
+    puts humanize_tsp_route(best_path, return_to_origin)
+    [min_distance, best_path]
+  end
+</pre></code>
+
+      <p>Not strictly necessary, but the <code>#brute_force_tsp</code> method finishes by calling a private method <code>#humanize_tsp_route</code> that renders the city-to-city path easily readable for a humans, who are more adept at words than numbers.</p><br />
+
+      <p>With the setup now in place, all that’s left to do is to create a graph containing the vertices and edges specified in the input data and then call <code>#brute_force_tsp</code> with the <code>return_to_origin</code> flag set to <code>false</code>. Using <a href="advent-of-code-and-ruby-regexp.html">Ruby’s Regexp</a>, it would possible to pull out as capture groups all the data we’re interested in; however, a sloppier but no less effective way to do this is to use <code>#split</code> on each line of the input (comments are interspersed):</p>
+
+<code class="block"><pre>
+def build_graph_io
+  g = Graph.new
+  places = []
+
+  IO.foreach("../input/input9-distances.txt") do |line|
+    data = line.split
     
+    # if locations don't yet exist in graph, add it to graph and tracker array
+    unless places.index(data[0])
+      places &lt;&lt; data[0]
+      g.add_vertex(data[0])
+    end
+
+    unless places.index(data[2])
+      places &lt;&lt; data[2]
+      g.add_vertex(data[2])
+    end
+
+    # now add edge to graph
+    g.add_edge(data[0], data[2], data[4].to_i)
+  end
+  g
+end
+</pre></code>
+
+    <p>Note that the <code>#add_edge</code> method defaults to undirected, so with each call to this method, not one, but two edges are added to graph, both of the same weight. Now that the graph can be built, the denouement is a simple two-liner, which could easily be uglified into a one-liner:</p>
+
+<code class="block"><pre>
+places = build_graph_io
+places.brute_force_tsp(false)
+
+# Output:
+# The shortest route to visit each vertex exactly once is 117
+# Faerun -> AlphaCentauri -> Tambi -> Snowdin -> Norrath -> Tristram -> Arbre -> Straylight
+</pre></code>
     </section>
 
+    <section>
+    <h2>Part Two and Final Observations</h2>
+
+    <p>As this post is already waaaaaaay too long as it stands, I shall have mercy on you and shan’t torture you with a blow-by-blow explanation of the Part Two solution, which can be found <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/solutions/9-minimum-distance.rb">here</a>. Basically, it’s just another tweak of the basic TSP algorithm, only this one tracks maximum distance (as written it will only work for fully connected graphs, i.e. a path exists between each and every city, which is fine because our input conforms to this criterion).</p>
+
+    <p>Of course, it is fully possible to solve this problem without bothering to construct a graph. (This day’s <a href="https://www.reddit.com/r/adventofcode/comments/3w192e/day_9_solutions/">solution thread</a> on the AoC subreddit has a ridiculously concise &ndash; and ridiculously hard to read &ndash; Ruby solution spanning only 7 lines.) But by recognizing common computational problems and then identifying which data structure lends itself best to solving them, it’s possible to leverage well-known, reusable algorithms and adapt them toward specific goals whether that’s modeling relations on an expansive social networking or achieving more mundane goals like helping Santa visit eight mythical lands as quickly and painlessly as possible.</p>
+    </section>
 
     <footer>
       Follow me on Twitter <a href="https://twitter.com/BillLeidy">@BillLeidy</a> for regular blog posts.
