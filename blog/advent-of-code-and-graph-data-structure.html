@@ -59,7 +59,7 @@
 
     <p>There are a plethora of terms that are commonly used for the points and lines on a graph. I personally prefer the terms <strong>vertices</strong> and <strong>edges</strong>, so I will use these terms below.</p>
 
-    <p>Graphs can be “weighted” or ”unweighted.” In a weighted graph, edges have a particular value associated with them. In an unweighted graph, the edge between any two points is merely present or absent. Graphs can also be “directed” or ”undirected.” In a directed graph, the edge <em>A&rarr;B</em> might not necessarily be the same as the edge <em>B&rarr;A</em> (for road maps, think of cases like one-way roads or construction detours; for social networks like Twitter, think of unreciprocated followings). Obviously, in an undirected graph, <em>A&rarr;B</em> will always be the same as <em>B&rarr;A</em>.</p>
+    <p>Graphs can be <strong>weighted</strong> or <strong>unweighted</strong>. In a weighted graph, edges have a particular value associated with them. In an unweighted graph, the edge between any two points is merely present or absent. Graphs can also be <strong>directed</strong> or <strong>undirected</strong>. In a directed graph, the edge <em>A&rarr;B</em> might not necessarily be the same as the edge <em>B&rarr;A</em> (for road maps, think of cases like one-way roads or construction detours; for social networks like Twitter, think of unreciprocated followings). Obviously, in an undirected graph, <em>A&rarr;B</em> will always be the same as <em>B&rarr;A</em>.</p>
 
     <p>Now that our terminology has been defined, let’s explore how one might a <code>Graph</code> class in Ruby, while keeping in mind that what follows below is just one programmer’s first attempt at doing so.</p>
     </section>
@@ -67,14 +67,101 @@
     <section>
     <h2>Building a Graph Class</h2>
 
-    <p>One of the most interesting decisions that needs to made when constructing a <code>Graph</code> class is choosing how to keep track of the data in the edges. There are three different canonical ways to do this, each with its own pluses and minuses:</p>
+    <p>One of the most interesting decisions that needs to made when constructing a <code>Graph</code> class is choosing how to keep track of the data in the edges. To my knowledge, there are three different “canonical” ways to do this, each with its own pluses and minuses:</p>
     <ol>
       <li>matrix &ndash; a matrix <em>M</em> of size <em>n x n</em> can be built with the data at <em>M[x,y]</em> representing either the presence/absence of a connection (unweighted graphs) or the weight of such a connection (weighted graphs); if you’re old enough to remember these things called road altases, they generally contained matrices of distances between major cities</li>
       <li>array + linked lists &ndash; the array <em>A</em> holds all the vertices in order, while the value at <em>A[x]</em> holds a linked list that contains all the edges that originate at vertex <em>x</em>; best used for sparsely connected graphs</li>
       <li>pointer-based &ndash; each vertex has one or two associated arrays, one that holds pointers to all of the vertex’s neighbors (or <em>nil</em> if no connection is present) and, if necessary, another array containing all the weights</li>
     </ol>
 
-    <p>I chose to try a pointer-based model...not sure how well I did...insert code...</p>
+    <p>In my <code>Graph</code> class, I opted to use a pointer-based model. I chose to optimize my implementation for graphs with “named” (string-based) vertices and edges that hold a numerical value. Here’s what my <code>Vertex</code> class and beginnings of my <code>Graph</code> class looks like:</p>
+
+<code class="block"><pre>
+class Vertex
+  attr_accessor :name, :neighbors, :weights
+
+  def initialize(name)
+    @name = name
+    @neighbors = []
+    @weights = []
+  end
+end
+
+class Graph
+  attr_accessor :vertices
+
+  def initialize
+    @vertices = []
+  end
+
+  def add_vertex(name)
+    @vertices &lt;&lt; Vertex.new(name)
+  end
+
+  def find_vertex_by_name(name)
+    vertices.each do |v|
+      return v if v.name == name
+    end
+    nil
+  end
+
+  def count
+    vertices.length
+  end
+end
+</pre></code>
+
+    <p>A graph is initialized with an empty array of vertices. Each vertex is instantiated with a name, an empty neighbors array, and an empty weights array. Because of my choice to optimize for working easily with named vertices, I have a method <code>#find_vertex_by_name</code> that can track down a vertex by, well, its name, which is used internally to allow for the convenient invocation of complex graph algorithms using the vertex names as parameters. The <code>#count</code> method is heavily used internally as well, as knowing the total number of vertices is essential for many of the graph algorithms.</p>
+
+    <p>The ease of using vertex names for arguments for all the methods of the <code>Graph</code> does come with a cost&mdash;it is somewhat clunky and costly to convert the name to the proper index position in the graph’s <code>@vertices</code> instance variable. For example, here’s my <code>#add_edge</code> method, which defaults for use with unweighted and undirected graphs (it will create a matching pair of unweighted edges for <em>A&rarr;B</em> and <em>B&rarr;A</em>), but can made to create edges for weighted and/or directed graphs by including additional arguments:</p>
+
+<code class="block"><pre>
+class Graph
+  # ...see above...
+
+  def add_edge(start_name, end_name, weight = nil, undirected = true)
+    from = vertices.index { |v| v.name == start_name }
+    to   = vertices.index { |v| v.name == end_name }
+    vertices[from].neighbors[to] = true
+    vertices[from].weights[to] = weight if weight
+    if undirected
+      vertices[to].neighbors[from] = true
+      vertices[to].weights[from] = weight if weight
+    end
+  end
+end
+</pre></code>
+
+    <p>The first thing the method does is track down the index positions in the graph’s <code>@vertices</code> array corresponding to the names entered as first and second arguments. Then the neighbors array of the starting (“originating”) vertex is updated at the position of the ending vertex to <code>true</code>.</p>
+
+    <p>How Ruby is programmed to handle arrays helps here. Say we’ve just added a ninth vertex ("Nine") and tenth vertex ("Ten") to a graph <code>g</code>. Should we want to add an undirected, unweighted edge between the two, it’s as simple as calling: <code>g.add_edge("Nine", "Ten")</code>. The <code>@neighbors</code> array of the ninth vertex will be updated to <code>[nil, nil, nil, nil, nil, nil, nil, nil, nil, true]</code>. When <code>true</code> is assigned to <code>@neighbors[9]</code> (corresponding to the tenth vertex of the graph as Ruby arrays are zero-based), the other array positions are automatically filled with <code>nil</code>. This indicates that the "Nine" vertex has an edge that runs to the tenth vertex, but no other edges.</p>
+
+    <p>By default, the <code>#add_edge</code> method will also create an edge that runs in the reverse direction. This can be suppressed by including <code>false</code> as a fourth argument to turn the <code>undirected</code> flag off. Including a weight for the edge(s) created is as simple as including it as a third argument.</p>
+    </section>
+
+    <section>
+    <h2>What Can We Do With Graphs? &ndash; An Overview</h2>
+
+    <p>This blog post would grow to even more monstrous proportions if I were to describe in detail all the cool stuff it’s possible to do with graphs and analyze the methods I wrote to accomplish these things. Instead I’ll provide a barebones overview of the possibilities of graphs, and refer my reader to my GitHub account for <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/data-structures/graphs.rb">all the implementation details</a>:</p>
+
+    <ul>
+      <li>Traversal/Search &ndash; Graphs can be traversed (or searched) in either a breadth-first fashion (by using a queue) or a depth-first fashion (by using a stack)</li>
+      <li>Shortest Path &ndash; The classic algorithm for finding the shortest path between two vertices was envisioned by legendary computer scientist <a href="http://amturing.acm.org/award_winners/dijkstra_1053701.cfm">Edsger Dijkstra</a>; theoretically, this can be used for weighted graphs (e.g. to find the shortest distance) and for unweighted graphs too (e.g. to find the minimum number of degrees to Kevin Bacon)</li>
+      <li>All Shortest Paths &ndash; If we’re interested in finding all the shortest distances between all the vertices on the graph, Floyd’s algorithm does so quicker (in O(n^3) time) than repeatingly calling Dijkstra’s algorithm</li>
+      <li>Minimal Spanning Tree &ndash; To find the “minimal spanning tree” of an undirected graph, that is, a collection of connected edges with the minimum possible total weight, Prim’s algorithm is one such option</li>
+      <li>Traveling Salesman Problem &ndash; Lastly, the famously difficult and theoretically important optimization problem, the <a href="https://en.wikipedia.org/wiki/Travelling_salesman_problem">Traveling Salesman Problem</a>, which tries to find the shortest route whereby a salesman can visit each “city” (vertex) exactly once and then return to his hometown, is best represented by using a graph (the method I’ve written is a rather naïve, brute-force approach that only works effectively up until about 10 vertices on a fully connected graph as the number of possible routes grows at the same speed as does <em>n!</em>)</li>
+    </ul>
+    </section>
+
+    <section>
+    <h2>Advent of Code, Day 9 &ndash; The Problem</h2>
+
+    <p>On the <a href="http://adventofcode.com/day/9">ninth day</a> of Advent of Code, the elves give Santa a list of new locations to visit that includes distances between every pair of locations, and the task of the programmer was to find the shortest route that would visit each and every location exactly once. For Part Two of the problem, Santa, probably a bit drunk on eggnog, decides he’s going to show off and take the longest possible route between all the locations (while visiting each of them exactly once). The lack of concern he shows for his reindeer’s health is frightening, but I guess we can excuse it because Santa grew up in a different era.</p>
+    </section>
+
+    <section>
+    <h2>Advent of Code, Day 9 &ndash; A Solution</h2>
+    
     </section>
 
 
