@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width">
+  <title>Recursion / Advent of Code</title>
+  <link rel="stylesheet" type="text/css" href="../styles/default.css" />
+  <link rel="stylesheet" type="text/css" href="../styles/responsive.css" media="screen and (max-width: 700px)"> 
+</head>
+
+<body>
+  <header>
+    <a href="../index.html"><img src="../images/logo_serif.png" id="logo" alt="Bill Leidy" /></a>
+    <nav>
+      <ul>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Writings</a></li>
+        <li><a href="../resume.html">Resume</a></li>
+        <li><a href="../bio.html">About</a>
+          <ul>
+            <li><a href="../bio.html">Bio</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <img src="../images/writing_bkgd.jpg" id="heroimage" alt="" />
+    <div id="tagline">THE BLOG</div>
+  </header>
+  
+  <div id="spaceholder"></div>
+
+  <main>
+  <article>
+    <header>
+      <h1>Recursion (Advent of Code, Day 12)</h1>
+      <p class="date">January 5, 2016</p>
+    </header>
+    
+    <p>This is the third in a series of posts stemming from <a href="http://adventofcode.com/">Advent of Code</a>, the super fun set of 25 holiday-themed programming challenges. Prior blog entries were devoted to <a href="advent-of-code-and-ruby-regexp.html">Regexp in Ruby</a> and <a href="advent-of-code-and-graph-data-structure">the graph data structure</a>. The current post tackles a more abstract concept: <strong>recursion</strong>.</p>
+
+    <section>
+    <h2>Advent of Code, Day 12 &ndash; The Problem</h2>
+    
+    <p>Given <a href="https://raw.githubusercontent.com/wmleidy/advent-of-code-ruby/master/input/input12-objects.json">this</a> 27,277-character “fustercluck” of a JSON object, which consists of objects, arrays, numbers, and strings all embedded and nested inside each other, find all the numbers and sum them up. That was Part One of <a href="http://adventofcode.com/day/12">Day 12</a>. Part Two added the additional complication that should an object contain the string <code>"red"</code>, then all data within the object and its children should not be counted toward the final sum. But arrays with the string <code>"red"</code> are okay and should be part of the accumulated total.</p>
+    </section>
+
+    <section>
+    <h2>Advent of Code, Day 12 &ndash; A Solution</h2>
+
+    <p>My first instinct was to try to tackle this problem by using recursion. As I found out later by looking at the Advent of Code leaderboard and then the <a href="https://www.reddit.com/r/adventofcode/comments/3wh73d/day_12_solutions/">Day 12 solutions subreddit</a>, Part One could be solved in 2-3 minutes coding time by using Regex to isolate all the groups of digits using the wildcard <code>\d+</code> and then adding all of them up. However, my recursive approach was vindicated in Part Two, because the added rule of discounting objects (but not arrays) with the string <code>"red"</code> is virtually impervious to assault by Regex.</p>
+
+    <p>Before sharing my solution, I’d like to take a step back and offer an explanation of recursion that differs from how it is usually described for benefit of any readers in my audience who feel a bit shaky on the topic of recursive algorithms.</p>
+    </section>
+
+    <section>
+    <h2>What Is Recursion? An Explanation and An Example</h2>
+
+    <p>The standard description of a recursive algorithm usually goes something like this: “a recursive algorithm is an algorithm that calls itself.” From a certain point of view, this might be true, but speaking more strictly, a function can’t really call itself. Rather, a function creates a similar copy of itself (almost always with smaller or more restrictive input) and then adds this copy to the top of what is known as a <a href="https://en.wikipedia.org/wiki/Call_stack">call stack</a>. This copy gets processed first (following a stack’s LIFO principle&mdash;the Last In is the First Out) and the calculation of the ultimate result of the original function is deferred until all the other copies are cleared from the stack.</p>
+
+    <p>Okay, those were a lot of words and probably didn’t do much to make things clearer. Maybe this example will help. Imagine that you’ve just taken your place at the end of a very long line (TSA screening at O’Hare?). You say to yourself, “Oh, wow. This is a long line. I wonder how many people are in front of me.” You ask the person in front of you, let’s call her Allison, how many people are in front of her. But Allison, like you, can only see a long line of humanity snaking around corners and Tensabarriers. So she asks the next person, Jim, how many are ahead of him. And so on.</p>
+
+    <p>Eventually, the question “How many people are in front of you in line?” gets to the person at the front of it. He says, “What? Are you blind? I’m at the front of the line; there’s no one in front of me.” So, the second person in line now knows there is exactly one person ahead of him. He turns around and says, “Kind sir, you had asked me how many people were standing ahead of me in this queue. Well, there is only one person. Do with this information what you will.” Now the third person, because he’s good at math, can conclude that there are exactly two people standing in front of him. He turns around and cheerfully reports this to the fourth person in line. And so on.</p>
+
+    <p>This process is continuously repeated, with the updated count being passed along toward the back of the line, until it reaches Jim. Jim then tells Allison there are 80 people standing ahead of him in line. Finally, Allison turns to you and reports there are 81 people in front of her in line. Now you have your answer. You say to yourself, “There are 82 people ahead of me in line. Shit. I’m going to miss my flight.”
+
+    <p>This little game of “line telephone” is a prototypical example of how recursion works. A similarly formatted request is passed down a line as far as possible until a <strong>base case</strong> is hit (here: the person at the front of the line). When this happens, an unequivocally accurate answer can be passed back to the previous requester, who uses this information to formulate an unequivocally accurate answer, which is in turn passed along to the requester that came before the previous requester, et cetera. Eventually, the original requester gets an equivocally accurate answer, which can then be used to come up with the “final” answer.</p>
+
+    <p>The “line telephone” game could be represented in generic code in the following fashion:</p>
+
+<code class="block"><pre>
+function TotalPeopleInFrontOfMe(line)
+  if AtTheFront
+    { return 0 }
+  else
+    { return 1 + TotalPeopleInFrontMe(line not including me) }
+</pre></code>
+    
+    <p>More complex cases of recursion are of course possible, involving branching and/or multiple base cases, but hopefully this explanation and example have given you a new way to visualize what’s happening under the hood when a recursive function is called.</p>
+    </section>
+
+    <section>
+    <h2>A Recursive Solution to Day 12, Part One</h2>
+
+    <p>Because the <a href="https://raw.githubusercontent.com/wmleidy/advent-of-code-ruby/master/input/input12-objects.json">input</a> is a JSON object, the very first step needs to be converting this into something that Ruby can natively use. This can easily be done using the JSON module in Ruby’s standard library:</p>
+
+<code class="block"><pre>
+require 'json'
+
+def convert_data
+  file = File.read("../input/input12-objects.json")
+  hash = JSON.parse(file)
+end
+</pre></code>
+
+    <p>Now comes the meat of the problem. There are nested arrays inside nested hashes (JSON objects become Ruby hashes) inside nested arrays that contain numbers and strings inside nested hashes practically ad infinitum. But it’s all contained within one giant hash. And we need to find only the numbers. We know there are four possible data types that can exist within this tangle, and we have to treat each differently:</p>
+
+    <ol>
+      <li>hash &ndash; go through each of the key/value pairs combing for numbers to add to the total</li>
+      <li>array &ndash; go through each of the elements in search of numbers to add to the total</li>
+      <li>number &ndash; add it to the total</li>
+      <li>string &ndash; do nothing</li>
+    </ol>
+
+    <p>Reviewing the four cases above, the first two sound like miniature versions of the bigger problem and thus are prime candidates for using a recursive approach. The last two, numbers and strings, are indeed the base cases&mdash;as soon as they are hit, the recursive branch can safely end and start sending data up toward the root of the recursive tree. The final count can be determined by summing up the individual totals of all the recursive branches.</p>
+
+    <p>My <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/solutions/12-deciphering-objects.rb">original solution</a> used an <code>if...elsif...else</code> structure, but a Ruby case statement (<code>case...when...else</code>), which takes advantage of the nifty <code>===</code> operator, works too:</p>
+
+<code class="block"><pre>
+def parse(data)
+  sum = 0
+
+  case data
+  when Hash
+    data.each do |key, value|
+      sum += parse(value)
+    end
+  when Array
+    data.each do |element|
+      sum += parse(element)
+    end
+  when Integer
+    sum += data
+  # when String
+    # do nothing...
+  end
+
+  sum
+end
+</pre></code>
+
+    <p>As explained above, whenever a hash or array is found a new recursive branch will be spawned, and its total will be added to the grand sum. The <code>when String</code> line is superfluous of course, but included for clarity’s sake. When <code>p parse(convert_data)</code> is run, we receive the correct output of <code>119433</code>.</p>
+    </section>
+
+    <section>
+    <h2>A Recursive Solution to Day 12, Part Two</h2>
+
+    <p>So, now the question is how to exclude those objects (hashes) that contain the string <code>"red"</code>. Ruby allows one to do this with a very small and very expressive phrase: <code>unless data.has_value?("red")</code>. Assuming the variable <code>data</code> is a hash, this short phrase will prevent any code from running if the value <code>"red"</code> is found anywhere in the hash.</p>
+
+    <p>Now the updated code looks like this (I will also take advantage of this opportunity to do a bit more refactoring to make the code more concise at the cost of a smidge of clarity):</p>
+
+<code class="block"><pre>
+def parse(data)
+  sum = 0
+
+  case data
+  when Hash
+    data.each { |k, v| sum += parse(v) } unless data.has_value?("red")
+  when Array
+    data.each { |el|  sum += parse(el) }
+  when Integer
+    sum += data
+  end
+  sum
+end
+</pre></code>
+
+    <p>Once again, we run the code with <code>p parse(convert_data)</code> and receive the updated answer of <code>68466</code>. Those elves in the accounting department surely will thank us, as modern computing technology and the smart use of recursion has saved them from ruining their eyesight poring over character after character in their old school ledgers.</p>
+
+    <footer>
+      Follow me on Twitter <a href="https://twitter.com/BillLeidy">@BillLeidy</a> for regular blog posts.
+    </footer>
+  
+  </article>
+  </main>
+
+  <footer>
+    Site design and content by Bill Leidy, 2015-2016.
+    <div id="mobilefooter"><a href="../contact.html">Contact Page</a></div> 
+    <div class="socialmedia">
+      <a href="https://twitter.com/BillLeidy"><img src="../images/twitter-icon2.png" alt="Twitter link" /></a>
+      <a href="https://www.linkedin.com/in/wmleidy"><img src="../images/linkedin-icon2.png" alt="LinkedIn link" /></a>
+      <a href="https://github.com/wmleidy/"><img src="../images/github-icon2.png" alt="GitHub link" /></a>
+      <a href="mailto:please-enable-javascript" class="emaillink"><img src="../images/email-icon2.png" alt="Email link" /></a>
+    </div>
+  </footer>
+  <script src="../js/spamguard.js"></script>
+</body>
+
+</html>
