@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width">
+  <title>Object-Oriented Game Programming</title>
+  <link rel="stylesheet" type="text/css" href="../styles/default.css" />
+  <link rel="stylesheet" type="text/css" href="../styles/responsive.css" media="screen and (max-width: 700px)"> 
+</head>
+
+<body>
+  <header>
+    <a href="../index.html"><img src="../images/logo_serif.png" id="logo" alt="Bill Leidy" /></a>
+    <nav>
+      <ul>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Writings</a></li>
+        <li><a href="../resume.html">Resume</a></li>
+        <li><a href="../bio.html">About</a>
+          <ul>
+            <li><a href="../bio.html">Bio</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <img src="../images/writing_bkgd.jpg" id="heroimage" alt="" />
+    <div id="tagline">THE BLOG</div>
+  </header>
+  
+  <div id="spaceholder"></div>
+
+  <main>
+  <article>
+    <header>
+      <h1>Object-Oriented Game Programming (Advent of Code, Day 21)</h1>
+      <p class="date">January 11, 2016</p>
+    </header>
+    
+    <p>My fourth and final post in my <a href="http://adventofcode.com/">Advent of Code</a> series is devoted to two topics that I very much enjoy writing about: games and <a href="my-introduction-to-object-oriented-design.html">object-oriented programming</a>. As Advent of Code progressed and the challenges became more complex, there was a definite tipping point (at least in my mind) when taking advantage of Ruby’s classes to program in an object-oriented fashion paid dividends both in terms of quickly finding a valid solution and in terms of code readability.</p>
+
+    <p>My <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/solutions/14-reindeer-races.rb">solution to Day 14</a> was the first problem I solved using Ruby classes (and looking back at my hastily written code, I realize that the methods <code>find_winner</code> and <code>find_leaders</code> should be converted to class methods). I also used classes on the following two days as well as for arguably the two most engaging problems in the entire sequence: Days 21 and 22. Both of these problems required first simulating and then optimizing a battle of the type that’s usually found in <a href="http://tvtropes.org/pmwiki/pmwiki.php/Main/RolePlayingGame">role-playing games</a>.</p>
+
+    <p>If we consider the time it took to fill the highly competitive Advent to Code leaderboard as an indicator of a problem’s difficulty, then <a href="http://adventofcode.com/day/22">Day 22</a> was the hardest day by a considerable margin as it took about 3 hours for the 100 leaderboard spots to be filled (as opposed to 20-30 minutes on an average day). As such, though Day 22 beckons to my typing fingers like a siren’s song (or a bad mixed metaphor), for all of our sakes I have chosen in this post to analyze the similar, but simpler Day 21 problem instead.</p>
+
+    <section>
+    <h2>Advent of Code, Day 21 &ndash; The Problem</h2>
+
+    </section>
+
+    <footer>
+      Follow me on Twitter <a href="https://twitter.com/BillLeidy">@BillLeidy</a> for regular blog posts.
+    </footer>
+  
+  </article>
+  </main>
+
+  <footer>
+    Site design and content by Bill Leidy, 2015-2016.
+    <div id="mobilefooter"><a href="../contact.html">Contact Page</a></div> 
+    <div class="socialmedia">
+      <a href="https://twitter.com/BillLeidy"><img src="../images/twitter-icon2.png" alt="Twitter link" /></a>
+      <a href="https://www.linkedin.com/in/wmleidy"><img src="../images/linkedin-icon2.png" alt="LinkedIn link" /></a>
+      <a href="https://github.com/wmleidy/"><img src="../images/github-icon2.png" alt="GitHub link" /></a>
+      <a href="mailto:please-enable-javascript" class="emaillink"><img src="../images/email-icon2.png" alt="Email link" /></a>
+    </div>
+  </footer>
+  <script src="../js/spamguard.js"></script>
+</body>
+
+</html>
