@@ -54,9 +54,52 @@
     </section>
 
     <section>
-    <h2>An Object-Oriented Approach</h2>
+    <h2>The Basics of Ruby Classes</h2>
 
-    <p>Stuff.</p>
+    <p>I still remember the first time I encountered a Ruby class in the wild. I had no idea what its purpose was or what those <code>@</code> signs were doing in front of variable names. Now, I can’t imagine programming in Ruby without them, especially when using Ruby for web development. Classes are a crucial part of Ruby’s object-oriented nature.</p>
+
+    <p>A lengthy explanation of Ruby classes would be ill-placed here (Chapter 3 of David Black’s excellent <a href="https://www.manning.com/books/the-well-grounded-rubyist-second-edition"><em>The Well-Grounded Rubyist</em></a> or a Google search can help complete the picture if need be), but basically they are a way to create <strong>instances</strong> of objects that possess similar characteristics and behavior.</p>
+
+    <p>Say we want to represent three different cats in a computer program. (I debated putting an image of three cats sitting together here, but upon further reflection I decided that the Internet already has enough cats.) Each cat has a particular age, breed, and playfulness rating. This is what I mean by “similar characteristics”: even though the ages and breeds of the individual cats might differ, whenever we represent a cat in our program, we always will want it to have these traits. In Ruby, these inherent characteristics are called <strong>instance variables</strong> and prefaced by the <code>@</code> sign:</p>
+
+<code class="block"><pre>
+class Cat
+  def initialize(age, breed, playfulness)
+    @age         = age
+    @breed       = breed
+    @playfulness = playfulness
+  end
+end
+</pre></code>
+
+    <p>Shared behaviors, for example, meowing, are termed <strong>instance methods</strong> (they can be called on all instances of a class), and are defined within a <code>class</code>:</p>
+<code class="block"><pre>
+class Cat
+  # ...see above...
+
+  def meow
+    puts "Mee-ooow! I'm #{@age} years old."
+  end
+end
+</pre></code>
+
+    <p>Now it’s simple to batch create cats (well, cats that are composed of bits and bytes anyway), keep track of their individual traits, and expect the same behavior from them:</p>
+<code class="block"><pre>
+xerxes = Cat.new(3, "Persian", 5)
+java   = Cat.new(5, "Balinese", 8)
+angara = Cat.new(7, "Siberian", 7)
+
+xerxes.meow
+# Output: Mee-ooow! I'm 5 years old.
+
+angara.meow
+# Output: Mee-ooow! I'm 7 years old.
+</pre></code>
+
+    </section>
+
+    <section>
+    <h2>Modeling Equipment and Characters</h2>
 
     </section>
 
