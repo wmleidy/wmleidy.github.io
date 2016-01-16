@@ -83,9 +83,9 @@ class Cat
 end
 </pre></code>
 
-    <p>Now it’s simple to batch create cats (well, cats that are composed of bits and bytes anyway), keep track of their individual traits, and expect the same behavior from them:</p>
+    <p>Now it’s simple to batch create cats (well, cats that are composed of bits and bytes anyway), keep track of their individual traits, and rely on them to exhibit the same behavior:</p>
 <code class="block"><pre>
-xerxes = Cat.new(3, "Persian", 5)
+xerxes = Cat.new(3, "Persian",  5)
 java   = Cat.new(5, "Balinese", 8)
 angara = Cat.new(7, "Siberian", 7)
 
@@ -95,12 +95,203 @@ xerxes.meow
 angara.meow
 # Output: Mee-ooow! I'm 7 years old.
 </pre></code>
-
     </section>
 
     <section>
-    <h2>Modeling Equipment and Characters</h2>
+    <h2>Modeling Equipment</h2>
 
+    <p>Reviewing the <a href="http://adventofcode.com/day/21">Day 21 challenge</a>, one espies an analogous situation to our cats: weapons, armor, and rings each have a name, a cost in gold pieces, a damage value, and an armor value. Due to their common characteristics, it’s possible to combine them into one class, say an <code>Item</code> class, and be done with it.</p>
+
+    <p>However, there is a drawback to such a design choice&mdash;it would be harder to do things like restrict a character to exactly one weapon (or, if one were to continue building out the game, locate all the armor in a player’s inventory). For that reason, I have elected to make separate <code>Weapon</code>, <code>Armor</code>, and <code>Ring</code> subclasses that <a href="https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming)">inherit</a> from an <code>Item</code> superclass:</p>
+
+<code class="block"><pre>
+class Item
+  attr_reader :name, :cost, :damage, :defense
+
+  def initialize(name, cost, damage, defense)
+    @name = name
+    @cost = cost
+    @damage = damage
+    @defense = defense
+  end
+end
+
+class Weapon &lt; Item
+end
+
+class Armor &lt; Item
+end
+
+class Ring &lt; Item
+end
+</pre></code>
+
+    <p>Now that the classes are in place, it’s easy to generate the armory that our hero can choose his equipment from. I’d like to draw particular attention to one design choice I’ve made: since the rules of the challenge declare that the hero need not equip armor or rings, I’ve created dummy values (<code>Bare</code>, <code>Empty R</code>, and <code>Empty L</code>) that signify a lack of equipment. When implemented in this manner, generating possible equipment combinations becomes much more streamlined and makes the absence of armor or rings a fully fledged option (which it is).</p>
+
+<code class="block"><pre>
+weapons = [
+  Weapon.new("Dagger", 8, 4, 0),
+  Weapon.new("Shortsword", 10, 5, 0),
+  Weapon.new("Warhammer", 25, 6, 0),
+  Weapon.new("Longsword", 40, 7, 0),
+  Weapon.new("Greataxe", 74, 8, 0)
+]
+
+armor = [
+  Armor.new("Bare", 0, 0, 0),
+  Armor.new("Leather", 13, 0, 1),
+  Armor.new("Chainmail", 31, 0, 2),
+  Armor.new("Splintmail", 53, 0, 3),
+  Armor.new("Bandedmail", 75, 0, 4),
+  Armor.new("Platemail", 102, 0, 5)
+]
+
+rings = [
+  Ring.new("Empty R", 0, 0, 0),
+  Ring.new("Empty L", 0, 0, 0),
+  Ring.new("Damage +1", 25, 1, 0),
+  Ring.new("Damage +2", 50, 2, 0),
+  Ring.new("Damage +3", 100, 3, 0),
+  Ring.new("Defense +1", 20, 0, 1),
+  Ring.new("Defense +2", 40, 0, 2),
+  Ring.new("Defense +3", 80, 0, 3)
+]
+</pre></code>
+    </section>
+
+    <section>
+    <h2>Modeling Characters and Battles</h2>
+
+    <p>With the swords, platemail, and magical rings all ready to go, only characters and battle sequences remain to be modeled. There are a couple design decisions to be made:<p>
+    <ul>
+      <li>First, while the hero and the boss share similar stats and attack mechanisms, the means by which the stats are determined (as a combination of equipment bonuses for the hero, as innate values for the boss) are different. Possible solutions include incorporating both stat determination methods into a single class or creating two subclasses of <code>Character</code>, a <code>Hero</code> and a <code>Enemy</code> that are initialized differently.</li>
+      <li>Second, while it seems natural for a one-time <code>#attack</code> method to originate from the <code>Character</code> class, the status of the wider, multi-turn battle is less clear. Should it somehow be wrapped into the <code>Character</code> class? Or exist on its own, in which case it could keep track a lot of different values and environmental factors easily?</li>
+    </ul>
+
+    <p>In both cases, I chose the simpler option, which works perfectly in the short-term, but would probably necessitate refactoring if the RPG simulation were to increase in complexity. Why did I do this? Doesn’t it constitute sloppy design? As I found out while completing <a href="https://foodies.herokuapp.com/">my final project</a> at Dev Bootcamp, there is always a tension between achieving very concrete short-term goals and planning for nebulous long-term needs. When focusing too much on the short term something called <strong>technical debt</strong> is accrued, but considering the narrow scope of this project (finding the right answers for Day 21 of Advent of Code), I made a conscious and carefully weighted decision to focus almost exclusively on the short term.</p>
+
+    <p>(As it turned out, when <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/solutions/22-rpg-wizard.rb">completing the Day 22 challenge</a>, I would take the foundation I had from Day 21 and build on it by splitting the <code>Character</code> class and creating a new <code>Battle</code> class.)
+
+    <p>This is the reason why the instantiation method for my <code>Character</code> class looks the way it does. When creating a “hero,” his equipment is passed in through the <code>options</code> hash, and then his <code>damage</code> and <code>defense</code> stats are generated by private methods based on the stat boosts provided by the equipment. Creating a “boss” is simpler&mdash;the precise <code>damage</code> and <code>defense</code> stats are included in the <code>options</code> hash. Both character types have a name and a set number of hit points (HP), so these are required parameters. My code looks like this:</p>
+
+<code class="block"><pre>
+class Character
+  attr_reader :name, :equipment, :damage, :defense
+  attr_accessor :hit_points
+
+  def initialize(name, hit_points, options = {})
+    @name = name
+    @hit_points = hit_points
+    @equipment = options[:equipment] || []
+    @damage  = options[:damage]  || calculate_attack
+    @defense = options[:defense] || calculate_absorb
+  end
+
+  private
+
+    def calculate_attack
+      equipment.inject(0) { |total, item| total += item.damage }
+    end
+
+    def calculate_absorb
+      equipment.inject(0) { |total, item| total += item.defense }
+    end
+end
+</pre></code>
+
+    <p>Now that the character stats and hit points are in place, simulating one character attacking another according to the rules given in the challenge is straightforward enough (and should additional modifications, such as randomized damage, be requested, extremely easy to change):</p>
+
+<code class="block"><pre>
+class Character
+  # ...see above...
+
+  def attack(target)
+    result = self.damage - target.defense
+    result = 1 if result &lt; 1
+    target.hit_points -= result
+  end
+</pre></code>
+
+    <p>Replicating the battle flow is somewhat harder. The two characters exchange blows in turns with the hero always going first. Should the HP of one of the combatants fall to zero, then the battle is immediately over, and the method should return the winning character.</p>
+
+    <p>This seemed to me an excellent opportunity to utilize the rather arcane Ruby <code>Array</code> method <code>#cycle</code>, which will cycle through an array infinitely, executing a code block at each pass, until a break condition is hit. By putting the hero (who originates the duel) and boss into an array, they can then <code>#attack</code> each other until one of them falls (the break condition).</p>
+
+    <p>My resulting code is very concise, but suffers a bit in terms of readability. The appropriate target for the attack is identified by using a ternary operator. And the character’s actual attack is rather obscured in the code, as it is located in a conditional <code>if</code> modifier that checks for the break condition (HP less than 1 after an attack).</p>
+
+<code class="block"><pre>
+class Character
+  # ...see above...
+
+  def duel_to_the_death(enemy)
+    hero = self
+    combatants = [hero, enemy]
+    combatants.cycle do |character|
+      character == hero ? target = enemy : target = hero
+      return character if character.attack(target) &lt;= 0
+    end
+  end
+</pre></code>
+    
+    <p>Note that technically speaking there is no need to simulate the battle turn-by-turn&mdash;all that’s really needed is a comparison of the number of turns it takes the hero to win with how many turns the boss needs to win (both of which can be determined by simple math), but simulating the turn-based nature of the battle allows us the pleasure of implementing the rarely-used <code>#cycle</code> method and makes the model much easier to modify should the rules of engagement change.</p>
+    </section>
+
+    <section>
+    <h2>Advent of Code, Day 21 &ndash; A Solution</h2>
+
+    <p>With the equipment, characters, and battle sequence now modeled as objects and methods, we can finally turn to the “real” programming problem that this challenge posed: what set of equipment allows the hero to win the battle while doing minimal harm to his wallet.</p>
+
+    <p>There are 840 possible combinations of equipment when accounting for the absence of armor and/or 1 or 2 rings as options (5 weapons * 6 armors * (8 * 7 / 2) combinations of rings). By iterating through each of these 840 combinations, marking which ones result in a victory for the hero, and then comparing the cost of the winning sets, the “thriftiest” set of arms can be determined.</p>
+
+    <p>My code uses a triple nested loop to generate the equipment combinations and then sends the hero into battle with each of them. The Enumerable method <code>#min_by</code> is then called to find the cheapest set, which is analyzed for cost and composition and printed out. Here it is in its entirety:</p>
+
+<code class="block"><pre>
+def find_cheapest_win(weapons, armor, rings)
+  winning_sets = []
+
+  weapons.each do |w|
+    armor.each do |a|
+      rings.combination(2).to_a.each do |r|
+        arms = [w, a, r].flatten
+        hero = Character.new("Knowledge", 100, { equipment: arms })
+        boss = Character.new("Ignorance", 103, { damage: 9, defense: 2})
+        if hero.duel_to_the_death(boss) == hero
+          winning_sets &lt;&lt; arms
+        end
+      end
+    end
+  end
+
+  cheapest_set  = winning_sets.min_by { |set| set.inject(0) { |total, item| total += item.cost } }
+  cheapest_cost = cheapest_set.inject(0) { |total, item| total += item.cost }
+  p [cheapest_cost, cheapest_set.map(&:name)]
+end
+</pre></code>
+
+    <p>The boss stats that were provided to me (HP: 103, damage: 9, defense: 2) are hardcoded into the method. When the method is called <code>find_cheapest_win(weapons, armor, rings)</code> (the parameters refer to the previously constructed arrays of weapons, armor, and defense), the correct result appears in the output:</p>
+
+<code class="block"><pre>
+[121, ["Longsword", "Chainmail", "Empty R", "Damage +2"]]
+</pre></code>
+
+    <p>A close call for the hero as he has only 2 hit points left (and one can very well question the hero’s parsimony as it puts his life in danger and results in lots of unnecessary wounds), but a win nonetheless!</p>
+    </section>
+
+    <section>
+    <h2>Part Two and Concluding Thoughts on Object-Oriented Game Programming</h2>
+
+    <p>Part Two of this challenge was another optimization problem: finding the most expensive set of equipment that results in a loss. A non-DRY approach to this would be to write a <code>#find_costliest_loss</code> method that closely mimics the above <code>#find_cheapest_win</code> method, but collects losing sets and uses <code>#max_by</code> to find the most expensive one. My <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/solutions/21-rpg-fighter.rb">solution</a> combines the two methods together to (mostly) reduce code repetition.</p>
+
+    <p>To wrap up: I’m not sure how clear it is from the preceding code without a counterexample consisting of raw numbers and single-letter variables, but an added benefit of using object-oriented approach (especially with the Ruby community’s convention that stresses making code easy for humans to read) is that it is relatively effortless to figure out what’s going on in the code at a cursory glance.</p>
+
+    <p>With all the named classes, named instance variables, and named local variables within methods, this style of code is less burdensome to maintain and modify. Though I took a few shortcuts (I didn’t bother adding a restriction to holding only one <code>Weapon</code> within the <code>Character</code> class, subclassing the <code>Hero</code> and <code>Enemy</code>, or creating a separate <code>Battle</code> class), I believe my codebase represents a solid foundation that’s easily adaptable to future demands. And, in fact, I did take advantage of my existing codebase when solving the Day 22 challenge.</p>
+    </section>
+
+    <section>
+    <h2>Final Reflections on Advent of Code</h2>
+
+    <p>Advent of Code was really fun to complete. It was also really fun to blog about. The variety of the challenges led me to explore a wide gamut of design concepts and rather obscure Ruby methods. The complexity of the challenges made them that much more thought-provoking. Cheers to <a href="https://twitter.com/ericwastl">Eric Wastl</a> for creating it.</p>
+
+    <img src="../images/aoc_day25.jpg" class="screenshot" alt="Completed Advent of Code Tree" />
     </section>
 
     <footer>
