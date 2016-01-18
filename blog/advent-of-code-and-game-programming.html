@@ -39,28 +39,28 @@
       <p class="date">January 11, 2016</p>
     </header>
     
-    <p>My fourth and final post in my <a href="http://adventofcode.com/">Advent of Code</a> series is devoted to two topics that I very much enjoy writing about: games and <a href="my-introduction-to-object-oriented-design.html">object-oriented programming</a>. As Advent of Code progressed and the challenges became more complex, there was a definite tipping point (at least in my mind) when taking advantage of Ruby’s classes to program in an object-oriented fashion paid dividends both in terms of quickly finding a valid solution and in terms of code readability.</p>
+    <p>The fourth and final post in my <a href="http://adventofcode.com/">Advent of Code</a> series is devoted to two topics that I very much enjoy writing about: games and <a href="my-introduction-to-object-oriented-design.html">object-oriented programming</a>. As Advent of Code progressed and the challenges became more complex, there was a definite tipping point (at least in my mind) when taking advantage of Ruby’s classes to program in an object-oriented fashion paid dividends both in terms of quickness in finding a valid solution and in terms of code readability.</p>
 
-    <p>My <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/solutions/14-reindeer-races.rb">solution to Day 14</a> was the first problem I solved using Ruby classes (and looking back at my hastily written code, I realize that the methods <code>find_winner</code> and <code>find_leaders</code> should probably be converted to class methods). I also used classes on the following two days as well as for two of the most engaging problems in the entire sequence: Days 21 and 22. Both of these problems required first simulating and then optimizing a battle of the type that’s usually found in <a href="http://tvtropes.org/pmwiki/pmwiki.php/Main/RolePlayingGame">role-playing games</a>.</p>
+    <p>My <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/solutions/14-reindeer-races.rb">solution to Day 14</a> was the first problem I solved using Ruby classes (and looking back at my hastily written code, I realize that the methods <code>find_winner</code> and <code>find_leaders</code> should probably be converted to class methods). I used classes on the following two days too and also for two of the most engaging problems in the entire sequence: Days 21 and 22. Both of these problems required first simulating and then optimizing a battle of the type that’s usually found in <a href="http://tvtropes.org/pmwiki/pmwiki.php/Main/RolePlayingGame">role-playing games</a>.</p>
 
-    <p>If we consider the time it took to fill the highly competitive Advent to Code leaderboard as an indicator of a problem’s difficulty, then <a href="http://adventofcode.com/day/22">Day 22</a> was the hardest day by a considerable margin as it took about 3 hours for the 100 leaderboard spots to be filled (as opposed to 20-30 minutes on an average day). As such, though Day 22 beckons to my typing fingers like a siren’s song (or a bad mixed metaphor), for all of our sakes I have chosen to analyze in this post the similar, but simpler Day 21 problem instead.</p>
+    <p>If we consider the time it took to fill the highly competitive Advent to Code leaderboard as an indicator of a problem’s difficulty, then <a href="http://adventofcode.com/day/22">Day 22</a> was the hardest day by a considerable margin as it took about 3 hours for the 100 leaderboard spots to be filled (as opposed to 20-30 minutes on an average day). As such, though Day 22 beckons to my typing fingers like a siren’s song (or a bad mixed metaphor), for all of our sakes I have chosen to analyze the similar, but simpler Day 21 problem in this post.</p>
 
     <section>
     <h2>Advent of Code, Day 21 &ndash; The Problem</h2>
 
-    <p>The scenario for this challenge (full details <a href="http://adventofcode.com/day/21">here</a>) is vaguely reminiscent of one of the <a href="../images/ff_box.jpg">seminal games</a> of my youth. The randomness of turn order and damage dealt is absent, but the basic concept of a hero possessing hit points and stat-boosting equipment fighting against an evil boss (who also has hit points and attack/defense stats) is the same. Simulating the rules given for this fight (how attack and defense works) is the programmer’s first battle.</p>
+    <p>The scenario for this challenge (full details <a href="http://adventofcode.com/day/21">here</a>) is vaguely reminiscent of one of the <a href="../images/ff_box.jpg">seminal games</a> of my youth. The randomness of turn order and damage dealt is absent, but the basic concept of a hero with hit points and stat-boosting equipment fighting against an evil boss (who also has hit points and attack/defense stats) is the same. Simulating the rules given for this fight (how attack and defense works) is the programmer’s first battle.</p>
 
-    <p>The second (and more interesting) battle is to figure out what combination of equipment (weapon, optional armor, and up to two optional rings) allows the hero to win the fight while spending the least amount of gold. In comparison to the complexities inherent in the follow-up challenge on Day 22, this puzzle is rather straightforward as there are no convoluted restrictions present and only a finite number of equipment combinations possible, a number low enough to be processed in mere microseconds. Still, there is a bit of programming to be done and design decisions to be made.</p>
+    <p>The second battle is to figure out what combination of equipment (weapon, optional armor, and up to two optional rings) allows the hero to win the fight while spending the least amount of gold. In comparison to the complexities inherent in the follow-up challenge on Day 22, this puzzle is rather straightforward as there are no convoluted restrictions present and only a finite number of equipment combinations possible, a number low enough to be processed in mere microseconds. Nonetheless, there is programming to be done and design decisions to be made.</p>
     </section>
 
     <section>
     <h2>The Basics of Ruby Classes</h2>
 
-    <p>I still remember the first time I encountered a Ruby class in the wild. I had no idea what its purpose was or what those <code>@</code> signs were doing in front of variable names. Now, I can’t imagine programming in Ruby without them, especially when using Ruby for web development. Classes are a crucial part of Ruby’s object-oriented nature.</p>
+    <p>I still remember the first time I encountered a Ruby class in the wild. I had no idea what its purpose was or what those <code>@</code> signs were doing in front of the variable names. Now, I can’t imagine programming in Ruby without them, especially when using Ruby for web development. Classes are a crucial part of Ruby’s object-oriented nature.</p>
 
     <p>A lengthy explanation of Ruby classes would be ill-placed here (Chapter 3 of David Black’s excellent <a href="https://www.manning.com/books/the-well-grounded-rubyist-second-edition"><em>The Well-Grounded Rubyist</em></a> or a Google search can help complete the picture if need be), but basically they are a way to create <strong>instances</strong> of objects that possess similar characteristics and behavior.</p>
 
-    <p>Say we want to represent three different cats in a computer program. (I debated putting an image of three cats sitting together here, but upon further reflection I decided that the Internet already has enough cats.) Each cat has a particular age, breed, and playfulness rating. This is what I mean by “similar characteristics”: even though the ages and breeds of the individual cats might differ, whenever we represent a cat in our program, we always will want it to have these traits. In Ruby, these inherent characteristics are called <strong>instance variables</strong> and prefaced by the <code>@</code> sign:</p>
+    <p>Say we want to represent three different cats in a computer program. (I debated putting an image of three cats sitting together here, but upon further reflection I decided that the Internet already has enough cats.) Each cat has a particular age, breed, and playfulness rating. This is what I mean by “similar characteristics”: even though the ages and breeds of the individual cats might differ, whenever we represent a cat in our program, we will always want it to have these traits. In Ruby, these inherent characteristics are called <strong>instance variables</strong> and prefaced by the <code>@</code> sign:</p>
 
 <code class="block"><pre>
 class Cat
@@ -72,7 +72,7 @@ class Cat
 end
 </pre></code>
 
-    <p>Shared behaviors, for example, meowing, are termed <strong>instance methods</strong> (they can be called on all instances of a class), and are defined within a <code>class</code>:</p>
+    <p>Shared behaviors, for example, meowing, are termed <strong>instance methods</strong> (they can be called on all instances of a class), and are defined within the class:</p>
 <code class="block"><pre>
 class Cat
   # ...see above...
@@ -83,7 +83,7 @@ class Cat
 end
 </pre></code>
 
-    <p>Now it’s simple to batch create cats (well, cats that are composed of bits and bytes anyway), keep track of their individual traits, and rely on them to exhibit the same behavior:</p>
+    <p>Now it’s simple to batch create cats (well, cats composed of bits and bytes anyway), keep track of their individual traits, and rely on them to exhibit the same behavior:</p>
 <code class="block"><pre>
 xerxes = Cat.new(3, "Persian",  5)
 java   = Cat.new(5, "Balinese", 8)
@@ -126,7 +126,7 @@ class Ring &lt; Item
 end
 </pre></code>
 
-    <p>Now that the classes are in place, it’s easy to generate the armory that our hero can choose his equipment from. I’d like to draw particular attention to one design choice I’ve made: since the rules of the challenge declare that the hero need not equip armor or rings, I’ve created dummy values (<code>Bare</code>, <code>Empty R</code>, and <code>Empty L</code>) that signify a lack of equipment. When implemented in this manner, generating possible equipment combinations becomes much more streamlined and makes the absence of armor or rings a fully fledged option (which it is).</p>
+    <p>Now that the classes are in place, it’s easy enough to generate the armory that our hero can choose his equipment from. I’d like to draw particular attention to one design choice I’ve made: since the rules of the challenge declare that the hero need not equip armor or rings, I’ve created dummy values (<code>Bare</code>, <code>Empty R</code>, and <code>Empty L</code>) that signify a lack of equipment. When implemented in this manner, generating possible equipment combinations becomes much more streamlined and makes the absence of armor or rings a fully fledged choice (which it is).</p>
 
 <code class="block"><pre>
 weapons = [
@@ -162,15 +162,15 @@ rings = [
     <section>
     <h2>Modeling Characters and Battles</h2>
 
-    <p>With the swords, platemail, and magical rings all ready to go, only characters and battle sequences remain to be modeled. There are a couple design decisions to be made:<p>
+    <p>With the swords, platemail, and magical rings all ready to go, only characters and the battle sequence remain to be modeled. Here too there are a couple design decisions to be made:<p>
     <ul>
-      <li>First, while the hero and the boss share similar stats and attack mechanisms, the means by which the stats are determined (as a combination of equipment bonuses for the hero, as innate values for the boss) are different. Possible solutions include incorporating both stat determination methods into a single class or creating two subclasses of <code>Character</code>, a <code>Hero</code> and a <code>Enemy</code> that are initialized differently.</li>
+      <li>First, while the hero and the boss share similar stats and attack mechanisms, the means by which the stats are determined are different (as a combination of equipment bonuses for the hero, as innate values for the boss). Possible solutions include incorporating both stat determination methods into a single class or creating two subclasses of <code>Character</code>, a <code>Hero</code> and a <code>Enemy</code> that are initialized differently.</li>
       <li>Second, while it seems natural for a one-time <code>#attack</code> method to originate from the <code>Character</code> class, the status of the wider, multi-turn battle is less clear. Should it somehow be wrapped into the <code>Character</code> class? Or exist on its own, in which case it could keep track a lot of different values and environmental factors easily?</li>
     </ul>
 
-    <p>In both cases, I chose the simpler option, which works perfectly in the short-term, but would probably necessitate refactoring if the RPG simulation were to increase in complexity. Why did I do this? Doesn’t it constitute sloppy design? As I found out while completing <a href="https://foodies.herokuapp.com/">my final project</a> at Dev Bootcamp, there is always a tension between achieving very concrete short-term goals and planning for nebulous long-term needs. When focusing too much on the short term something called <strong>technical debt</strong> is accrued, but considering the narrow scope of this project (finding the right answers for Day 21 of Advent of Code), I made a conscious and carefully weighted decision to focus almost exclusively on the short term.</p>
+    <p>In both cases, I chose the simpler option, which works perfectly in the short-term, but would probably necessitate refactoring if the RPG simulation were to increase in complexity. Why did I do this? Doesn’t this constitute sloppy design? As I found out while completing <a href="https://foodies.herokuapp.com/">my final project</a> at Dev Bootcamp, there is always a tension between achieving very concrete short-term goals and planning for more nebulous long-term needs. When focusing too much on the short term, something called <a href="https://en.wikipedia.org/wiki/Technical_debt">technical debt</a> is accrued, but considering the narrow scope of this project (finding the right answers for Day 21 of Advent of Code), I made a conscious and carefully weighted decision to focus almost exclusively on the short term.</p>
 
-    <p>(As it turned out, when <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/solutions/22-rpg-wizard.rb">completing the Day 22 challenge</a>, I would take the foundation I had from Day 21 and build on it by splitting the <code>Character</code> class and creating a new <code>Battle</code> class.)
+    <p>(As it turned out, when <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/solutions/22-rpg-wizard.rb">completing the Day 22 challenge</a>, I would take the foundation I had from Day 21 and build on it by splitting the <code>Character</code> class and creating a <code>Battle</code> class.)
 
     <p>This is the reason why the instantiation method for my <code>Character</code> class looks the way it does. When creating a “hero,” his equipment is passed in through the <code>options</code> hash, and then his <code>damage</code> and <code>defense</code> stats are generated by private methods based on the stat boosts provided by the equipment. Creating a “boss” is simpler&mdash;the precise <code>damage</code> and <code>defense</code> stats are included in the <code>options</code> hash. Both character types have a name and a set number of hit points (HP), so these are required parameters. My code looks like this:</p>
 
@@ -199,7 +199,7 @@ class Character
 end
 </pre></code>
 
-    <p>Now that the character stats and hit points are in place, simulating one character attacking another according to the rules given in the challenge is straightforward enough (and should additional modifications, such as randomized damage, be requested, extremely easy to change):</p>
+    <p>Now that the character stats and hit points are in place, simulating one character attacking another according to the rules given in the challenge is the next step (and should additional modifications such as randomized damage be requested, extremely straightforward to change):</p>
 
 <code class="block"><pre>
 class Character
@@ -214,9 +214,9 @@ class Character
 
     <p>Replicating the battle flow is somewhat harder. The two characters exchange blows in turns with the hero always going first. Should the HP of one of the combatants fall to zero, then the battle is immediately over, and the method should return the winning character.</p>
 
-    <p>This seemed to me an excellent opportunity to utilize the rather arcane Ruby <code>Array</code> method <code>#cycle</code>, which will cycle through an array infinitely, executing a code block at each pass, until a break condition is hit. By putting the hero (who originates the duel) and boss into an array, they can then <code>#attack</code> each other until one of them falls (the break condition).</p>
+    <p>This seemed to me an excellent opportunity to utilize the rather arcane Ruby <code>Array</code> (and <code>Enumerable</code>) method <code>#cycle</code>, which will cycle through an array infinitely, executing a code block at each pass, until a break condition is hit. By putting the hero (who originates the duel) and boss into an array, they can then <code>#attack</code> each other until one of them falls (the break condition).</p>
 
-    <p>My resulting code is very concise, but suffers a bit in terms of readability. The appropriate target for the attack is identified by using a ternary operator. And the character’s actual attack is rather obscured in the code, as it is located in a conditional <code>if</code> modifier that checks for the break condition (HP less than 1 after an attack).</p>
+    <p>My resulting code is rather concise. The appropriate target for the attack is identified by using a ternary operator.</p>
 
 <code class="block"><pre>
 class Character
@@ -227,7 +227,8 @@ class Character
     combatants = [hero, enemy]
     combatants.cycle do |character|
       character == hero ? target = enemy : target = hero
-      return character if character.attack(target) &lt;= 0
+      character.attack(target)
+      return character if target.hit_points &lt;= 0
     end
   end
 </pre></code>
@@ -240,9 +241,9 @@ class Character
 
     <p>With the equipment, characters, and battle sequence now modeled as objects and methods, we can finally turn to the “real” programming problem that this challenge posed: what set of equipment allows the hero to win the battle while doing minimal harm to his wallet.</p>
 
-    <p>There are 840 possible combinations of equipment when accounting for the absence of armor and/or 1 or 2 rings as options (5 weapons * 6 armors * (8 * 7 / 2) combinations of rings). By iterating through each of these 840 combinations, marking which ones result in a victory for the hero, and then comparing the cost of the winning sets, the “thriftiest” set of arms can be determined.</p>
+    <p>There are 840 possible combinations of equipment when accounting for the absence of armor and/or 1 or 2 rings as options (5 weapons * 6 armor choices * (8 * 7 / 2) combinations of rings). By iterating through each of these 840 combinations, marking which ones result in a victory for the hero, and then comparing the cost of the winning sets, the “thriftiest” set of arms can be determined.</p>
 
-    <p>My code uses a triple nested loop to generate the equipment combinations and then sends the hero into battle with each of them. The Enumerable method <code>#min_by</code> is then called to find the cheapest set, which is analyzed for cost and composition and printed out. Here it is in its entirety:</p>
+    <p>My code uses a triple nested loop to generate the equipment combinations and then sends the hero into battle with each of them. The Enumerable method <code>#min_by</code> is then called to find the cheapest set, which is analyzed for cost and composition and then printed out. Here is the method in its entirety:</p>
 
 <code class="block"><pre>
 def find_cheapest_win(weapons, armor, rings)
@@ -273,7 +274,7 @@ end
 [121, ["Longsword", "Chainmail", "Empty R", "Damage +2"]]
 </pre></code>
 
-    <p>A close call for the hero as he has only 2 hit points left (and one can very well question the hero’s parsimony as it puts his life in danger and results in lots of unnecessary wounds), but a win nonetheless!</p>
+    <p>A close call for the hero as he has only 2 hit points left (and one can very well question the hero’s parsimony as it puts his life in danger and results in a lot of unnecessary wounds), but a win nonetheless!</p>
     </section>
 
     <section>
@@ -281,15 +282,15 @@ end
 
     <p>Part Two of this challenge was another optimization problem: finding the most expensive set of equipment that results in a loss. A non-DRY approach to this would be to write a <code>#find_costliest_loss</code> method that closely mimics the above <code>#find_cheapest_win</code> method, but collects losing sets and uses <code>#max_by</code> to find the most expensive one. My <a href="https://github.com/wmleidy/advent-of-code-ruby/blob/master/solutions/21-rpg-fighter.rb">solution</a> combines the two methods together to (mostly) reduce code repetition.</p>
 
-    <p>To wrap up: I’m not sure how clear it is from the preceding code without a counterexample consisting of raw numbers and single-letter variables, but an added benefit of using object-oriented approach (especially with the Ruby community’s convention that stresses making code easy for humans to read) is that it is relatively effortless to figure out what’s going on in the code at a cursory glance.</p>
+    <p>To wrap up: I’m not sure how clear it is from the preceding code without a counterexample consisting of raw numbers and single-letter variables, but an added benefit of using an object-oriented approach (especially since the Ruby community stresses conventions that make the code easier to read for humans) is that it is relatively effortless to figure out what’s going on at a cursory glance.</p>
 
-    <p>With all the named classes, named instance variables, and named local variables within methods, this style of code is less burdensome to maintain and modify. Though I took a few shortcuts (I didn’t bother adding a restriction to holding only one <code>Weapon</code> within the <code>Character</code> class, subclassing the <code>Hero</code> and <code>Enemy</code>, or creating a separate <code>Battle</code> class), I believe my codebase represents a solid foundation that’s easily adaptable to future demands. And, in fact, I did take advantage of my existing codebase when solving the Day 22 challenge.</p>
+    <p>With all the named classes, named instance variables, and named local variables within methods, this style of code is less burdensome to maintain and modify. Though I took a few shortcuts (I didn’t bother adding a restriction that a <code>Character</code> can hold only one <code>Weapon</code>, subclassing a <code>Hero</code> and an <code>Enemy</code>, or creating a separate <code>Battle</code> class), I believe my codebase represents a solid foundation that’s easily adaptable to future demands. And, in fact, as noted above, I did take advantage of my existing codebase when solving the Day 22 challenge.</p>
     </section>
 
     <section>
     <h2>Final Reflections on Advent of Code</h2>
 
-    <p>Advent of Code was really fun to complete. It was also really fun to blog about. The variety of the challenges led me to explore a wide gamut of design concepts and rather obscure Ruby methods. The complexity of the challenges made them that much more thought-provoking. Cheers to <a href="https://twitter.com/ericwastl">Eric Wastl</a> for creating it.</p>
+    <p>Advent of Code was really fun to complete. It was also really fun to blog about. The variety of the challenges led me to explore a wide gamut of design concepts and fairly obscure Ruby methods. The complexity of the challenges made them thought-provoking and a good investment of 30 or so minutes daily. Cheers to <a href="https://twitter.com/ericwastl">Eric Wastl</a> for creating it.</p>
 
     <img src="../images/aoc_day25.jpg" class="screenshot" alt="Completed Advent of Code Tree" />
     </section>
