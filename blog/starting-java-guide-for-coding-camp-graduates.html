@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width">
+  <title>Java for Coding Camp Graduates</title>
+  <link rel="stylesheet" type="text/css" href="../styles/default.css" />
+  <link rel="stylesheet" type="text/css" href="../styles/responsive.css" media="screen and (max-width: 700px)"> 
+</head>
+
+<body>
+  <header>
+    <a href="../index.html"><img src="../images/logo_serif.png" id="logo" alt="Bill Leidy" /></a>
+    <nav>
+      <ul>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Writings</a></li>
+        <li><a href="../resume.html">Resume</a></li>
+        <li><a href="../bio.html">About</a>
+          <ul>
+            <li><a href="../bio.html">Bio</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <img src="../images/writing_bkgd.jpg" id="heroimage" alt="" />
+    <div id="tagline">THE BLOG</div>
+  </header>
+  
+  <div id="spaceholder"></div>
+
+  <main>
+  <article>
+    <header>
+      <h1>A Crash Course in Java for Coding Camp Graduates</h1>
+      <p class="date">February 23, 2016</p>
+    </header>
+
+    <p>Congratulations! After 10-20 weeks of hard work, you’ve graduated from a well-known coding camp and are pumped to finally land that dream developer job.</p>
+
+    <p>But wait, what’s this!? Your dream company happens works with a lot of Fortune 500 clients and wants you to know that most enterprisey of langauges, Java. Or maybe your dream position involves building mobile apps for Android &ndash; and that’s also Java.</p>
+
+    <p>Chances are that your coding camp used Ruby as its primary language<sup><a href="#footnote1">1</a></sup>, Rails as its primary web framework, and taught enough JavaScript for you to develop an irrational hatred of semicolons and almost be able to explain how closures work. But JavaScript, for better or worse, is not Java, although there are plenty of semicolons in both languages.</p>
+
+    <p>The purpose of this post is to provide a convenient summary of the most salient differences between Java and more dynamic languages like Ruby and JavaScript for recent graduates of coding camps. It can be conceived as either a crash course intro to what makes Java different or a handy source to refer to when learning Java.</p>
+
+    <section>
+    <h2>A Disclaimer</h2>
+    
+    <p>While this page will (hopefully!) help you to quickly acquire reading knowledge of Java (which can be very useful when working through a book like <a href="http://www.amazon.com/Cracking-Coding-Interview-6th-Programming/dp/0984782850/">Cracking the Coding Interview</a>), in order to learn to code in Java, you actually need to, you know, code in Java. There are various websites and books (for example, Head First Java) that promise to introduce you to Java. Be aware, though, that recent versions of Java have added new features, such as Ruby-like iteration through collections, which debuted in Java SE 8. As such, I elected to suffer through the rather rigid and stilted <a href="http://docs.oracle.com/javase/tutorial/tutorialLearningPaths.html">tutorials</a> direct from the source.</p>
+
+    <p>With that disclaimer out of the way, let us now proceed to the big list of differences, which, as per the requirement for all lists appearing on the Internet, will be numbered.</p>
+    </section>
+
+    <h4>1) Static Typing</h4>
+
+    <p>Ruby and JavaScript are both <strong>dynamically typed</strong>. Java is <strong>statically typed</strong>. What does this mean? Quite simply:</p>
+
+<code class="block"><pre>
+// JavaScript
+var thing = 18
+thing = "coffee calligraphy"
+// this is okay
+
+// Java
+int thing = 18
+thing = "coffee"
+// Error: java: incompatible types: java.lang.String cannot be converted to int
+</pre></code>
+
+    <p>In Java, every variable must be declared as a certain type. Its type cannot change as the program moves forward&mdash;its type is therefore <strong>static</strong>. There are eight <a href="http://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html">primitive data types</a>, the <code>String</code> data type (which is primitive-like in its immutability), many additional classes (types) available in Java’s various libraries, and an infinite number of types (classes) that you can design yourself.</p>
+
+    <h4>2) Explicit Return Type and Argument Types</h4>
+
+    <p>Another example of Java’s static typing is how method declarations must be written. Here are two examples:</p>
+
+<code class="block"><pre>
+public String numbersToWords(int x, int y)
+private void setName(String name)
+
+&lt;modifiers&gt; &lt;return type&gt; &lt;method name&gt; (&lt;argument1 type&gt; &lt;argument1&gt;, etc.)
+</pre></code>
+
+    <p>The return type of a method must be explicitly identified. (If the method does not return anything, the keyword <code>void</code> is used instead.) Same deal with the arguments to be passed in.</p>
+
+    <h4>3) Type Safety and Code Compiling</h4>
+
+    <p>Okay, you’re probably thinking that explicitly declaring types seems like a pain &ndash; take this typical line of Java as an example, <code>TypePatternClassFilter typePatternClassFilter = new TypePatternClassFilter()</code> &ndash; surely it must bring some benefit?</p>
+
+    <p>It does. Java code is compiled down to something called “bytecode,” which is platform independent and runs very fast (almost as fast as C/C++). During the compiling process, any mismatched types are caught by the compiler (in fact, the compiler will refuse to compile the code), which greatly reduces the prospect of embarrassing runtime errors occurring. This is known as <strong>type safety</strong>. (It is not foolproof due to language features like generics and typecasting, but nonetheless catches most type errors.)</p>
+
+    <h4>4) One Type per Array</h4>
+
+    <h4>5) Arrays are Very Limited</h4>
+
+    <h4>6) Use ArrayList and Other Modern Collections Instead</h4>
+
+    <h4>7) Map as Equivalent to Hash or Object Literal</h4>
+
+    <h4>8) Lots of Different Numbers and Object Wrappers</h4>
+
+    <h4>9) Iteration Over Collections</h4>
+
+    <h4>10) Message-Sending from Class (Collections.sort(list) instead of list.sort())</h4>
+
+    <h4>11) Single Quotes for Char, Double Quotes for String</h4>
+
+    <h4>12) Basically Everything Is A Class</h4>
+
+    <h4>13) public static void main(String[] args)</h4>
+
+    <h4>14) Keyword static for Class Methods and Variables</h4>
+
+    <h4>15) Important Concepts Without Equivalent: Interfaces and Generics (maybe Abstract)</h4>
+
+
+
+    <p>* * * * *</p>
+    <footer>
+      <p id="footnote1"><sup>1</sup> Dev Bootcamp, App Academy, Flatiron School, General Assembly, plus many other programs teach Ruby as the primary programming language.</p>
+      
+      <p>Follow me on Twitter <a href="https://twitter.com/BillLeidy">@BillLeidy</a> for regular blog posts.</p>
+    </footer>
+  
+  </article>
+  </main>
+
+  <footer>
+    Site design and content by Bill Leidy, 2015-2016.
+    <div id="mobilefooter"><a href="../contact.html">Contact Page</a></div> 
+    <div class="socialmedia">
+      <a href="https://twitter.com/BillLeidy"><img src="../images/twitter-icon2.png" alt="Twitter link" /></a>
+      <a href="https://www.linkedin.com/in/wmleidy"><img src="../images/linkedin-icon2.png" alt="LinkedIn link" /></a>
+      <a href="https://github.com/wmleidy/"><img src="../images/github-icon2.png" alt="GitHub link" /></a>
+      <a href="mailto:please-enable-javascript" class="emaillink"><img src="../images/email-icon2.png" alt="Email link" /></a>
+    </div>
+  </footer>
+  <script src="../js/spamguard.js"></script>
+</body>
+
+</html>
