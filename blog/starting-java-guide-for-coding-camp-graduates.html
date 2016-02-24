@@ -43,7 +43,7 @@
 
     <p>But wait, what’s this!? Your dream company happens works with a lot of Fortune 500 clients and wants you to know that most enterprisey of langauges, Java. Or maybe your dream position involves building mobile apps for Android &ndash; and that’s also Java.</p>
 
-    <p>Chances are that your coding camp used Ruby as its primary language<sup><a href="#footnote1">1</a></sup>, Rails as its primary web framework, and taught enough JavaScript for you to develop an irrational hatred of semicolons and almost be able to explain how closures work. But JavaScript, for better or worse, is not Java, although there are plenty of semicolons in both languages.</p>
+    <p>Chances are that your coding camp used Ruby as its primary language<sup><a href="#footnotes">1</a></sup>, Rails as its primary web framework, and taught enough JavaScript for you to develop an irrational hatred of semicolons and almost be able to explain how closures work. But JavaScript, for better or worse, is not Java, although there are plenty of semicolons in both languages.</p>
 
     <p>The purpose of this post is to provide a convenient summary of the most salient differences between Java and more dynamic languages like Ruby and JavaScript for recent graduates of coding camps. It can be conceived as either a crash course intro to what makes Java different or a handy source to refer to when learning Java.</p>
 
@@ -71,7 +71,7 @@ thing = "coffee"
 // Error: java: incompatible types: java.lang.String cannot be converted to int
 </pre></code>
 
-    <p>In Java, every variable must be declared as a certain type. Its type cannot change as the program moves forward&mdash;its type is therefore <strong>static</strong>. There are eight <a href="http://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html">primitive data types</a>, the <code>String</code> data type (which is primitive-like in its immutability), many additional classes (types) available in Java’s various libraries, and an infinite number of types (classes) that you can design yourself.</p>
+    <p>In Java, every variable must be declared as a certain type. Its type cannot change as the program moves forward&mdash;its type is therefore <strong>static</strong>. There are eight <a href="http://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html">primitive data types</a> (including <code>int</code> used above), the <code>String</code> data type (which is primitive-like in its immutability), many additional classes (types) available in Java’s various libraries, and an infinite number of types (classes) that you can design yourself.</p>
 
     <h4>2) Explicit Return Type and Argument Types</h4>
 
@@ -88,15 +88,41 @@ private void setName(String name)
 
     <h4>3) Type Safety and Code Compiling</h4>
 
-    <p>Okay, you’re probably thinking that explicitly declaring types seems like a pain &ndash; take this typical line of Java as an example, <code>TypePatternClassFilter typePatternClassFilter = new TypePatternClassFilter()</code> &ndash; surely it must bring some benefit?</p>
+    <p>Okay, you’re probably thinking that explicitly declaring types seems like a pain &ndash; take this typical line of Java<a href="#footnotes"><sup>2</sup></a> as an example, <code>TypePatternClassFilter typePatternClassFilter = new TypePatternClassFilter()</code> &ndash; surely it must bring some benefit?</p>
 
-    <p>It does. Java code is compiled down to something called “bytecode,” which is platform independent and runs very fast (almost as fast as C/C++). During the compiling process, any mismatched types are caught by the compiler (in fact, the compiler will refuse to compile the code), which greatly reduces the prospect of embarrassing runtime errors occurring. This is known as <strong>type safety</strong>. (It is not foolproof due to language features like generics and typecasting, but nonetheless catches most type errors.)</p>
+    <p>It does. Java code is compiled down to something called <strong>bytecode</strong>, which is platform independent and runs very fast (almost as fast as C/C++). During the compiling process, any mismatched types are caught by the compiler (in fact, the compiler will refuse to compile the code), which greatly reduces the prospect of embarrassing runtime errors occurring. This is known as <strong>type safety</strong>. (It is not foolproof due to language features like generics and typecasting, but nonetheless catches most type errors.)</p>
 
     <h4>4) One Type per Array</h4>
 
-    <h4>5) Arrays are Very Limited</h4>
+    <p>Another result of Java’s static typing is that all elements in an array (and, in fact, any type of collection) must be of the same type. This is in contrast to Ruby and JavaScript where mix-and-match arrays are allowed &ndash; though not necessarily encouraged.</p>
 
-    <h4>6) Use ArrayList and Other Modern Collections Instead</h4>
+    <h4>5) Arrays are Very Limited...</h4>
+
+    <p>“Traditional” arrays in Java have very limited functionality, at least in comparison to Ruby’s arrays. Not only are they limited to one data type, but they also are created with a fixed length (which can only be increased using a roundabout procedure) and lack methods like <code>pop</code>, <code>push</code>, and <code>shuffle</code>. The positive side of these limitations is that they can result in greater memory efficiency and speed.</p>
+
+    <p>Here are some simple examples of array creation and access:</p>
+
+<code class="block"><pre>
+// creates 10-element array of integers
+int[] numbers = new int[10];
+
+// assigns first element to 16
+numbers[0] = 16;
+
+// will output 0, which is the default value for int arrays
+System.out.println(numbers[9]);
+
+// simultaneous creation and assignment of array
+int[] digits  = {2, 4, 6};
+
+// will output 4
+System.out.println(digits[1]);
+
+// will raise an ArrayIndexOutOfBoundsException
+System.out.println(digits[3]);
+</pre></code>
+
+    <h4>6) ...So Use ArrayList and Other Modern Collections Instead</h4>
 
     <h4>7) Map as Equivalent to Hash or Object Literal</h4>
 
@@ -119,8 +145,10 @@ private void setName(String name)
 
 
     <p>* * * * *</p>
-    <footer>
-      <p id="footnote1"><sup>1</sup> Dev Bootcamp, App Academy, Flatiron School, General Assembly, plus many other programs teach Ruby as the primary programming language.</p>
+    <footer class="footnotes">
+      <p id="footnotes"><sup>1</sup> Dev Bootcamp, App Academy, Flatiron School, General Assembly, plus many other programs teach Ruby as the primary programming language.</p>
+
+      <p><sup>2</sup> Many Rubyists dislike working in Java in part because of verbose statements like this. For example, Noel Rappin in <a href="https://pragprog.com/book/nrtest2/rails-4-test-prescriptions"><em>Rails 4 Test Prescriptions</em></a> writes of a time when he “was young and foolish and got paid to write Java.”</p>
       
       <p>Follow me on Twitter <a href="https://twitter.com/BillLeidy">@BillLeidy</a> for regular blog posts.</p>
     </footer>

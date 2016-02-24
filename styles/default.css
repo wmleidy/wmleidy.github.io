@@ -264,6 +264,10 @@ blockquote {
 	background-color: #eee;
 }
 
+footer.footnotes {
+	height: auto;
+}
+
 .attribution {
 	font-style: italic;
 }
