@@ -112,7 +112,7 @@ numbers[0] = 16;
 // will output 0, which is the default value for int arrays
 System.out.println(numbers[9]);
 
-// simultaneous creation and assignment of array
+// simultaneous creation and assignment of array (note the curly braces)
 int[] digits  = {2, 4, 6};
 
 // will output 4
@@ -122,9 +122,20 @@ System.out.println(digits[1]);
 System.out.println(digits[3]);
 </pre></code>
 
-    <h4>6) ...So Use ArrayList and Other Modern Collections Instead</h4>
+    <h4>6) ...So Use ArrayList Instead</h4>
+
+    <p>Luckily though, there is another option that’s available when a more flexible, dynamic, and fully-featured array is required. This is the <code>ArrayList</code>. There are a few different ways to create one, but the most straightforward method looks something like:</p>
+
+<code class="block"><pre>
+List&lt;String&gt;  specialWords = new ArrayList&lt;String&gt;();
+List&lt;Integer&gt; magicNumbers = new ArrayList&lt;Integer&gt;();
+</pre></code>
+
+    <p>Note that an <code>ArrayList</code> can still only contain one type (or, technically, it’s possible to use <strong>generics</strong> to allow for different subclasses of a type to be permitted, but this is an advanced topic). An <code>ArrayList</code> is an implementation of the <code>List</code> interface, which is part of the Java Collections Framework. This means that an <code>ArrayList</code> can use <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html">collection-wide methods</a> in the <code>Collection</code> interface, several useful <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collections.html">manipulation methods</a> in the <code>Collections</code> class, plus many specialized <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">list/array methods</a> within its own class.</p>
 
     <h4>7) Map as Equivalent to Hash or Object Literal</h4>
+
+    <p>Not the only collection in the JCF...
 
     <h4>8) Lots of Different Numbers and Object Wrappers</h4>
 
