@@ -113,7 +113,7 @@ numbers[0] = 16;
 System.out.println(numbers[9]);
 
 // simultaneous creation and assignment of array (note the curly braces)
-int[] digits  = {2, 4, 6};
+short[] digits  = {2, 4, 6};
 
 // will output 4
 System.out.println(digits[1]);
@@ -137,18 +137,61 @@ List&lt;Integer&gt; magicNumbers = new ArrayList&lt;Integer&gt;();
 
     <p>Lists aren’t the only collection type in the Java Collections Framework. The equivalent to a Ruby hash or a JavaScript object literal is Java’s <code>Map</code> interface with the most common implementation being <code>HashMap</code>. A <code>HashMap</code>, like any associative array, contains unordered key-value pairs with each key limited to one appearance in the data structure.</p>
 
-    <p>As is standard in Java, the data type of both the keys and values must be explicitly declared upon creation of a <code>HashMap</code>, and all keys and values added to it must conform to these types:</p>
+    <p>As is standard in Java, the data type of both the keys and values must be explicitly declared upon creation of a <code>HashMap</code>, and all keys and values added to it must conform to these types. Observe the syntax for map creation, setting a key to a value, and retrieving that value:</p>
 
 <code class="block"><pre>
+Map&lt;String, Integer&gt; countryData = new HashMap&lt;String, Integer&gt;();
+countryData.put("USA", 324_118_787);
+int population = countryData.get("USA");
+</pre></code>
 
+    <h4>8) Different Number Types and Their Object Wrappers</h4>
 
-    <h4>8) Lots of Different Numbers and Object Wrappers</h4>
+    <p>As mentioned above in #1, there are eight diffrent <a href="http://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html">primitive data types</a> in Java. Six of them represent integers and floating-point numbers of varying sizes. (The other two primitive types are a Boolean and a Unicode character.)</p>
+
+    <p>In the code fragments above, notice that <code>Integer</code> is the type declared for the <code>ArrayList</code> and <code>HashMap</code> samples. This is the <strong>object wrapper</strong> for the primitive data type of <code>int</code>, and it must be used since the data types used in collections must be descendants of the <code>Object</code> class. In cases such as these, Java will usually handle the conversion between an <code>Integer</code> object and an <code>int</code> primitive automatically.</p>
 
     <h4>9) Iteration Over Collections</h4>
 
-    <h4>10) Message-Sending from Class (Collections.sort(list) instead of list.sort())</h4>
+    <p>When using “traditional” arrays, the code needed to iterate over the values looks equally “traditional”:</p>
 
-    <h4>11) Single Quotes for Char, Double Quotes for String</h4>
+<code class="block"><pre>
+String[] words = {"World", "Monde", "Mir", "Swiat"};
+for (int i = 0; i < words.length; i++) {
+    System.out.println(words[i]);
+}
+</pre></code>
+    
+    <p>However, if that traditional array is converted to a modern collection, iteration also looks more modern. In fact, there are two ways to iterate over a collection. The first way is called a <code>for-each</code> construct:</p>
+
+<code class="block"><pre>
+List&lt;String&gt; wordList = Arrays.asList(words);
+
+for (String word : wordList) {
+    System.out.println(word);
+}
+</pre></code>
+
+    <p>The second way, which is now considered the preferred method, looks very modern indeed and was only introduced with Java SE 8 in 2014. The elements are <strong>streamed</strong> from the collection, at which point they are fed into an <strong>aggregate operation</strong> (full list found <a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html">here</a>), which contains a <strong>lambda expression</strong>. It is worth pointing out that during the first 19 years of Java’s existence, none of the three bolded concepts were incorporated into the core language, so this method of iteration is indeed very new (for Java).</p>
+
+<code class="block"><pre>
+List&lt;String&gt; wordList = Arrays.asList(words);
+
+wordList.stream()
+        .forEach(w -> System.out.println(w));
+</pre></code>
+
+    <h4>10) Message Sending from the Class </h4>
+
+    <p>The eagle-eyed among you might have spotted that in order to convert an array into a list, the “class” (or <strong>static</strong>) method <code>Arrays.asList(words)</code> needs to be used. While Ruby, JavaScript, and Java are all object-oriented languages, their overarching conceptions of message-sending differ significantly. If the same transformation from array to list were to exist in Ruby or JavaScript, there would almost assuredly be a method that could be called directly on the individual instance of the array, that is, something like, <code>words.to_list</code>. In Java, however, this isn’t the case.</p>
+
+    <p>Perhaps a more illustrative example (because it actually exists) is how collections are sorted. Taking the same array of words from #9, in Ruby the array would be sorted alphabetically with <code>words.sort</code> and in JavaScript with <code>words.sort()</code>. But in Java, the <code>sort</code> method is instead called on the class <code>Arrays</code> (not to be confused with the class <code>Array</code>, which has its own methods). The resulting code is <code>Arrays.sort(words)</code> (or <code>Collections.sort(wordList)</code> if sorting the list).</p>
+
+    <p>This pattern is widespread in Java, and will potentially frustrate Rubyists, to whom calling instance methods in such situations would seem more natural.</p>
+
+    <h4>11) Single Quotes for char, Double Quotes for String</h4>
+
+    <p>As the list item says, use single quotes to represent a <code>char</code> primitive (<code>'B'</code>), and double quotes for a <code>String</code> (<code>"Bill"</code>). While on the topic of Java strings, note that (frustratingly) there is no string interpolation available in Java. Also, due to the immutability of the <code>String</code> class, whenever a string needs to be built by a complex process or frequently modified, the special <code>StringBuilder</code> or <code>StringBuffer</code> classes are better choices.</p> 
 
     <h4>12) Basically Everything Is A Class</h4>
 
