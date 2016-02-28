@@ -36,6 +36,7 @@
   <article>
     <header>
       <h1>A Crash Course in Java for Coding Camp Graduates</h1>
+      <h4>Fifteen Takeaway Points</h4>
       <p class="date">February 23, 2016</p>
     </header>
 
@@ -43,9 +44,9 @@
 
     <p>But wait, what’s this!? Your dream company happens works with a lot of Fortune 500 clients and wants you to know that most enterprisey of langauges, Java. Or maybe your dream position involves building mobile apps for Android &ndash; and that’s also Java.</p>
 
-    <p>Chances are that your coding camp used Ruby as its primary language<sup><a href="#footnotes">1</a></sup>, Rails as its primary web framework, and taught enough JavaScript for you to develop an irrational hatred of semicolons and almost be able to explain how closures work. But JavaScript, for better or worse, is not Java, although there are plenty of semicolons in both languages.</p>
+    <p id="ref1">Chances are that your coding camp used Ruby as its primary language<sup><a href="#footnotes">1</a></sup>, Rails as its primary web framework, and taught enough JavaScript for you to develop an irrational hatred of semicolons and almost be able to explain how closures work. But JavaScript, for better or worse, is not Java, although there are plenty of semicolons and curly braces in both languages.</p>
 
-    <p>The purpose of this post is to provide a convenient summary of the most salient differences between Java and more dynamic languages like Ruby and JavaScript for recent graduates of coding camps. It can be conceived as either a crash course intro to what makes Java different or a handy source to refer to when learning Java.</p>
+    <p>The purpose of this post is to provide a convenient summary of the most salient differences between Java and more dynamic languages like Ruby and JavaScript for recent graduates of coding camps. It can be conceived as either a crash course to what makes Java different or a handy source to refer to when learning Java.</p>
 
     <section>
     <h2>A Disclaimer</h2>
@@ -88,7 +89,7 @@ private void setName(String name)
 
     <h4>3) Type Safety and Code Compiling</h4>
 
-    <p>Okay, you’re probably thinking that explicitly declaring types seems like a pain &ndash; take this typical line of Java<a href="#footnotes"><sup>2</sup></a> as an example, <code>TypePatternClassFilter typePatternClassFilter = new TypePatternClassFilter()</code> &ndash; surely it must bring some benefit?</p>
+    <p id="ref2">Okay, you’re probably thinking that explicitly declaring types seems like a pain &ndash; take this typical line of Java<a href="#footnotes"><sup>2</sup></a> as an example, <code>TypePatternClassFilter typePatternClassFilter = new TypePatternClassFilter()</code> &ndash; surely it must bring some benefit?</p>
 
     <p>It does. Java code is compiled down to something called <strong>bytecode</strong>, which is platform independent and runs very fast (almost as fast as C/C++). During the compiling process, any mismatched types are caught by the compiler (in fact, the compiler will refuse to compile the code), which greatly reduces the prospect of embarrassing runtime errors occurring. This is known as <strong>type safety</strong>. (It is not foolproof due to language features like generics and typecasting, but nonetheless catches most type errors.)</p>
 
@@ -122,7 +123,7 @@ System.out.println(digits[1]);
 System.out.println(digits[3]);
 </pre></code>
 
-    <h4>6) ...So Use ArrayList Instead</h4>
+    <h4>6) ...So Use <code>ArrayList</code> Instead</h4>
 
     <p>Luckily though, there is another option that’s available when a more flexible, dynamic, and fully-featured array is required. This is the <code>ArrayList</code>. There are a few different ways to create one, but the most straightforward method looks something like:</p>
 
@@ -209,9 +210,11 @@ wordList.stream()
 
     <h4>14) Use The Keyword <code>static</code> for Class Methods, Class Variables, and Constants</h4>
 
-    <p>It’s an oversimplification to claim that static methods and static variables in Java are exactly the same as class methods and class variables in Ruby. However, it is true that field declarations and methods that include the <code>static</code> keyword very often fulfill the exact same role as class methods and class variables do in Ruby. One last use .... constants </p>
+    <p>It’s an oversimplification to claim that static methods and static variables in Java are exactly the same as class methods and class variables in Ruby. However, it is true that fields and methods that include the <code>static</code> keyword very often fulfill the same role as class methods and class variables do in Ruby.</p>
 
-    <p>Say we have a <code>Country</code> class and want to be able to keep track of the number of <code>Country</code> objects we’ve created and have a handy method to determine which one is most populous. These are both class-level concerns and require use of the <code>static</code> keyword:</p>
+    <p>One more thing: when the <code>static</code> keyword teams up the <code>final</code> keyword, it can be used to declare class constants.</p>
+
+    <p>To bring it all together, say we have a <code>Country</code> class and want to be able to keep track of the number of <code>Country</code> objects we’ve created and have a handy method to determine which one is most populous. Also, let’s assume for the sake of this contrived example that having a conversion factor between square miles and square kilometers would be helpful. All of these things are class-level concerns and require use of the <code>static</code> keyword:</p>
 
 <code class="block"><pre>
 import Java.util.List;
@@ -219,27 +222,42 @@ import Java.util.List;
 class Country {
   // fields (instance variables)
 
-  // constructors, getter and setters, etc.
+  // constructors, getter and setters, instance methods, etc.
 
+  // this variable would be incremented within the constructor method(s)
   private static short numberOfCountries = 0;
 
   public static String determineLargest(List&lt;Country&gt; countries) {
-    /* CODE */
+    /* BORING CODE */
+  }
 
   static final double SQ_MILES_TO_KM = 2.58999;
-  }
 }
 </pre></code>
 
-    <h4>15) Important Concepts Without Equivalent: Interfaces and Generics (maybe Abstract)</h4>
+    <h4>15) Important Concepts without Clear Equivalents: Interfaces, Generics, and Abstract Classes</h4>
 
+    <p>Up until this point, there have been enough clear similarities (or dissimilarities) amongst Ruby, JavaScript, and Java to explore the differences in a comparative fashion. Here is where the paths diverge.</p>
 
+    <p>But not quite yet. Java classes, similar to Ruby classes, can inherit from exactly one superclass. The “formula” is <code>&lt;modifiers&gt; class SubClass extends SuperClass</code>. So, inheritance is very similar. But the distance between Ruby modules and Java interfaces is quite large. A Ruby module freely mixes in methods into classes, whereas a Java <strong>interface</strong> is a “contract” that precisely lays out what methods must be defined in classes that implement it. However, if a Java interface contains only static and default methods, the functionality is similar to that of a Ruby module. Confused? Check out the <a href="http://docs.oracle.com/javase/tutorial/java/IandI/createinterface.html">interface tutorial</a>.</p>
+
+    <p>Mentioned in passing while discussing the Java Collections Framework, <strong>generics</strong> (introduced in Java 5 in 2004) allow types to be specified as parameters. This allows for enhanced type safety and obviates the need for something called <strong>typecasting</strong>. Under points #6 and #7 above, generics feature inside angle brackets, viz. <code>List&lt;String&gt;</code> and <code>Map&lt;String, Integer&gt;</code>. Again, as this is a somewhat advanced topic, check the <a href="http://docs.oracle.com/javase/tutorial/java/generics/index.html">tutorial</a> or whatever learning resource you prefer for more details on generics, including the concept of <strong>wildcards</strong>.</p>
+
+    <p>Finally, <strong>abstract classes</strong> deserve a passing mention. They’re similar to interfaces, but slightly more flexible. Just like interfaces, they can’t be instantiated, but they can be subclassed. More info can be found <a href="http://docs.oracle.com/javase/tutorial/java/IandI/abstract.html">here</a>.</p>
+
+    <h2>Conclusion</h2>
+
+    <p>The 15 list items above are meant to provide a quick orientation to Java for those who already know Ruby and/or JavaScript fairly well. While this “crash course” is not in itself sufficient to actually code efficiently and effectively in Java, my sincere hope is that it will help readers transition more quickly into the world of Java and understand the major differences between Java and its more dynamic counterparts.</p>
+
+    <p>If you have any suggestions for how to improve this post or just want to say “hi,” please use the contact links at the very bottom of this page.</p>
+
+    <p>Happy Java-ing!</p>
 
     <p>* * * * *</p>
     <footer class="footnotes">
-      <p id="footnotes"><sup>1</sup> Dev Bootcamp, App Academy, Flatiron School, General Assembly, plus many other programs teach Ruby as the primary programming language.</p>
+      <p id="footnotes"><sup>1</sup> Dev Bootcamp, App Academy, Flatiron School, General Assembly, plus many other programs teach Ruby as the primary programming language. <a href="#ref1">return</a></p>
 
-      <p><sup>2</sup> Many Rubyists dislike working in Java in part because of verbose statements like this. For example, Noel Rappin in <a href="https://pragprog.com/book/nrtest2/rails-4-test-prescriptions"><em>Rails 4 Test Prescriptions</em></a> writes of a time when he “was young and foolish and got paid to write Java.”</p>
+      <p><sup>2</sup> Many Rubyists dislike working in Java in part because of verbose statements like this. For example, Noel Rappin in <a href="https://pragprog.com/book/nrtest2/rails-4-test-prescriptions"><em>Rails 4 Test Prescriptions</em></a> writes of a time when he “was young and foolish and got paid to write Java.” <a href="#ref2">return</a></p>
       
       <p>Follow me on Twitter <a href="https://twitter.com/BillLeidy">@BillLeidy</a> for regular blog posts.</p>
     </footer>
