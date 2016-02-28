@@ -131,7 +131,7 @@ List&lt;String&gt;  specialWords = new ArrayList&lt;String&gt;();
 List&lt;Integer&gt; magicNumbers = new ArrayList&lt;Integer&gt;();
 </pre></code>
 
-    <p>Note that an <code>ArrayList</code> can still only contain one type (or, technically, it’s possible to use <strong>generics</strong> to allow for different subclasses of a type to be permitted, but this is an advanced topic). An <code>ArrayList</code> is an implementation of the <code>List</code> interface, which is part of the Java Collections Framework. This means that an <code>ArrayList</code> can use <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html">collection-wide methods</a> in the <code>Collection</code> interface, several useful <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collections.html">manipulation methods</a> in the <code>Collections</code> class, plus many specialized <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">list/array methods</a> within its own class.</p>
+    <p>Note that an <code>ArrayList</code> can still only contain one type (or, technically, it’s possible to use <strong>generics</strong> to allow for different subclasses of a type to be permitted, but this is an advanced topic). An <code>ArrayList</code> is an implementation of the <code>List</code> interface, which is part of the Java Collections Framework (put <code>import java.util.*;</code> at the top of the file to gain access to it). This means that an <code>ArrayList</code> can use <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html">collection-wide methods</a> in the <code>Collection</code> interface, several useful <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collections.html">manipulation methods</a> in the <code>Collections</code> class, plus many specialized <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">list/array methods</a> within its own class.</p>
 
     <h4>7) Map as Equivalent to Hash or Object Literal</h4>
 
@@ -193,11 +193,43 @@ wordList.stream()
 
     <p>As the list item says, use single quotes to represent a <code>char</code> primitive (<code>'B'</code>), and double quotes for a <code>String</code> (<code>"Bill"</code>). While on the topic of Java strings, note that (frustratingly) there is no string interpolation available in Java. Also, due to the immutability of the <code>String</code> class, whenever a string needs to be built by a complex process or frequently modified, the special <code>StringBuilder</code> or <code>StringBuffer</code> classes are better choices.</p> 
 
-    <h4>12) Basically Everything Is A Class</h4>
+    <h4>12) Packages and Classes</h4>
 
-    <h4>13) public static void main(String[] args)</h4>
+    <p>Now comes the fun part...learning a bit about everything fits together in Java. A program written in Java will generally be grouped together in a <strong>package</strong> of files, each of which contains exactly one class (or interface &ndash; see #15 below). (There are also situations, for example, building out a <a href="advent-of-code-and-graph-data-structure.html">graph data structure</a> in which a <code>Vertex</code> class might be “embedded” within the <code>Graph</code> class, where there can be “inner classes” contained within the larger class.)</p>
 
-    <h4>14) Keyword static for Class Methods and Variables</h4>
+    <p>Access to the classes within the packages and the methods contained within the package’s classes is controlled by the <a href="http://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html">four access-control modifiers</a> that can preface classes and methods.</p>
+
+    <p>Delving into how to set up a class’s fields (instance variables), constructor methods, instance methods, constants, and so on is beyond the scope of this post. For more details, see the <a href="http://docs.oracle.com/javase/tutorial/java/javaOO/classes.html">Oracle tutorial</a>, your favorite book, or your favorite online learning platform.</p>
+
+    <h4>13) <code>public static void main(String[] args)</code></h4>
+
+    <p>When experimenting with Java for the first time (perhaps by hacking through some elementary coding challenges, like I did), one quickly notices the lack of a built-in global scope, such as Ruby and JavaScript possess. The solution, which soon works its way into your fingers the same way a memorable piano passage or guitar riff does, is to write <code>public static void main(String[] args)</code> within a class and place all the code to be executed in the global scope in it.</p>
+
+    <p>Note that executable code can also be placed within <code>threads</code>, which can be started from the <code>public static void main(String[] args)</code> block or another thread. In fact, Java’s ability to handle concurrent programming and its support for high-level concurrency APIs is one of the big advantages it holds over Ruby when dealing with very large collections of data.</p>
+
+    <h4>14) Use The Keyword <code>static</code> for Class Methods, Class Variables, and Constants</h4>
+
+    <p>It’s an oversimplification to claim that static methods and static variables in Java are exactly the same as class methods and class variables in Ruby. However, it is true that field declarations and methods that include the <code>static</code> keyword very often fulfill the exact same role as class methods and class variables do in Ruby. One last use .... constants </p>
+
+    <p>Say we have a <code>Country</code> class and want to be able to keep track of the number of <code>Country</code> objects we’ve created and have a handy method to determine which one is most populous. These are both class-level concerns and require use of the <code>static</code> keyword:</p>
+
+<code class="block"><pre>
+import Java.util.List;
+
+class Country {
+  // fields (instance variables)
+
+  // constructors, getter and setters, etc.
+
+  private static short numberOfCountries = 0;
+
+  public static String determineLargest(List&lt;Country&gt; countries) {
+    /* CODE */
+
+  static final double SQ_MILES_TO_KM = 2.58999;
+  }
+}
+</pre></code>
 
     <h4>15) Important Concepts Without Equivalent: Interfaces and Generics (maybe Abstract)</h4>
 
