@@ -42,18 +42,18 @@
 
     <p>Congratulations! After 10-20 weeks of hard work, you’ve graduated from a well-known coding camp and are pumped to finally land that dream developer job.</p>
 
-    <p>But wait, what’s this!? Your dream company happens works with a lot of Fortune 500 clients and wants you to know that most enterprisey of langauges, Java. Or maybe your dream position involves building mobile apps for Android &ndash; and that’s also Java.</p>
+    <p>But wait, what’s this!? Your dream company happens to work with a lot of Fortune 500 clients and wants you to know that most enterprisey of langauges, Java. Or maybe your dream position involves building mobile apps for Android &ndash; that’s also Java.</p>
 
     <p id="ref1">Chances are that your coding camp used Ruby as its primary language<sup><a href="#footnotes">1</a></sup>, Rails as its primary web framework, and taught enough JavaScript for you to develop an irrational hatred of semicolons and almost be able to explain how closures work. But JavaScript, for better or worse, is not Java, although there are plenty of semicolons and curly braces in both languages.</p>
 
-    <p>The purpose of this post is to provide a convenient summary of the most salient differences between Java and more dynamic languages like Ruby and JavaScript for recent graduates of coding camps. It can be conceived as either a crash course to what makes Java different or a handy source to refer to when learning Java.</p>
+    <p>This post’s purpose is to provide a convenient summary of the most salient differences between Java and more dynamic languages like Ruby and JavaScript for recent graduates of coding camps. It can be conceived as either a crash course to what makes Java different or a handy source to refer to while in the process of learning Java.</p>
 
     <section>
     <h2>A Disclaimer</h2>
     
-    <p>While this page will (hopefully!) help you to quickly acquire reading knowledge of Java (which can be very useful when working through a book like <a href="http://www.amazon.com/Cracking-Coding-Interview-6th-Programming/dp/0984782850/">Cracking the Coding Interview</a>), in order to learn to code in Java, you actually need to, you know, code in Java. There are various websites and books (for example, Head First Java) that promise to introduce you to Java. Be aware, though, that recent versions of Java have added new features, such as Ruby-like iteration through collections, which debuted in Java SE 8. As such, I elected to suffer through the rather rigid and stilted <a href="http://docs.oracle.com/javase/tutorial/tutorialLearningPaths.html">tutorials</a> direct from the source.</p>
+    <p>Though this page will (hopefully!) help you to quickly acquire reading knowledge of Java (which can be very useful when working through a book like <a href="http://www.amazon.com/Cracking-Coding-Interview-6th-Programming/dp/0984782850/">Cracking the Coding Interview</a>), in order to learn to code in Java, you actually need to, you know, code in Java. There are various websites and books (for example, Head First Java) that promise to teach you Java. Be aware, though, that recent versions of Java have added new features, such as Ruby-like iteration through collections, which only debuted in 2014’s Java SE 8. As such, I personally elected to suffer through the rather rigid and stilted <a href="http://docs.oracle.com/javase/tutorial/tutorialLearningPaths.html">tutorials</a> from the Oracle website.</p>
 
-    <p>With that disclaimer out of the way, let us now proceed to the big list of differences, which, as per the requirement for all lists appearing on the Internet, will be numbered.</p>
+    <p>With that disclaimer out of the way, let us now proceed to the big list of differences, which, in the fashion of all lists that appear on the Internet, will be conveniently numbered.</p>
     </section>
 
     <h4>1) Static Typing</h4>
@@ -79,19 +79,24 @@ thing = "coffee"
     <p>Another example of Java’s static typing is how method declarations must be written. Here are two examples:</p>
 
 <code class="block"><pre>
-public String numbersToWords(int x, int y)
-private void setName(String name)
+public String numbersToWords(int x, int y) {
+  /* CODE */
+}
 
-&lt;modifiers&gt; &lt;return type&gt; &lt;method name&gt; (&lt;argument1 type&gt; &lt;argument1&gt;, etc.)
+private void setName(String name) {
+  /* CODE */
+}
+
+&lt;modifier(s)&gt; &lt;return type&gt; &lt;method name&gt; (&lt;argument1 type&gt; &lt;argument1&gt;, etc.)
 </pre></code>
 
-    <p>The return type of a method must be explicitly identified. (If the method does not return anything, the keyword <code>void</code> is used instead.) Same deal with the arguments to be passed in.</p>
+    <p>The return type of a method must be explicitly identified. (If the method does not return anything, the keyword <code>void</code> is used instead.) Any arguments that are passed in must also be given a type.</p>
 
     <h4>3) Type Safety and Code Compiling</h4>
 
-    <p id="ref2">Okay, you’re probably thinking that explicitly declaring types seems like a pain &ndash; take this typical line of Java<a href="#footnotes"><sup>2</sup></a> as an example, <code>TypePatternClassFilter typePatternClassFilter = new TypePatternClassFilter()</code> &ndash; surely it must bring some benefit?</p>
+    <p id="ref2">Okay, you’re probably thinking that explicitly declaring types seems like a pain &ndash; take this typical line of Java<a href="#footnotes"><sup>2</sup></a> as an example, <code>TypePatternClassFilter typePatternClassFilter = new TypePatternClassFilter()</code> &ndash; surely type declaration must bring some benefit?</p>
 
-    <p>It does. Java code is compiled down to something called <strong>bytecode</strong>, which is platform independent and runs very fast (almost as fast as C/C++). During the compiling process, any mismatched types are caught by the compiler (in fact, the compiler will refuse to compile the code), which greatly reduces the prospect of embarrassing runtime errors occurring. This is known as <strong>type safety</strong>. (It is not foolproof due to language features like generics and typecasting, but nonetheless catches most type errors.)</p>
+    <p>It does. Java code is compiled down to something called <strong>bytecode</strong>, which is platform independent and runs very fast (almost as fast as C or C++). During the compiling process, any mismatched types are caught by the compiler (in fact, the compiler will refuse to compile the code), which greatly reduces the prospect of embarrassing runtime errors occurring. This is known as <strong>type safety</strong>. (It is not foolproof due to language features like generics and typecasting, but nonetheless it will catch most type errors.)</p>
 
     <h4>4) One Type per Array</h4>
 
@@ -99,7 +104,7 @@ private void setName(String name)
 
     <h4>5) Arrays are Very Limited...</h4>
 
-    <p>“Traditional” arrays in Java have very limited functionality, at least in comparison to Ruby’s arrays. Not only are they limited to one data type, but they also are created with a fixed length (which can only be increased using a roundabout procedure) and lack methods like <code>pop</code>, <code>push</code>, and <code>shuffle</code>. The positive side of these limitations is that they can result in greater memory efficiency and speed.</p>
+    <p>“Traditional” arrays in Java have very limited functionality, at least in comparison to Ruby’s arrays. Not only are they limited to one data type, but also they are created with a fixed length (which can only be increased using a roundabout procedure) and lack methods like <code>pop</code>, <code>push</code>, and <code>shuffle</code>. The positive side of these limitations is that they can lead to greater memory efficiency and speed.</p>
 
     <p>Here are some simple examples of array creation and access:</p>
 
@@ -132,11 +137,11 @@ List&lt;String&gt;  specialWords = new ArrayList&lt;String&gt;();
 List&lt;Integer&gt; magicNumbers = new ArrayList&lt;Integer&gt;();
 </pre></code>
 
-    <p>Note that an <code>ArrayList</code> can still only contain one type (or, technically, it’s possible to use <strong>generics</strong> to allow for different subclasses of a type to be permitted, but this is an advanced topic). An <code>ArrayList</code> is an implementation of the <code>List</code> interface, which is part of the Java Collections Framework (put <code>import java.util.*;</code> at the top of the file to gain access to it). This means that an <code>ArrayList</code> can use <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html">collection-wide methods</a> in the <code>Collection</code> interface, several useful <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collections.html">manipulation methods</a> in the <code>Collections</code> class, plus many specialized <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">list/array methods</a> within its own class.</p>
+    <p>Note that an <code>ArrayList</code> can still only contain one type (or, technically, it’s possible to use <strong>generics</strong> to allow for different subclasses of a common ancestor to be permitted, but this is an advanced topic). An <code>ArrayList</code> is an implementation of the <code>List</code> interface, which is part of the Java Collections Framework (write <code>import java.util.*;</code> at the top of the file to gain access to it). This means that an <code>ArrayList</code> can use <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html">collection-wide methods</a> from the <code>Collection</code> interface, several useful <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collections.html">manipulation methods</a> in the <code>Collections</code> class, plus many specialized <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">list/array methods</a> within its own class.</p>
 
     <h4>7) Map as Equivalent to Hash or Object Literal</h4>
 
-    <p>Lists aren’t the only collection type in the Java Collections Framework. The equivalent to a Ruby hash or a JavaScript object literal is Java’s <code>Map</code> interface with the most common implementation being <code>HashMap</code>. A <code>HashMap</code>, like any associative array, contains unordered key-value pairs with each key limited to one appearance in the data structure.</p>
+    <p>Lists aren’t the only collection type in the Java Collections Framework. The equivalent to a Ruby hash or a JavaScript object literal is Java’s <code>Map</code> interface with the most common implementation being <code>HashMap</code>. A <code>HashMap</code>, like any associative array, contains unordered key-value pairs with the requirement that each key be unique.</p>
 
     <p>As is standard in Java, the data type of both the keys and values must be explicitly declared upon creation of a <code>HashMap</code>, and all keys and values added to it must conform to these types. Observe the syntax for map creation, setting a key to a value, and retrieving that value:</p>
 
@@ -148,7 +153,7 @@ int population = countryData.get("USA");
 
     <h4>8) Different Number Types and Their Object Wrappers</h4>
 
-    <p>As mentioned above in #1, there are eight diffrent <a href="http://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html">primitive data types</a> in Java. Six of them represent integers and floating-point numbers of varying sizes. (The other two primitive types are a Boolean and a Unicode character.)</p>
+    <p>As mentioned above in #1, there are eight diffrent <a href="http://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html">primitive data types</a> in Java. Six of them represent integers and floating-point numbers of varying sizes. (The other two primitive types encode a Boolean value and a Unicode character.)</p>
 
     <p>In the code fragments above, notice that <code>Integer</code> is the type declared for the <code>ArrayList</code> and <code>HashMap</code> samples. This is the <strong>object wrapper</strong> for the primitive data type of <code>int</code>, and it must be used since the data types used in collections must be descendants of the <code>Object</code> class. In cases such as these, Java will usually handle the conversion between an <code>Integer</code> object and an <code>int</code> primitive automatically.</p>
 
@@ -163,7 +168,7 @@ for (int i = 0; i < words.length; i++) {
 }
 </pre></code>
     
-    <p>However, if that traditional array is converted to a modern collection, iteration also looks more modern. In fact, there are two ways to iterate over a collection. The first way is called a <code>for-each</code> construct:</p>
+    <p>However, if that traditional array is converted to a modern collection, iteration also looks more modern. In fact, there are two ways to iterate over a collection. The first way is called a <strong>for-each</strong> construct:</p>
 
 <code class="block"><pre>
 List&lt;String&gt; wordList = Arrays.asList(words);
@@ -173,7 +178,7 @@ for (String word : wordList) {
 }
 </pre></code>
 
-    <p>The second way, which is now considered the preferred method, looks very modern indeed and was only introduced with Java SE 8 in 2014. The elements are <strong>streamed</strong> from the collection, at which point they are fed into an <strong>aggregate operation</strong> (full list found <a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html">here</a>), which contains a <strong>lambda expression</strong>. It is worth pointing out that during the first 19 years of Java’s existence, none of the three bolded concepts were incorporated into the core language, so this method of iteration is indeed very new (for Java).</p>
+    <p>The second way, which is considered to be the preferred method, looks very modern indeed and was only introduced with Java SE 8 in 2014. The elements are <strong>streamed</strong> from the collection, at which point they are fed into an <strong>aggregate operation</strong> (full list found <a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html">here</a>), and this aggregate operation contains a <strong>lambda expression</strong>. It is worth pointing out that during the first 19 years of Java’s existence, none of the three bolded concepts were incorporated into the core language, so this method of iteration is very new indeed (at least for Java).</p>
 
 <code class="block"><pre>
 List&lt;String&gt; wordList = Arrays.asList(words);
@@ -188,15 +193,15 @@ wordList.stream()
 
     <p>Perhaps a more illustrative example (because it actually exists) is how collections are sorted. Taking the same array of words from #9, in Ruby the array would be sorted alphabetically with <code>words.sort</code> and in JavaScript with <code>words.sort()</code>. But in Java, the <code>sort</code> method is instead called on the class <code>Arrays</code> (not to be confused with the class <code>Array</code>, which has its own methods). The resulting code is <code>Arrays.sort(words)</code> (or <code>Collections.sort(wordList)</code> if sorting the list).</p>
 
-    <p>This pattern is widespread in Java, and will potentially frustrate Rubyists, to whom calling instance methods in such situations would seem more natural.</p>
+    <p>This pattern is widespread in Java, and will potentially frustrate Rubyists, to whom calling instance methods in such situations would seem much more natural.</p>
 
     <h4>11) Single Quotes for char, Double Quotes for String</h4>
 
-    <p>As the list item says, use single quotes to represent a <code>char</code> primitive (<code>'B'</code>), and double quotes for a <code>String</code> (<code>"Bill"</code>). While on the topic of Java strings, note that (frustratingly) there is no string interpolation available in Java. Also, due to the immutability of the <code>String</code> class, whenever a string needs to be built by a complex process or frequently modified, the special <code>StringBuilder</code> or <code>StringBuffer</code> classes are better choices.</p> 
+    <p>As the heading advertises, use single quotes to represent a <code>char</code> primitive (<code>'B'</code>), and double quotes for a <code>String</code> (<code>"Bill"</code>). While on the topic of Java strings, note that (frustratingly) there is no string interpolation available in Java. Also, due to the immutability of the <code>String</code> class, whenever a string needs to be built by a complex process or frequently modified, the special <code>StringBuilder</code> or <code>StringBuffer</code> classes are better choices.</p> 
 
     <h4>12) Packages and Classes</h4>
 
-    <p>Now comes the fun part...learning a bit about everything fits together in Java. A program written in Java will generally be grouped together in a <strong>package</strong> of files, each of which contains exactly one class (or interface &ndash; see #15 below). (There are also situations, for example, building out a <a href="advent-of-code-and-graph-data-structure.html">graph data structure</a> in which a <code>Vertex</code> class might be “embedded” within the <code>Graph</code> class, where there can be “inner classes” contained within the larger class.)</p>
+    <p>Now comes the fun part...learning a bit about everything fits together in Java. A program written in Java will generally be grouped together in a <strong>package</strong> of files, each of which contains exactly one class (or interface &ndash; see #15 below). For accuracy’s sake, it should be noted that there are also situations, for example, when building out a <a href="advent-of-code-and-graph-data-structure.html">graph data structure</a> in which a <code>Vertex</code> class might be “embedded” within the <code>Graph</code> class, where there can be “inner classes” contained within the larger class.</p>
 
     <p>Access to the classes within the packages and the methods contained within the package’s classes is controlled by the <a href="http://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html">four access-control modifiers</a> that can preface classes and methods.</p>
 
@@ -204,17 +209,17 @@ wordList.stream()
 
     <h4>13) <code>public static void main(String[] args)</code></h4>
 
-    <p>When experimenting with Java for the first time (perhaps by hacking through some elementary coding challenges, like I did), one quickly notices the lack of a built-in global scope, such as Ruby and JavaScript possess. The solution, which soon works its way into your fingers the same way a memorable piano passage or guitar riff does, is to write <code>public static void main(String[] args)</code> within a class and place all the code to be executed in the global scope in it.</p>
+    <p>When experimenting with Java for the first time (perhaps by hacking through some elementary coding challenges as I did), one quickly notices the lack of a built-in global scope of the kind that Ruby and JavaScript possess. The solution, which soon works its way into your fingers in the same manner that a memorable piano passage or guitar riff does, is to write <code>public static void main(String[] args)</code> within a class and place all the code to be executed in the global scope in it.</p>
 
     <p>Note that executable code can also be placed within <code>threads</code>, which can be started from the <code>public static void main(String[] args)</code> block or another thread. In fact, Java’s ability to handle concurrent programming and its support for high-level concurrency APIs is one of the big advantages it holds over Ruby when dealing with very large collections of data.</p>
 
     <h4>14) Use The Keyword <code>static</code> for Class Methods, Class Variables, and Constants</h4>
 
-    <p>It’s an oversimplification to claim that static methods and static variables in Java are exactly the same as class methods and class variables in Ruby. However, it is true that fields and methods that include the <code>static</code> keyword very often fulfill the same role as class methods and class variables do in Ruby.</p>
+    <p>It’s an oversimplification to claim that static methods and static variables in Java are exactly the same as class methods and class variables in Ruby. However, it is true that fields and methods that include the <code>static</code> keyword in Java very often fulfill the same role as class methods and class variables do in Ruby.</p>
 
-    <p>One more thing: when the <code>static</code> keyword teams up the <code>final</code> keyword, it can be used to declare class constants.</p>
+    <p>Also, when the <code>static</code> keyword teams up the <code>final</code> keyword, they can be used to declare class constants.</p>
 
-    <p>To bring it all together, say we have a <code>Country</code> class and want to be able to keep track of the number of <code>Country</code> objects we’ve created and have a handy method to determine which one is most populous. Also, let’s assume for the sake of this contrived example that having a conversion factor between square miles and square kilometers would be helpful. All of these things are class-level concerns and require use of the <code>static</code> keyword:</p>
+    <p>To provide an example of typical usage: say we have a <code>Country</code> class and want to be able to keep track of the number of <code>Country</code> objects we’ve created and have a handy method to determine which country is most populous. Also, let’s assume for the sake of this contrived example that having a conversion factor between square miles and square kilometers would be helpful. All of these things are class-level concerns and require use of the <code>static</code> keyword:</p>
 
 <code class="block"><pre>
 import Java.util.List;
@@ -237,19 +242,19 @@ class Country {
 
     <h4>15) Important Concepts without Clear Equivalents: Interfaces, Generics, and Abstract Classes</h4>
 
-    <p>Up until this point, there have been enough clear similarities (or dissimilarities) amongst Ruby, JavaScript, and Java to explore the differences in a comparative fashion. Here is where the paths diverge.</p>
+    <p>Up until this point, there have been enough clear similarities (or dissimilarities) amongst Ruby, JavaScript, and Java to explore the language differences in a comparative fashion. Here is where the paths diverge.</p>
 
-    <p>But not quite yet. Java classes, similar to Ruby classes, can inherit from exactly one superclass. The “formula” is <code>&lt;modifiers&gt; class SubClass extends SuperClass</code>. So, inheritance is very similar. But the distance between Ruby modules and Java interfaces is quite large. A Ruby module freely mixes in methods into classes, whereas a Java <strong>interface</strong> is a “contract” that precisely lays out what methods must be defined in classes that implement it. However, if a Java interface contains only static and default methods, the functionality is similar to that of a Ruby module. Confused? Check out the <a href="http://docs.oracle.com/javase/tutorial/java/IandI/createinterface.html">interface tutorial</a>.</p>
+    <p>But not quite yet. Java classes, similar to Ruby classes, can inherit from exactly one superclass. The “formula” is <code>&lt;modifier(s)&gt; class SubClass extends SuperClass</code>. In other words, inheritance is very similar. But the conceptual distance between Ruby modules and Java interfaces is quite large. A Ruby module will freely mix in methods into classes, whereas a Java <strong>interface</strong> is best thought of as a “contract” that precisely lays out what methods must be defined in classes that implement it. However, if a Java interface contains only static and default methods, the functionality is similar to that of a Ruby module. Confused? Check out the <a href="http://docs.oracle.com/javase/tutorial/java/IandI/createinterface.html">interface tutorial</a> for an extended discussion.</p>
 
-    <p>Mentioned in passing while discussing the Java Collections Framework, <strong>generics</strong> (introduced in Java 5 in 2004) allow types to be specified as parameters. This allows for enhanced type safety and obviates the need for something called <strong>typecasting</strong>. Under points #6 and #7 above, generics feature inside angle brackets, viz. <code>List&lt;String&gt;</code> and <code>Map&lt;String, Integer&gt;</code>. Again, as this is a somewhat advanced topic, check the <a href="http://docs.oracle.com/javase/tutorial/java/generics/index.html">tutorial</a> or whatever learning resource you prefer for more details on generics, including the concept of <strong>wildcards</strong>.</p>
+    <p>Mentioned in passing while talking about the Java Collections Framework, <strong>generics</strong> (introduced in 2004 with the release of Java 5) allow types to be specified as parameters. This results in enhanced type safety and obviates the need for something called <strong>typecasting</strong>. If you return to the code samples in points #6 and #7 above, you’ll see generics featuring inside angle brackets: <code>List&lt;String&gt;</code> and <code>Map&lt;String, Integer&gt;</code>. Again, as this is a somewhat advanced topic, check the <a href="http://docs.oracle.com/javase/tutorial/java/generics/index.html">tutorial</a> or whatever learning resource you prefer for more details on generics, including the concept of <strong>wildcards</strong>.</p>
 
-    <p>Finally, <strong>abstract classes</strong> deserve a passing mention. They’re similar to interfaces, but slightly more flexible. Just like interfaces, they can’t be instantiated, but they can be subclassed. More info can be found <a href="http://docs.oracle.com/javase/tutorial/java/IandI/abstract.html">here</a>.</p>
+    <p>Finally, <strong>abstract classes</strong> deserve a passing mention. They’re similar to interfaces, but more flexible in what kind of fields and methods can be included. Just like interfaces, they can’t be instantiated, but they can be fruitfully subclassed. More info can be found <a href="http://docs.oracle.com/javase/tutorial/java/IandI/abstract.html">here</a>.</p>
 
     <h2>Conclusion</h2>
 
     <p>The 15 list items above are meant to provide a quick orientation to Java for those who already know Ruby and/or JavaScript fairly well. While this “crash course” is not in itself sufficient to actually code efficiently and effectively in Java, my sincere hope is that it will help readers transition more quickly into the world of Java and understand the major differences between Java and its more dynamic counterparts.</p>
 
-    <p>If you have any suggestions for how to improve this post or just want to say “hi,” please use the contact links at the very bottom of this page.</p>
+    <p>If you have any suggestions for how to improve this post or just want to say “hi” or “thank you,” please use the contact links found at the very bottom of this page.</p>
 
     <p>Happy Java-ing!</p>
 
